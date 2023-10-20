@@ -1,0 +1,2 @@
+curl --location --request GET 'http://localhost:8000/ajax/user/login_button_html' \
+--header 'Cookie: sgn_session_id=spuzfclhwrulhrnkuxriswsrgrapiiruqkcfmgxdwdmcjhjxiefzeobpvgpuotqsciijwqk; user_prefs=""'
