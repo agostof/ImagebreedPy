@@ -2,7 +2,7 @@
 
 This attemps to implement Imagebreed's functionality using Python.
 
-This app servers static content downloaded from the Imagebreed app. It is currently setup to capture and forward requests in a Man-In-The-Middle fashion.
+This app servers static content downloaded from the Imagebreed app. It is currently setup to capture and forward requests in a Man-In-The-Middle fashion. Static content is served from the [site_root](site_root) directory.
 
 ## Starting server
 
