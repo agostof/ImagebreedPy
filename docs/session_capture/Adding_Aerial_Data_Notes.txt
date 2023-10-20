@@ -1,0 +1,603 @@
+#http://localhost:7080/breeders/drone_imagery
+# NOAA Location ID is requiered GHCND:USC00300331
+
+
+breedbase_web   | [info] *** Request 31 (0.008/s) [5518] [Thu Jun  1 21:34:04 2023] ***
+breedbase_web   | [debug] Path is "breeders/drone_imagery"
+breedbase_web   | [debug] "GET" request for "breeders/drone_imagery" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Response Code: 200; Content-Type: text/html; charset=utf-8; Content-Length: unknown
+breedbase_web   | [info] Request took 0.184087s (5.432/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /auto                                                      | 0.023763s |
+breedbase_web   | | /breederstoolbox/manage_drone_imagery                      | 0.000186s |
+breedbase_web   | | /end                                                       | 0.151990s |
+breedbase_web   | |  -> /render                                                | 0.058251s |
+breedbase_web   | |   -> SGN::View::Mason->process                             | 0.057584s |
+breedbase_web   | |  -> /insert_collected_html                                 | 0.093360s |
+breedbase_web   | |   -> /js/resolve_javascript_classes                        | 0.091791s |
+breedbase_web   | |   -> /resolve_css_paths                                    | 0.000212s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 37 (0.010/s) [5517] [Thu Jun  1 21:34:04 2023] ***
+breedbase_web   | [debug] Path is "js/legacy"
+breedbase_web   | [debug] Arguments are "opencv/opencv.js"
+breedbase_web   | [debug] "GET" request for "js/legacy/opencv/opencv.js" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] loading js file ... /home/production/cxgn/sgn/js/source/legacy/opencv/opencv.js
+breedbase_web   | [debug] skipping JS pack insertion for page with content type text/javascript
+breedbase_web   | [debug] Response Code: 200; Content-Type: text/javascript; charset=UTF-8; Content-Length: unknown
+breedbase_web   | [info] Request took 0.073037s (13.692/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /auto                                                      | 0.012319s |
+breedbase_web   | | /js/legacy                                                 | 0.018105s |
+breedbase_web   | |  -> SGN::View::JavaScript::Legacy->process                 | 0.017467s |
+breedbase_web   | | /end                                                       | 0.000610s |
+breedbase_web   | |  -> /render                                                | 0.000291s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | Generate login button for logged in user...
+breedbase_web   | [info] *** Request 32 (0.008/s) [5518] [Thu Jun  1 21:34:06 2023] ***
+breedbase_web   | [debug] Path is "ajax/html/select/years"
+breedbase_web   | [debug] "GET" request for "ajax/html/select/years" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | auto_generate                       | 1                                    |
+breedbase_web   | | id                                  | generic_save_analysis_analysis_year  |
+breedbase_web   | | name                                | generic_save_analysis_analysis_year  |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.042435s (23.565/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/htmlselect/begin                                     | 0.000206s |
+breedbase_web   | | /auto                                                      | 0.028810s |
+breedbase_web   | | /ajax/htmlselect/get_year_select                           | 0.002551s |
+breedbase_web   | | /ajax/htmlselect/end                                       | 0.000853s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 35 (0.009/s) [5519] [Thu Jun  1 21:34:06 2023] ***
+breedbase_web   | [debug] Path is "ajax/user/login_button_html"
+breedbase_web   | [debug] "GET" request for "ajax/user/login_button_html" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.04308s (23.213/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/user/begin                                           | 0.000192s |
+breedbase_web   | | /auto                                                      | 0.032290s |
+breedbase_web   | | /ajax/user/get_login_button_html                           | 0.000505s |
+breedbase_web   | | /ajax/user/end                                             | 0.000501s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 38 (0.010/s) [5517] [Thu Jun  1 21:34:06 2023] ***
+breedbase_web   | [debug] Path is "ajax/html/select/breeding_programs"
+breedbase_web   | [debug] "GET" request for "ajax/html/select/breeding_programs" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | id                                  | generic_save_analysis_breeding_prog- |
+breedbase_web   | |                                     | ram_id                               |
+breedbase_web   | | name                                | generic_save_analysis_breeding_prog- |
+breedbase_web   | |                                     | ram_id                               |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.06214s (16.093/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/htmlselect/begin                                     | 0.000222s |
+breedbase_web   | | /auto                                                      | 0.035402s |
+breedbase_web   | | /ajax/htmlselect/get_breeding_program_select               | 0.015286s |
+breedbase_web   | | /ajax/htmlselect/end                                       | 0.000475s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 45 (0.012/s) [5515] [Thu Jun  1 21:34:06 2023] ***
+breedbase_web   | [debug] Path is "ajax/html/select/trials"
+breedbase_web   | [debug] "GET" request for "ajax/html/select/trials" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | empty                               | 1                                    |
+breedbase_web   | | id                                  | export_drone_run_field_trial_id      |
+breedbase_web   | | multiple                            | 0                                    |
+breedbase_web   | | name                                | export_drone_run_field_trial_id      |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.082141s (12.174/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/htmlselect/begin                                     | 0.000192s |
+breedbase_web   | | /auto                                                      | 0.020773s |
+breedbase_web   | | /ajax/htmlselect/get_trials_select                         | 0.043870s |
+breedbase_web   | | /ajax/htmlselect/end                                       | 0.000491s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 36 (0.009/s) [5519] [Thu Jun  1 21:34:06 2023] ***
+breedbase_web   | [debug] Path is "ajax/html/select/years"
+breedbase_web   | [debug] "GET" request for "ajax/html/select/years" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | auto_generate                       | 1                                    |
+breedbase_web   | | id                                  | generic_save_analysis_template_anal- |
+breedbase_web   | |                                     | ysis_year                            |
+breedbase_web   | | name                                | generic_save_analysis_template_anal- |
+breedbase_web   | |                                     | ysis_year                            |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.019956s (50.110/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/htmlselect/begin                                     | 0.000101s |
+breedbase_web   | | /auto                                                      | 0.009724s |
+breedbase_web   | | /ajax/htmlselect/get_year_select                           | 0.001720s |
+breedbase_web   | | /ajax/htmlselect/end                                       | 0.000457s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 39 (0.010/s) [5517] [Thu Jun  1 21:34:06 2023] ***
+breedbase_web   | [debug] Path is "ajax/html/select/private_companies"
+breedbase_web   | [debug] "GET" request for "ajax/html/select/private_companies" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | id                                  | drone_run_new_imaging_vehicle_compa- |
+breedbase_web   | |                                     | ny_id                                |
+breedbase_web   | | name                                | drone_run_new_imaging_vehicle_compa- |
+breedbase_web   | |                                     | ny_id                                |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.027764s (36.018/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/htmlselect/begin                                     | 0.000132s |
+breedbase_web   | | /auto                                                      | 0.009746s |
+breedbase_web   | | /ajax/htmlselect/get_private_companies_select              | 0.011001s |
+breedbase_web   | | /ajax/htmlselect/end                                       | 0.000388s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 33 (0.009/s) [5518] [Thu Jun  1 21:34:06 2023] ***
+breedbase_web   | [debug] Path is "ajax/html/select/breeding_programs"
+breedbase_web   | [debug] "GET" request for "ajax/html/select/breeding_programs" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | id                                  | generic_save_analysis_template_bree- |
+breedbase_web   | |                                     | ding_program_id                      |
+breedbase_web   | | name                                | generic_save_analysis_template_bree- |
+breedbase_web   | |                                     | ding_program_id                      |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.037596s (26.599/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/htmlselect/begin                                     | 0.000180s |
+breedbase_web   | | /auto                                                      | 0.012457s |
+breedbase_web   | | /ajax/htmlselect/get_breeding_program_select               | 0.015012s |
+breedbase_web   | | /ajax/htmlselect/end                                       | 0.000640s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 46 (0.012/s) [5516] [Thu Jun  1 21:34:06 2023] ***
+breedbase_web   | [debug] Path is "api/drone_imagery/raw_drone_imagery_top"
+breedbase_web   | [debug] "GET" request for "api/drone_imagery/raw_drone_imagery_top" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | _                                   | 1685655244716                        |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.147777s (6.767/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/droneimagery/droneimagerymaindisplay/begin           | 0.000216s |
+breedbase_web   | | /auto                                                      | 0.026327s |
+breedbase_web   | | /ajax/droneimagery/droneimagerymaindisplay/raw_drone_imag- | 0.000139s |
+breedbase_web   | | ery_summary_top                                            |           |
+breedbase_web   | | -> /ajax/droneimagery/droneimagerymaindisplay/raw_drone_i- | 0.110794s |
+breedbase_web   | | magery_summary_top_GET                                     |           |
+breedbase_web   | | /ajax/droneimagery/droneimagerymaindisplay/end             | 0.000527s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 46 (0.012/s) [5515] [Thu Jun  1 21:34:06 2023] ***
+breedbase_web   | [debug] Path is "ajax/html/select/private_companies"
+breedbase_web   | [debug] "GET" request for "ajax/html/select/private_companies" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | id                                  | drone_run_company_id                 |
+breedbase_web   | | name                                | drone_run_company_id                 |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.024241s (41.252/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/htmlselect/begin                                     | 0.000089s |
+breedbase_web   | | /auto                                                      | 0.007923s |
+breedbase_web   | | /ajax/htmlselect/get_private_companies_select              | 0.011207s |
+breedbase_web   | | /ajax/htmlselect/end                                       | 0.000425s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 34 (0.009/s) [5518] [Thu Jun  1 21:34:06 2023] ***
+breedbase_web   | [debug] Path is "ajax/html/select/imaging_event_vehicles"
+breedbase_web   | [debug] "GET" request for "ajax/html/select/imaging_event_vehicles" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | id                                  | drone_run_imaging_vehicle_id         |
+breedbase_web   | | name                                | drone_run_imaging_vehicle_id         |
+breedbase_web   | | private_company_id                  | 1                                    |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.027739s (36.050/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/htmlselect/begin                                     | 0.000111s |
+breedbase_web   | | /auto                                                      | 0.010676s |
+breedbase_web   | | /ajax/htmlselect/get_imaging_event_vehicles                | 0.010651s |
+breedbase_web   | | /ajax/htmlselect/end                                       | 0.000476s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 37 (0.010/s) [5519] [Thu Jun  1 21:34:06 2023] ***
+breedbase_web   | [debug] Path is "ajax/html/select/trials"
+breedbase_web   | [debug] "GET" request for "ajax/html/select/trials" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | empty                               | 1                                    |
+breedbase_web   | | id                                  | drone_run_field_trial_id             |
+breedbase_web   | | multiple                            | 1                                    |
+breedbase_web   | | name                                | drone_run_field_trial_id             |
+breedbase_web   | | private_company_id                  | 1                                    |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.050702s (19.723/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/htmlselect/begin                                     | 0.000102s |
+breedbase_web   | | /auto                                                      | 0.009471s |
+breedbase_web   | | /ajax/htmlselect/get_trials_select                         | 0.034573s |
+breedbase_web   | | /ajax/htmlselect/end                                       | 0.000457s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 47 (0.012/s) [5516] [Thu Jun  1 21:34:06 2023] ***
+breedbase_web   | [debug] Path is "api/drone_imagery/raw_drone_imagery_plot_image_count"
+breedbase_web   | [debug] "GET" request for "api/drone_imagery/raw_drone_imagery_plot_image_count" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.86533s (1.156/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/droneimagery/droneimagery/begin                      | 0.000168s |
+breedbase_web   | | /auto                                                      | 0.008888s |
+breedbase_web   | | /ajax/droneimagery/droneimagery/raw_drone_imagery_plot_im- | 0.000066s |
+breedbase_web   | | age_count                                                  |           |
+breedbase_web   | | -> /ajax/droneimagery/droneimagery/raw_drone_imagery_plot- | 0.848447s |
+breedbase_web   | | _image_count_GET                                           |           |
+breedbase_web   | | /ajax/droneimagery/droneimagery/end                        | 0.000453s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 40 (0.010/s) [5517] [Thu Jun  1 21:34:07 2023] ***
+breedbase_web   | [debug] Path is "ajax/html/select/models"
+breedbase_web   | [debug] "GET" request for "ajax/html/select/models" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | empty                               | 1                                    |
+breedbase_web   | | id                                  | save_new_analysis_model_id           |
+breedbase_web   | | name                                | save_new_analysis_model_id           |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.039942s (25.036/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/htmlselect/begin                                     | 0.000181s |
+breedbase_web   | | /auto                                                      | 0.023637s |
+breedbase_web   | | /ajax/htmlselect/get_analysis_models                       | 0.006922s |
+breedbase_web   | | /ajax/htmlselect/end                                       | 0.000431s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+
+## ADD button shows "Upload Aerial Imagery" screen
+breedbase_web   | [info] *** Request 47 (0.012/s) [5515] [Thu Jun  1 21:34:31 2023] ***
+breedbase_web   | [debug] Path is "api/drone_imagery/get_vehicle"
+breedbase_web   | [debug] "GET" request for "api/drone_imagery/get_vehicle" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | vehicle_id                          | 41790                                |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.052234s (19.145/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/droneimagery/droneimagery/begin                      | 0.000232s |
+breedbase_web   | | /auto                                                      | 0.025307s |
+breedbase_web   | | /ajax/droneimagery/droneimagery/drone_imagery_get_vehicle  | 0.000102s |
+breedbase_web   | | -> /ajax/droneimagery/droneimagery/drone_imagery_get_vehi- | 0.016409s |
+breedbase_web   | | cle_GET                                                    |           |
+breedbase_web   | | /ajax/droneimagery/droneimagery/end                        | 0.000489s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+
+## ON SINGLE EVENT
+##
+
+breedbase_web   | [info] *** Request 35 (0.009/s) [5518] [Thu Jun  1 21:36:10 2023] ***
+breedbase_web   | [debug] Path is "api/drone_imagery/drone_runs"
+breedbase_web   | [debug] "GET" request for "api/drone_imagery/drone_runs" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | _                                   | 1685655244717                        |
+breedbase_web   | | disable                             | 1                                    |
+breedbase_web   | | field_trial_ids                     | 167                                  |
+breedbase_web   | | select_checkbox_name                | upload_drone_imagery_drone_run_sele- |
+breedbase_web   | |                                     | ct                                   |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.070152s (14.255/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/droneimagery/droneimagery/begin                      | 0.000204s |
+breedbase_web   | | /auto                                                      | 0.027861s |
+breedbase_web   | | /ajax/droneimagery/droneimagery/get_drone_run_projects     | 0.000181s |
+breedbase_web   | | -> /ajax/droneimagery/droneimagery/get_drone_run_projects- | 0.030153s |
+breedbase_web   | | _GET                                                       |           |
+breedbase_web   | | /ajax/droneimagery/droneimagery/end                        | 0.000879s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 38 (0.010/s) [5519] [Thu Jun  1 21:36:10 2023] ***
+breedbase_web   | [debug] Path is "api/drone_imagery/check_field_trial_ids"
+breedbase_web   | [debug] "GET" request for "api/drone_imagery/check_field_trial_ids" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | field_trial_ids                     | 167                                  |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.127752s (7.828/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/droneimagery/droneimagery/begin                      | 0.000224s |
+breedbase_web   | | /auto                                                      | 0.025475s |
+breedbase_web   | | /ajax/droneimagery/droneimagery/get_check_field_trial_ids  | 0.000148s |
+breedbase_web   | | -> /ajax/droneimagery/droneimagery/get_check_field_trial_- | 0.091774s |
+breedbase_web   | | ids_GET                                                    |           |
+breedbase_web   | | /ajax/droneimagery/droneimagery/end                        | 0.000480s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+
+# Selecting Field Trial 
+breedbase_web   | [info] *** Request 91 (0.021/s) [5516] [Thu Jun  1 21:43:38 2023] ***
+breedbase_web   | [debug] Path is "api/drone_imagery/drone_runs"
+breedbase_web   | [debug] "GET" request for "api/drone_imagery/drone_runs" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | _                                   | 1685655740572                        |
+breedbase_web   | | disable                             | 1                                    |
+breedbase_web   | | field_trial_ids                     | 167                                  |
+breedbase_web   | | select_checkbox_name                | upload_drone_imagery_drone_run_sele- |
+breedbase_web   | |                                     | ct                                   |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.061626s (16.227/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/droneimagery/droneimagery/begin                      | 0.000172s |
+breedbase_web   | | /auto                                                      | 0.024104s |
+breedbase_web   | | /ajax/droneimagery/droneimagery/get_drone_run_projects     | 0.000091s |
+breedbase_web   | | -> /ajax/droneimagery/droneimagery/get_drone_run_projects- | 0.028005s |
+breedbase_web   | | _GET                                                       |           |
+breedbase_web   | | /ajax/droneimagery/droneimagery/end                        | 0.000410s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 80 (0.018/s) [5518] [Thu Jun  1 21:43:38 2023] ***
+breedbase_web   | [debug] Path is "api/drone_imagery/check_field_trial_ids"
+breedbase_web   | [debug] "GET" request for "api/drone_imagery/check_field_trial_ids" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | field_trial_ids                     | 167                                  |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.126666s (7.895/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/droneimagery/droneimagery/begin                      | 0.000143s |
+breedbase_web   | | /auto                                                      | 0.024107s |
+breedbase_web   | | /ajax/droneimagery/droneimagery/get_check_field_trial_ids  | 0.000113s |
+breedbase_web   | | -> /ajax/droneimagery/droneimagery/get_check_field_trial_- | 0.094729s |
+breedbase_web   | | ids_GET                                                    |           |
+breedbase_web   | | /ajax/droneimagery/droneimagery/end                        | 0.000375s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+
+# date is also selected at this screen
+breedbase_web   | [info] *** Request 92 (0.021/s) [5515] [Thu Jun  1 21:44:56 2023] ***
+breedbase_web   | [debug] Path is "api/drone_imagery/upload_drone_imagery_check_drone_name"
+breedbase_web   | [debug] "GET" request for "api/drone_imagery/upload_drone_imagery_check_drone_name" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | drone_run_name                      | Testdata_upload_20230116_00:00:00    |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.039136s (25.552/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/droneimagery/droneimageryupload/begin                | 0.000230s |
+breedbase_web   | | /auto                                                      | 0.023799s |
+breedbase_web   | | /ajax/droneimagery/droneimageryupload/upload_drone_imager- | 0.000109s |
+breedbase_web   | | y_check_drone_name                                         |           |
+breedbase_web   | | -> /ajax/droneimagery/droneimageryupload/upload_drone_ima- | 0.004535s |
+breedbase_web   | | gery_check_drone_name_GET                                  |           |
+breedbase_web   | | /ajax/droneimagery/droneimageryupload/end                  | 0.000552s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
+breedbase_web   | [info] *** Request 89 (0.020/s) [5519] [Thu Jun  1 21:44:56 2023] ***
+breedbase_web   | [debug] Path is "api/drone_imagery/get_vehicle"
+breedbase_web   | [debug] "GET" request for "api/drone_imagery/get_vehicle" from "::ffff:192.168.160.1"
+breedbase_web   | [debug] Query Parameters are:
+breedbase_web   | .-------------------------------------+--------------------------------------.
+breedbase_web   | | Parameter                           | Value                                |
+breedbase_web   | +-------------------------------------+--------------------------------------+
+breedbase_web   | | vehicle_id                          | 41790                                |
+breedbase_web   | '-------------------------------------+--------------------------------------'
+breedbase_web   | [debug] authenticate: Authenticating user: fja32_imuser
+breedbase_web   | [debug] find_user: fja32_imuser
+breedbase_web   | [debug] Obtained sp_person 44
+breedbase_web   | [debug] USER fja32_imuser FOUND!
+breedbase_web   | [debug] Serializing with Catalyst::Action::Serialize::JSON
+breedbase_web   | [debug] Response Code: 200; Content-Type: application/json; Content-Length: unknown
+breedbase_web   | [info] Request took 0.059548s (16.793/s)
+breedbase_web   | .------------------------------------------------------------+-----------.
+breedbase_web   | | Action                                                     | Time      |
+breedbase_web   | +------------------------------------------------------------+-----------+
+breedbase_web   | | /ajax/droneimagery/droneimagery/begin                      | 0.000247s |
+breedbase_web   | | /auto                                                      | 0.028406s |
+breedbase_web   | | /ajax/droneimagery/droneimagery/drone_imagery_get_vehicle  | 0.000129s |
+breedbase_web   | | -> /ajax/droneimagery/droneimagery/drone_imagery_get_vehi- | 0.020720s |
+breedbase_web   | | cle_GET                                                    |           |
+breedbase_web   | | /ajax/droneimagery/droneimagery/end                        | 0.000449s |
+breedbase_web   | '------------------------------------------------------------+-----------'
+breedbase_web   |
