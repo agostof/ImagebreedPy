@@ -15,9 +15,9 @@ PORT = 8000
 DIRECTORY = 'site_root/imagebreed.org/'
 
 app = FastAPI()
-UPSTREAM_HOST = "http://localhost:7080"
-#UPSTREAM_HOST = "http://imagebreed-mirror.rlab.scienceversa.com:7080"
-#UPSTREAM_HOST= "https://imagebreed.org"
+# UPSTREAM_HOST = "http://localhost:7080"
+# UPSTREAM_HOST = "http://imagebreed-mirror.rlab.scienceversa.com:7080"
+UPSTREAM_HOST= "https://imagebreed.org"
 
 DEBUG_COOKIE = False
 
