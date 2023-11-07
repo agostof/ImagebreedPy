@@ -385,10 +385,10 @@
                   success: function (r) {
                     if (r.error) { alert(r.error); }
                     else {
-                      jQuery('#login_button_html_div button').removeClass('disabled');
+                      $('#login_button_html_div button').removeClass('disabled');
 
                       if (0 == 1 && !r.logged_in) {
-                        jQuery('#site_login_dialog').modal({ backdrop: 'static', keyboard: false });
+                        $('#site_login_dialog').modal({ backdrop: 'static', keyboard: false });
                       }
                     }
                   }
@@ -812,7 +812,7 @@
 
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
                       encoding="multipart/form-data" id="upload_drone_rover_form" name="upload_drone_rover_form"
-                      action="/api/drone_rover/upload_drone_rover">
+                      action="/drone_rover/upload_drone_rover">
 
 
 
@@ -1287,7 +1287,7 @@
 
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
                       encoding="multipart/form-data" id="upload_drone_rover_earthsense_lidar_form"
-                      name="upload_drone_rover_earthsense_lidar_form" action="/api/drone_rover/upload_drone_rover">
+                      name="upload_drone_rover_earthsense_lidar_form" action="/drone_rover/upload_drone_rover">
 
                       <input type="hidden" name="rover_run_field_trial_id" value="">
                       <input type="hidden" name="rover_run_company_id" value="" />

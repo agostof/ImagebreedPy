@@ -1,11 +1,8 @@
-import uvicorn
 import os
 from fastapi import FastAPI, Query, Request
 from fastapi.responses import RedirectResponse, HTMLResponse, JSONResponse, FileResponse, Response, PlainTextResponse
 import requests
-import time
 from fastapi.staticfiles import StaticFiles
-import json
 from fastapi.templating import Jinja2Templates
 from collections import defaultdict
 
@@ -15,9 +12,10 @@ import main.services.utils as utils
 app = FastAPI()
 
 
-from main.routers import breeders
-app.add_route("/breeders", breeders.router)
-app.mount("/", StaticFiles(directory=utils.DIRECTORY, html=True), name="root")
+from main.routers import breeders, ajax, api
+app.include_router(breeders.router)
+app.include_router(ajax.router)
+app.include_router(api.router)
 templates = Jinja2Templates(directory=utils.DIRECTORY + "breeders/")
 
 # Dump ACTION_LOG
@@ -253,19 +251,7 @@ async def read_brapi(path: str, in_request: Request):
     print("METHOD", method)
     return await read_all(brapi_path, in_request, request_method=method)
 
-@app.get("/ajax/{path:path}")
-async def read_ajax_api(path: str, in_request: Request):
-    url = f'{utils.UPSTREAM_HOST}/ajax/{path}'
-    print("AJAX CATCHALL", url, in_request.query_params)
-    print("AJAX CATCHALL HEADERS", in_request.headers)
-    app_cookies = utils.dump_cookies(in_request)
-    print("APP_COOKIES", app_cookies)
-    
-    print("AJAX API", path)
-    ajax_api_path = os.path.join("ajax", path)
-    print("REDIRECTING TO", ajax_api_path)
-    
-    return await read_all(ajax_api_path, in_request)
+
 
     # response = requests.get(url, params=in_request.query_params, cookies=app_cookies)
     # out_response = JSONResponse(content=response.json(), status_code=response.status_code)
@@ -372,6 +358,8 @@ async def read_api(path: str, request: Request):
     return await read_all(api_path, request)
     #return path
 
+app.mount("/", StaticFiles(directory=utils.DIRECTORY, html=True), name="root")
+
 @app.get("/{path:path}")
 async def read_all(path: str, request: Request, request_method="GET"):
     utils.dump_cookies(request)
@@ -424,6 +412,3 @@ async def read_all(path: str, request: Request, request_method="GET"):
 print("app loaded")
 print(__name__)
 print(app)
-
-if __name__ == "__main__":
-   uvicorn.run("main.app:app", host="127.0.0.1", port=8000, reload=True)

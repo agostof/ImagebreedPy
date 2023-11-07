@@ -2885,12 +2885,13 @@ jQuery(document).ready(function() {
             type: 'POST',
             url: '/api/drone_imagery/analysis_query',
             dataType: "json",
-            data: {
-                'observation_variable_id_list':JSON.stringify(manage_drone_imagery_download_phenotypes_trait_ids),
-                'field_trial_id_list':JSON.stringify([manage_drone_imagery_download_phenotypes_field_trial_id]),
-                'project_image_type_id_list':JSON.stringify(manage_drone_imagery_download_phenotypes_image_type_ids),
+            contentType: "application/json",
+            data: JSON.stringify({
+                'observation_variable_id_list': manage_drone_imagery_download_phenotypes_trait_ids,
+                'field_trial_id_list':[manage_drone_imagery_download_phenotypes_field_trial_id],
+                'project_image_type_id_list':manage_drone_imagery_download_phenotypes_image_type_ids,
                 'format':'csv'
-            },
+            }),
             beforeSend: function (){
                 jQuery('#working_modal').modal('show');
             },

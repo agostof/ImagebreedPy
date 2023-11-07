@@ -16,9 +16,15 @@ function get_select_box(type, div_id, options) {
                 alert(response.error);
                 // jQuery('#'+div_id).html(previous_html);
             }
-            else {
+            else if (response.options) {
+                var optionsHTML = "";
+                for (const selectOption of response.options) {
+                    optionsHTML = optionsHTML + "<option title='"+ selectOption.name + "' value='" + selectOption.id + "' >"+ selectOption.name + "</option>"
+                }
+                var selectHTML = "<select class='form-control' id='" + options.id + "' name='" + options.name + "'>" +
+                optionsHTML + "</select>"
                 jQuery('#'+div_id).empty();
-                jQuery('#'+div_id).html(response.select);
+                jQuery('#'+div_id).html(selectHTML);
                 if (options.live_search) {
                     var select = jQuery("#"+options.id);
                     select.selectpicker('render');
