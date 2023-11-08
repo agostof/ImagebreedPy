@@ -1,0 +1,453 @@
+{% for band in ["one","two","three","four","five","six","seven","eight","nine","ten","eleven"] %}
+
+<div class="modal fade" id="upload_drone_imagery_dialog_{{ band }}_band"
+    name="upload_drone_imagery_dialog_{{ band }}_band" tabindex="-1" role="dialog"
+    aria-labelledby="uploadDroneImageryElevenBandDialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDroneImageryElevenBandDialog">Upload Aerial Imagery</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="pagetitle">
+                        <h3 id="pagetitle_h3">Select Image(s) to Upload</h3>
+                    </div>
+
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
+                        encoding="multipart/form-data" id="upload_drone_imagery_{{ band }}_band_form"
+                        name="upload_drone_imagery_{{ band }}_band_form"
+                        action="/api/drone_imagery/upload_drone_imagery">
+                        <input type="hidden" name="drone_run_field_trial_id" value="">
+                        <input type="hidden" name="drone_run_id" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_stitching_odm_image_count"
+                            value="" />
+
+                        <input type="hidden" name="private_company_id" value="" />
+                        <input type="hidden" name="drone_run_name" value="" />
+                        <input type="hidden" name="drone_run_type" value="" />
+                        <input type="hidden" name="drone_image_upload_camera_info" value="" />
+                        <input type="hidden" name="drone_run_imaging_vehicle_id" value="" />
+                        <input type="hidden" name="drone_run_imaging_vehicle_battery_name" value="" />
+                        <input type="hidden" name="drone_run_description" value="" />
+                        <input type="hidden" name="drone_run_date" value="" />
+                        <input type="hidden" name="drone_run_camera_rig_description" value="" />
+                        <input type="hidden" name="drone_run_base_date" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_stitching" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_type" value="" />
+                        <input type="hidden" name="drone_run_band_number" value="" />
+
+                        <div id="drone_imagery_upload_workflow_{{ band }}_band" class="workflow">
+                            <ol class="workflow-prog" style="text-align: center;">
+                                <li>
+                                    <div class="workflow-title">Select Images</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Submit</div>
+                                </li>
+                            </ol>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <ol class="workflow-content">
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Select Orthophoto Raster Images</h3>
+                                            </div>
+
+                                            {% for n in range(loop.index) %}
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Imaging Event Coordinate
+                                                        System:</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_run_band_coordinate_system_{{ band }}_{{ n }}"
+                                                            name="drone_run_band_coordinate_system_{{ n }}">
+                                                            <option value="Pixels">Pixels (Raster Image .PNG, .JPG,
+                                                                .TIFF)</option>
+                                                            <option value="WGS84/UTM">WGS84/UTM (GeoTIFF Image .tif)
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Imaging Event Band
+                                                        Description: </label>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control"
+                                                            id="drone_run_band_description_{{ band }}_{{ n }}"
+                                                            name="drone_run_band_description_{{ n }}" type="text" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Imaging Event Band
+                                                        Type:</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_run_band_type_{{ band }}_{{ n }}"
+                                                            name="drone_run_band_type_{{ n }}">
+                                                            <option value="Black and White Image">Black and White Image
+                                                            </option>
+                                                            <option value="RGB Color Image">RGB Color Image</option>
+                                                            <option value="Coastal Blue (410-480nm)">Coastal Blue
+                                                                (410-480nm)</option>
+                                                            <option value="Blue (450-520nm)">Blue (450-520nm)</option>
+                                                            <option value="Green (510-550nm)">Green (510-550nm)</option>
+                                                            <option value="Green (515-600nm)">Green (515-600nm)</option>
+                                                            <option value="Red (590-670nm)">Red (590-670nm)</option>
+                                                            <option value="Red (600-690nm)">Red (600-690nm)</option>
+                                                            <option value="Red Edge (680-720nm)">Red Edge (680-720nm)
+                                                            </option>
+                                                            <option value="Red Edge (690-750nm)">Red Edge (690-750nm)
+                                                            </option>
+                                                            <option value="Red Edge (720-760nm)">Red Edge (720-760nm)
+                                                            </option>
+                                                            <option value="NIR (780-3000nm)">NIR (780-3000nm)</option>
+                                                            <option value="MIR (3000-50000nm)">MIR (3000-50000nm)
+                                                            </option>
+                                                            <option value="FIR (50000-1000000nm)">FIR (50000-1000000nm)
+                                                            </option>
+                                                            <option value="Thermal IR (9000-14000nm)">Thermal IR
+                                                                (9000-14000nm)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Image: (.jpeg, .png,
+                                                        .tif)</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="file"
+                                                            id="drone_run_band_stitched_ortho_image_{{ band }}_{{ n }}"
+                                                            name="drone_run_band_stitched_ortho_image_{{ n }}"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+
+
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Orthomosaic Report: (.pdf)
+                                                        Optional <br /><small>If you used Pix4d, look into
+                                                            "/1_initial/report/report.pdf".<br />If you used ODM, look
+                                                            into "/odm_report/report.pdf"</small></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file"
+                                                            id="drone_run_band_stitched_ortho_report_{{ band }}"
+                                                            name="drone_run_band_stitched_ortho_report"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div style="text-align: center;">
+                                                <button class="btn btn-primary"
+                                                    name="upload_drone_imagery_select_images_{{ band }}"
+                                                    id="upload_drone_imagery_select_images_{{ band }}">Go To Next
+                                                    Step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Submit Imaging Event</h3>
+                                            </div>
+
+                                            <div style="text-align: center;">
+                                                <button type="submit" class="btn btn-info"
+                                                    name="upload_drone_imagery_{{ band }}_submit"
+                                                    id="upload_drone_imagery_{{ band }}_submit">Submit. Click Once and
+                                                    Be
+                                                    Patient As This Can Take A Long Time.</button>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                    <div class="workflow-pending-message">Complete!</div>
+                                    <div class="workflow-complete-message">Complete!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            Workflow.init("#drone_imagery_upload_workflow_{{ band }}_band");
+                        </script>
+
+                    </form><br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+<div class="modal fade" id="upload_drone_imagery_dialog_five_band_ODM" name="upload_drone_imagery_dialog_five_band_ODM"
+    tabindex="-1" role="dialog" aria-labelledby="uploadDroneImageryFiveBandODMDialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDroneImageryFiveBandODMDialog">Upload ODM Aerial Imagery</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="pagetitle">
+                        <h3 id="pagetitle_h3">Select Image(s) to Upload</h3>
+                    </div>
+
+
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
+                        encoding="multipart/form-data" id="upload_drone_imagery_five_band_odm_form"
+                        name="upload_drone_imagery_five_band_odm_form" action="/api/drone_imagery/upload_drone_imagery">
+                        <input type="hidden" name="drone_run_field_trial_id" value="">
+
+                        <!-- If drone run is selected above, the drone_run_project_id is passed to controller, negating need to create new drone run -->
+                        <input type="hidden" name="drone_run_id" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_stitching_odm_image_count"
+                            value="" />
+
+                        <input type="hidden" name="private_company_id" value="" />
+                        <input type="hidden" name="drone_run_name" value="" />
+                        <input type="hidden" name="drone_run_type" value="" />
+                        <input type="hidden" name="drone_image_upload_camera_info" value="" />
+                        <input type="hidden" name="drone_run_imaging_vehicle_id" value="" />
+                        <input type="hidden" name="drone_run_imaging_vehicle_battery_name" value="" />
+                        <input type="hidden" name="drone_run_description" value="" />
+                        <input type="hidden" name="drone_run_date" value="" />
+                        <input type="hidden" name="drone_run_camera_rig_description" value="" />
+                        <input type="hidden" name="drone_run_base_date" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_stitching" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_type" value="" />
+                        <input type="hidden" name="drone_run_band_number" value="" />
+
+                        <div id="drone_imagery_upload_workflow_five_band_odm" class="workflow">
+                            <ol class="workflow-prog">
+                                <li>
+                                    <div class="workflow-title">Select Images</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Submit</div>
+                                </li>
+                            </ol>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <ol class="workflow-content">
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Select Orthophoto ODM Raster Image</h3>
+                                            </div>
+
+
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">ODM Orthophotomosaic: (.tif)
+                                                        <br /><small>Since you used ODM, upload
+                                                            "/odm_orthophoto/odm_orthophoto.tif"</small></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file"
+                                                            id="drone_run_band_stitched_ortho_image_five_odm"
+                                                            name="drone_run_band_stitched_ortho_image_odm"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Orthomosaic Report: (.pdf)
+                                                        Optional <br /><small>Since you used ODM, upload
+                                                            "/odm_report/report.pdf"</small></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file"
+                                                            id="drone_run_band_stitched_ortho_report_five_odm"
+                                                            name="drone_run_band_stitched_ortho_report"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div style="text-align: center;">
+                                                <button class="btn btn-primary"
+                                                    name="upload_drone_imagery_select_images_five_odm"
+                                                    id="upload_drone_imagery_select_images_five_odm">Go To Next
+                                                    Step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Submit Imaging Event</h3>
+                                            </div>
+
+                                            <div style="text-align: center;">
+                                                <button type="submit" class="btn btn-info"
+                                                    name="upload_drone_imagery_five_odm_submit"
+                                                    id="upload_drone_imagery_five_odm_submit">Submit. Click Once and Be
+                                                    Patient As This Can Take A Long Time.</button>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                    <div class="workflow-pending-message">Complete!</div>
+                                    <div class="workflow-complete-message">Complete!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            Workflow.init("#drone_imagery_upload_workflow_five_band_odm");
+                        </script>
+
+                    </form><br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="upload_drone_imagery_dialog_five_or_ten_band_agisoft"
+    name="upload_drone_imagery_dialog_five_or_ten_band_agisoft" tabindex="-1" role="dialog"
+    aria-labelledby="uploadDroneImageryFiveOrTenBandAgisoftDialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDroneImageryFiveOrTenBandAgisoftDialog">Upload Agisoft Aerial Imagery
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="pagetitle">
+                        <h3 id="pagetitle_h3">Select Image(s) to Upload</h3>
+                    </div>
+
+
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
+                        encoding="multipart/form-data" id="upload_drone_imagery_five_or_ten_band_agisoft_form"
+                        name="upload_drone_imagery_five_or_ten_band_agisoft_form"
+                        action="/api/drone_imagery/upload_drone_imagery">
+                        <input type="hidden" name="drone_run_field_trial_id" value="">
+
+                        <!-- If drone run is selected above, the drone_run_project_id is passed to controller, negating need to create new drone run -->
+                        <input type="hidden" name="drone_run_id" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_stitching_odm_image_count"
+                            value="" />
+
+                        <input type="hidden" name="private_company_id" value="" />
+                        <input type="hidden" name="drone_run_name" value="" />
+                        <input type="hidden" name="drone_run_type" value="" />
+                        <input type="hidden" name="drone_image_upload_camera_info" value="" />
+                        <input type="hidden" name="drone_run_imaging_vehicle_id" value="" />
+                        <input type="hidden" name="drone_run_imaging_vehicle_battery_name" value="" />
+                        <input type="hidden" name="drone_run_description" value="" />
+                        <input type="hidden" name="drone_run_date" value="" />
+                        <input type="hidden" name="drone_run_camera_rig_description" value="" />
+                        <input type="hidden" name="drone_run_base_date" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_stitching" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_type" value="" />
+                        <input type="hidden" name="drone_run_band_number" value="" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div id="drone_imagery_upload_workflow_five_or_ten_band_agisoft" class="workflow">
+                            <ol class="workflow-prog">
+                                <li>
+                                    <div class="workflow-title">Select Images</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Submit</div>
+                                </li>
+                            </ol>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <ol class="workflow-content">
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Select Orthophoto ODM Raster Image</h3>
+                                            </div>
+
+
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Agisoft Orthophotomosaic:
+                                                        (.tif) <br /><small>Since you used Agisoft, upload a MultiBand
+                                                            image stack</small></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file"
+                                                            id="drone_run_band_stitched_ortho_image_five_or_ten_agisoft"
+                                                            name="drone_run_band_stitched_ortho_image_agisoft"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Orthomosaic Report: (.pdf)
+                                                        Optional</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file"
+                                                            id="drone_run_band_stitched_ortho_report_five_or_ten_agisoft"
+                                                            name="drone_run_band_stitched_ortho_report"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div style="text-align: center;">
+                                                <button class="btn btn-primary"
+                                                    name="upload_drone_imagery_select_images_five_or_ten_agisoft"
+                                                    id="upload_drone_imagery_select_images_five_or_ten_agisoft">Go To
+                                                    Next Step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Submit Imaging Event</h3>
+                                            </div>
+
+                                            <div style="text-align: center;">
+                                                <button type="submit" class="btn btn-info"
+                                                    name="upload_drone_imagery_five_or_ten_agisoft_submit"
+                                                    id="upload_drone_imagery_five_or_ten_agisoft_submit">Submit. Click
+                                                    Once and Be Patient As This Can Take A Long Time.</button>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                    <div class="workflow-pending-message">Complete!</div>
+                                    <div class="workflow-complete-message">Complete!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            Workflow.init("#drone_imagery_upload_workflow_five_or_ten_band_agisoft");
+                        </script>
+
+                    </form><br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

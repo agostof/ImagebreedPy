@@ -1,0 +1,1564 @@
+
+<div class="modal fade" id="upload_drone_imagery_geocoordinate_param_dialog"
+    name="upload_drone_imagery_geocoordinate_param_dialog" tabindex="-1" role="dialog"
+    aria-labelledby="uploadDroneImageryGeocoordinateParamDialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDroneImageryGeocoordinateParamDialog">Add GeoCoordinate Params</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
+                        encoding="multipart/form-data" id="upload_drone_imagery_geocoordinate_param_form"
+                        name="upload_drone_imagery_geocoordinate_param_form"
+                        action="/drone_imagery/upload_drone_imagery_geocoordinate_param">
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">WGS84/UTM GeoTIFF (.tif): (should be same dimensions
+                                as the originally uploaded reflectance maps)</label>
+                            <div class="col-sm-6">
+                                <input type="file" id="upload_drone_imagery_geocoordinate_param_geotiff"
+                                    name="upload_drone_imagery_geocoordinate_param_geotiff"
+                                    encoding="multipart/form-data" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">GeoTIFF Type:</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" id="upload_drone_imagery_geocoordinate_param_type"
+                                    name="upload_drone_imagery_geocoordinate_param_type">
+                                    <option value="single">Single Channel GeoTIFF</option>
+                                    <option value="rgb">RGB GeoTIFF</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Save As Official Plot GeoJSON:</label>
+                            <div class="col-sm-6">
+                                <select class="form-control"
+                                    id="upload_drone_imagery_geocoordinate_param_overwrite_geojson"
+                                    name="upload_drone_imagery_geocoordinate_param_overwrite_geojson">
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" id="upload_drone_imagery_geocoordinate_param_field_trial_id"
+                            name="upload_drone_imagery_geocoordinate_param_field_trial_id" value="" />
+                        <input type="hidden" id="upload_drone_imagery_geocoordinate_param_drone_run_id"
+                            name="upload_drone_imagery_geocoordinate_param_drone_run_id" value="" />
+
+                        <div>
+                            <button type="submit" class="btn btn-info"
+                                name="upload_drone_imagery_geocoordinate_param_submit"
+                                id="upload_drone_imagery_geocoordinate_param_submit">Submit</button>
+                        </div>
+                    </form><br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="upload_drone_imagery_dialog" name="upload_drone_imagery_dialog" tabindex="-1" role="dialog"
+    aria-labelledby="uploadDroneImageryDialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDroneImageryDialog">Upload Aerial Imagery</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
+                        encoding="multipart/form-data" id="upload_drone_imagery_form" name="upload_drone_imagery_form"
+                        action="/api/drone_imagery/upload_drone_imagery">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div id="drone_imagery_upload_workflow" class="workflow">
+                            <ol class="workflow-prog">
+                                <li>
+                                    <div class="workflow-title">Intro</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Field Trial</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Imaging Event</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Image Info</div>
+                                </li>
+                            </ol>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <ol class="workflow-content">
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">This workflow will guide you through uploading
+                                                    aerial images to the database</h3>
+                                            </div>
+
+                                            <ul>
+                                                <li>Your field trial must already be in the database before you can
+                                                    upload images for it. Please go to <a
+                                                        href="/breeders/trials">Manage->Field Trials</a> if it is not.
+                                                </li>
+                                                <li><b>For Raw Image Captures</b>: If you have raw aerial images (.TIFF,
+                                                    .JPG, .PNG) that have not been stitched into an orthophotomosaic
+                                                    image of the whole field, your raw images should be uploaded using a
+                                                    zipfile (.zip). Include at least 25 images in the zipfile.
+                                                    OpenDroneMap will be used to stitch the orthophotos and digital
+                                                    surface maps (DSM). OpenDroneMap works for color RGB images and for
+                                                    MicaSense 5-channel multi-spectral images.</li>
+                                                <li><b>For Orthophotomosaics</b>: If you already have orthophotomosaic
+                                                    image(s) of your entire field from external software, you can upload
+                                                    those images. Upload orthomosaics as .TIFF, .PNG, or .JPG images.
+                                                    Orthophotomosaic images for multi-spectral cameras are expected to
+                                                    be perfectly super-imposable for all spectra.</li>
+                                            </ul>
+                                            <hr>
+                                            <p><b>Example Data:</b> <a
+                                                    href="https://imagebreed.org/static_content/imagebreed/AlfalfaExample35MeterMicasenseAerialDroneFlightRawCaptures.zip"
+                                                    download>MicaSense 5 Band Raw Captures (Unstitched TIFF
+                                                    image-captures) (Upload zipfile to ImageBreed and let OpenDroneMap
+                                                    stitch orthophotos and DSM.)</a></p>
+                                            <p><b>Example Data:</b> <a
+                                                    href="https://imagebreed.org/static_content/imagebreed/ExampleAerialDroneFlightMicasensePanel.zip"
+                                                    download>MicaSense 5 Band Panel Images (MicaSense calibration panel
+                                                    images.) (Upload zipfile for ImageBreed to calibrate Micasense
+                                                    raw-captures.)</a></p>
+                                            <p><b>Example Data:</b> <a
+                                                    href="https://imagebreed.org/static_content/imagebreed/AlfalfaExample35MeterMicasenseAerialDroneFlightOrthomosaics.zip"
+                                                    download>MicaSense 5 Band Previously Stitched Orthophotomosaic
+                                                    Images (PNG Files in provided zipfile. Can upload each band
+                                                    separately into ImageBreed.)</a></p>
+                                            <p><b>Example Data:</b> <a
+                                                    href="https://imagebreed.org/static_content/imagebreed/ExampleColorAerialDroneFlightRawCaptures.zip"
+                                                    download>Color Camera Raw Captures (Unstitched JPG image-captures)
+                                                    (Upload zipfile to ImageBreed and let OpenDroneMap stitch
+                                                    orthophotos and DSM.)</a></p>
+                                            <br />
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    onclick="Workflow.complete(this); return false;">Go to upload a
+                                                    single imaging event</button>
+                                                <br /><br />
+                                                <button class="btn btn-default" id="upload_drone_imagery_bulk_button">Go
+                                                    to bulk upload of imaging events</button>
+                                                <br /><br />
+                                                <button class="btn btn-default"
+                                                    id="upload_drone_imagery_bulk_previous_button">Go to bulk upload of
+                                                    previously processed imaging events (GeoJSON defitions
+                                                    included)</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Select your field trial</h3>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Company: </label>
+                                                <div class="col-sm-9">
+                                                    <div id="upload_drone_image_company_select_div"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Field Trial: </label>
+                                                <div class="col-sm-9">
+                                                    <div id="upload_drone_image_trial_select_div"></div>
+                                                </div>
+                                            </div>
+
+                                            <div id="upload_drone_image_field_trial_info">
+                                            </div>
+
+                                            <div id="upload_drone_image_field_trial_select_date_continue_div"
+                                                style="display:none">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Imaging Event Date and Hour
+                                                        (Must be after the planting date):</label>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control" id="drone_run_date"
+                                                            name="drone_run_date" title="drone_run_date" type="text" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Is this from a greenhouse,
+                                                        growth chamber, or fixed camera rig?:</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control" id="drone_run_is_fixed_rig"
+                                                            name="drone_run_is_fixed_rig">
+                                                            <option value="No">No</option>
+                                                            <option value="Yes">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    id="upload_drone_image_field_trial_select_date_continue">Go to Next
+                                                    Step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Create a new imaging event</h3>
+                                            </div>
+
+
+                                            <table class="table table-bordered table-hover"
+                                                id="drone_image_upload_drone_runs_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Select</th>
+                                                        <th>Imaging Event Name</th>
+                                                        <th>Imaging Event Type</th>
+                                                        <th>Imaging Event Description</th>
+                                                        <th>Imaging Event Date</th>
+                                                        <th>Drone Run GDD</th>
+                                                        <th>Sensor</th>
+                                                        <th>Field Trial Name</th>
+                                                        <th>Field Trial Description</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+
+                                            <!-- If drone run is selected above, the drone_run_project_id is passed to controller, negating need to create new drone run -->
+                                            <input id="drone_run_id" name="drone_run_id" type="hidden" value="" />
+                                            <input id="drone_image_upload_drone_run_band_stitching_odm_image_count"
+                                                name="drone_image_upload_drone_run_band_stitching_odm_image_count"
+                                                type="hidden" value="" />
+
+                                            <br />
+                                            <div id="drone_image_upload_create_drone_inputs">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Imaging Event Name(s)
+                                                        (Uniquely Generated): </label>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control" id="drone_run_name"
+                                                            name="drone_run_name" type="text"
+                                                            placeholder="e.g. Field Trial Name + Date of Flight"
+                                                            disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Imaging Event Type:</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control" id="drone_run_type"
+                                                            name="drone_run_type">
+                                                            <option value="">Select One</option>
+                                                            <option value="Aerial Medium to High Res">Medium to High
+                                                                Resolution Aerial Drone Image(s)</option>
+                                                            <option value="Aerial Low Res">Low Resolution Aerial Drone
+                                                                Image(s)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Sensor Type:</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control" id="drone_image_upload_camera_info"
+                                                            name="drone_image_upload_camera_info">
+                                                            <option value="">Select One</option>
+                                                            <option value="micasense_5">Micasense 5-Channel Camera
+                                                            </option>
+                                                            <option value="micasense_10">Micasense 10-Channel Camera
+                                                            </option>
+                                                            <option value="ccd_color">RGB Color Camera</option>
+                                                            <!--option value="cmos_color">CMOS Sensor Color Image</option-->
+                                                            <option value="interpolated_elevation">Interpolated
+                                                                Elevation Image</option>
+                                                            <option value="em38_interpolated_ch1.0m">EM38 Interpolated
+                                                                CH1.0m Image</option>
+                                                            <option value="em38_interpolated_ch0.5m">EM38 Interpolated
+                                                                CH0.5m Image</option>
+                                                            <option value="em38_interpolated_ih1.0m">EM38 Interpolated
+                                                                IH1.0m Image</option>
+                                                            <option value="em38_interpolated_ih0.5m">EM38 Interpolated
+                                                                IH0.5m Image</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Imaging Vehicle: <button
+                                                            class="btn btn-sm btn-default"
+                                                            name="drone_run_imaging_vehicle_add_new" type="button">Add
+                                                            New Vehicle</button></label>
+                                                    <div class="col-sm-9">
+                                                        <div id="drone_run_imaging_vehicle_div"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Imaging Vehicle Battery
+                                                        Set:</label>
+                                                    <div class="col-sm-9">
+                                                        <div id="drone_run_imaging_vehicle_battery_div"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Imaging Event Description
+                                                        (e.g. flight altitude, flight plan name, overall weather
+                                                        conditions): </label>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control" id="drone_run_description"
+                                                            name="drone_run_description" type="text" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="drone_image_upload_create_drone_inputs_fixed_camera"
+                                                style="display:none">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Fixed Camera Rig Name (For
+                                                        Fixed Camera Rigs e.g. Greenhouse or Growth Chambers) (Leave
+                                                        empty if not applicable):</label>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control"
+                                                            id="drone_run_camera_rig_description"
+                                                            name="drone_run_camera_rig_description"
+                                                            title="drone_run_camera_rig_description" type="text" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Base Date and Hour (For Fixed
+                                                        Camera Rigs e.g. Greenhouse or Growth Chambers) (Useful for
+                                                        fixed camera rigs capturing different pieces of a field
+                                                        experiment, and the capture time is not synchronized across
+                                                        camera rigs, but the rigs are on identical intervals. Can be the
+                                                        time of the first image for the rig.) (Leave empty if not
+                                                        applicable):</label>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control" id="drone_run_base_date"
+                                                            name="drone_run_base_date" title="drone_run_base_date"
+                                                            type="text" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    id="drone_image_upload_drone_run_continue">Go to Next Step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Type of Image to Upload</h3>
+                                            </div>
+
+
+                                            <div class="well">
+                                                <div>
+                                                    <h4>Uploading already stitched orthophotomosaics or complete images
+                                                        of experimental field</h4>
+                                                </div>
+                                                <ul>
+                                                    <li>You can choose to upload orthophotomosaic images (PNG, TIFF)
+                                                        created using external software (Pix4d, Agisoft, ODM, etc).</li>
+                                                    <li>You can upload any image (PNG, TIFF, JPEG) which covers the
+                                                        entire experimental field, for example, interpolated soil data
+                                                        for altitude or electrical conductance EC measurements. Another
+                                                        example is for images from a phenotyping facility, greenhouse,
+                                                        or growth chamber.</li>
+                                                    <li>Up to seven distinct spectral band images can be uploaded.</li>
+                                                    <li>Images should be perfectly super-imposable for all spectra in an
+                                                        imaging event.</li>
+                                                </ul>
+                                            </div>
+                                            <div class="well">
+                                                <div>
+                                                    <h4>Uploading raw images to stitch using OpenDroneMap</h4>
+                                                </div>
+                                                <ul>
+                                                    <li>You can upload raw images (PNG, TIFF, JPEG) from a MicaSense
+                                                        5-channel camera or a color image camera, for instance collected
+                                                        from an aerial drone, and then orthophotomosaics will be created
+                                                        using OpenDroneMap and saved in ImageBreed.</li>
+                                                    <li>Raw images are uploaded using a zipfile (.zip). Place all images
+                                                        relevant to the imaging event into one zipfile. Include atleast
+                                                        25 images in the zipfile.</li>
+                                                    <li>Make sure there is >75% overlap in the images, so that the
+                                                        images can be properly assembled.</li>
+                                                    <li>A digital surface map (DSM) will also be generated and saved as
+                                                        a black and white image. The DSM is a representation of height
+                                                        of objects.</li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Are you uploading
+                                                    orthophotomosaic(s) or complete image(s) of the experimental
+                                                    field?:</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control"
+                                                        id="drone_image_upload_drone_run_band_stitching"
+                                                        name="drone_image_upload_drone_run_band_stitching">
+                                                        <option value="">Select One</option>
+                                                        <option value="no">Yes, I am uploading stitched orthomosaic(s)
+                                                            or complete image(s)</option>
+                                                        <option value="yes_open_data_map_stitch">No, I am uploading a
+                                                            zipfile of raw images to stitch using OpenDroneMap within
+                                                            ImageBreed</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" id="drone_run_upload_drone_run_band_number_div">
+                                                <label class="col-sm-3 control-label">Number of Spectral Bands (Image
+                                                    Sets) To Upload:</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" id="drone_run_band_number"
+                                                        name="drone_run_band_number">
+                                                        <option value="">Select One</option>
+                                                        <option value="one_bw">One Black and White Image</option>
+                                                        <option value="one_rgb">One RGB Color Image</option>
+                                                        <option value="1">One Spectral Band or DSM raster</option>
+                                                        <option value="2">Two Separate Spectral Bands and/or DSM raster
+                                                        </option>
+                                                        <option value="3">Three Separate Spectral Bands and/or DSM
+                                                            raster</option>
+                                                        <option value="4">Four Separate Spectral Bands and/or DSM raster
+                                                        </option>
+                                                        <option value="5">Five Separate Spectral Bands</option>
+                                                        <option value="6">Six Separate Spectral Bands and/or DSM raster
+                                                        </option>
+                                                        <option value="7">Seven Separate Spectral Bands and/or DSM
+                                                            raster</option>
+                                                        <option value="8">Eight Separate Spectral Bands and/or DSM
+                                                            raster</option>
+                                                        <option value="9">Nine Separate Spectral Bands and/or DSM raster
+                                                        </option>
+                                                        <option value="10">Ten Separate Spectral Bands and/or DSM raster
+                                                        </option>
+                                                        <option value="11">Eleven Separate Spectral Bands and/or DSM
+                                                            raster</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" id="drone_run_upload_drone_run_band_image_type_div">
+                                                <label class="col-sm-3 control-label">Orthophotomosaic Product
+                                                    From:</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control"
+                                                        id="drone_run_upload_drone_run_band_image_type"
+                                                        name="drone_run_upload_drone_run_band_image_type">
+                                                        <option value="">Select One</option>
+                                                        <option value="None">None</option>
+                                                        <option value="Pix4D">Pix4D (Individual Band Images)</option>
+                                                        <option value="Agisoft">Agisoft (MultiBand Stack Image)</option>
+                                                        <option value="ODM">OpenDroneMap (MultiBand Stack Image)
+                                                        </option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    id="drone_image_upload_drone_run_band_continue">Go to Next
+                                                    Step</button>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                    <div class="workflow-pending-message">Complete!</div>
+                                    <div class="workflow-complete-message">Complete!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            Workflow.init("#drone_imagery_upload_workflow");
+                        </script>
+
+
+                        <div id="upload_drone_imagery_verify_status"></div>
+                    </form><br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="upload_drone_imagery_dialog_odm" name="upload_drone_imagery_dialog_odm" tabindex="-1"
+    role="dialog" aria-labelledby="uploadDroneImageryODMDialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDroneImageryODMDialog">Upload Aerial Imagery</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="pagetitle">
+                        <h3 id="pagetitle_h3">Select Image(s) to Upload</h3>
+                    </div>
+
+
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
+                        encoding="multipart/form-data" id="upload_drone_imagery_odm_form"
+                        name="upload_drone_imagery_odm_form" action="/api/drone_imagery/upload_drone_imagery">
+                        <input type="hidden" name="drone_run_field_trial_id" value="">
+
+                        <!-- If drone run is selected above, the drone_run_project_id is passed to controller, negating need to create new drone run -->
+                        <input type="hidden" name="drone_run_id" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_stitching_odm_image_count"
+                            value="" />
+
+                        <input type="hidden" name="private_company_id" value="" />
+                        <input type="hidden" name="drone_run_name" value="" />
+                        <input type="hidden" name="drone_run_type" value="" />
+                        <input type="hidden" name="drone_image_upload_camera_info" value="" />
+                        <input type="hidden" name="drone_run_imaging_vehicle_id" value="" />
+                        <input type="hidden" name="drone_run_imaging_vehicle_battery_name" value="" />
+                        <input type="hidden" name="drone_run_description" value="" />
+                        <input type="hidden" name="drone_run_date" value="" />
+                        <input type="hidden" name="drone_run_camera_rig_description" value="" />
+                        <input type="hidden" name="drone_run_base_date" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_stitching" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_type" value="" />
+                        <input type="hidden" name="drone_run_band_number" value="" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div id="drone_imagery_upload_workflow_odm" class="workflow">
+                            <ol class="workflow-prog">
+                                <li>
+                                    <div class="workflow-title">Select Images</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Submit</div>
+                                </li>
+                            </ol>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <ol class="workflow-content">
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Select Raw Image ZipFile</h3>
+                                            </div>
+
+
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Imaging Event Images ZipFile
+                                                        (.zip) (At least 25 images): </label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file" id="upload_drone_images_zipfile_odm"
+                                                            name="upload_drone_images_zipfile"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+
+                                                <!--div class="form-group"><label class="col-sm-6 control-label">Upload another zipfile after submit this one? Select Yes if all the images did not fit within the 2GB of the first zip file.: </label><div class="col-sm-6" ><select class="form-control" id="drone_image_upload_drone_run_band_stitching_odm_more_images" name="drone_image_upload_drone_run_band_stitching_odm_more_images"><option value="No">No</option><option value="Yes">Yes</option></select></div></div-->
+
+                                            </div>
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    id="upload_drone_imagery_select_images_odm"
+                                                    name="upload_drone_imagery_select_images_odm">Go To Next
+                                                    Step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Submit Imaging Event to Process With OpenDroneMap
+                                                </h3>
+                                            </div>
+
+                                            <div>
+                                                <button type="submit" class="btn btn-info"
+                                                    name="upload_drone_imagery_odm_submit"
+                                                    id="upload_drone_imagery_odm_submit">Submit. Click Once and Be
+                                                    Patient As This Can Take A Long Time.</button>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                    <div class="workflow-pending-message">Complete!</div>
+                                    <div class="workflow-complete-message">Complete!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            Workflow.init("#drone_imagery_upload_workflow_odm");
+                        </script>
+
+                    </form><br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="upload_drone_imagery_dialog_odm_micasense" name="upload_drone_imagery_dialog_odm_micasense"
+    tabindex="-1" role="dialog" aria-labelledby="uploadDroneImageryODMMicaSenseDialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDroneImageryODMMicaSenseDialog">Upload Aerial Imagery</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="pagetitle">
+                        <h3 id="pagetitle_h3">Select Image(s) to Upload</h3>
+                    </div>
+
+
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
+                        encoding="multipart/form-data" id="upload_drone_imagery_odm_micasense_form"
+                        name="upload_drone_imagery_odm_micasense_form" action="/api/drone_imagery/upload_drone_imagery">
+                        <input type="hidden" name="drone_run_field_trial_id" value="">
+
+                        <!-- If drone run is selected above, the drone_run_project_id is passed to controller, negating need to create new drone run -->
+                        <input type="hidden" name="drone_run_id" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_stitching_odm_image_count"
+                            value="" />
+
+                        <input type="hidden" name="private_company_id" value="" />
+                        <input type="hidden" name="drone_run_name" value="" />
+                        <input type="hidden" name="drone_run_type" value="" />
+                        <input type="hidden" name="drone_image_upload_camera_info" value="" />
+                        <input type="hidden" name="drone_run_imaging_vehicle_id" value="" />
+                        <input type="hidden" name="drone_run_imaging_vehicle_battery_name" value="" />
+                        <input type="hidden" name="drone_run_description" value="" />
+                        <input type="hidden" name="drone_run_date" value="" />
+                        <input type="hidden" name="drone_run_camera_rig_description" value="" />
+                        <input type="hidden" name="drone_run_base_date" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_stitching" value="" />
+                        <input type="hidden" name="drone_image_upload_drone_run_band_type" value="" />
+                        <input type="hidden" name="drone_run_band_number" value="" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div id="drone_imagery_upload_workflow_odm_micasense" class="workflow">
+                            <ol class="workflow-prog">
+                                <li>
+                                    <div class="workflow-title">Select Images</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Submit</div>
+                                </li>
+                            </ol>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <ol class="workflow-content">
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Select Raw Image ZipFile of MicaSense Images</h3>
+                                            </div>
+
+
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Imaging Event Images ZipFile
+                                                        (.zip) (At least 25 images): </label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file"
+                                                            id="upload_drone_images_zipfile_odm_micasense"
+                                                            name="upload_drone_images_zipfile"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+
+                                                <!--div class="form-group"><label class="col-sm-6 control-label">Upload another zipfile after submit this one? Select Yes if all the images did not fit within the 2GB of the first zip file.: </label><div class="col-sm-6" ><select class="form-control" id="drone_image_upload_drone_run_band_stitching_odm_more_images" name="drone_image_upload_drone_run_band_stitching_odm_more_images"><option value="No">No</option><option value="Yes">Yes</option></select></div></div-->
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">MicaSense Radiometric
+                                                        Calibration Images ZipFile (.zip): </label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file"
+                                                            id="upload_drone_images_panel_zipfile_odm_micasense"
+                                                            name="upload_drone_images_panel_zipfile"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Perform Radiometric
+                                                        Calibration: </label>
+                                                    <div class="col-sm-6">
+                                                        <select class="form-control"
+                                                            name="drone_image_upload_drone_run_band_stitching_odm_radiocalibration">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    id="upload_drone_imagery_select_images_odm_micasense"
+                                                    name="upload_drone_imagery_select_images_odm_micasense">Go To Next
+                                                    Step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Submit Imaging Event to Process With OpenDroneMap
+                                                </h3>
+                                            </div>
+
+                                            <div>
+                                                <button type="submit" class="btn btn-info"
+                                                    name="upload_drone_imagery_odm_micasense_submit"
+                                                    id="upload_drone_imagery_odm_micasense_submit">Submit. Click Once
+                                                    and Be Patient As This Can Take A Long Time.</button>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                    <div class="workflow-pending-message">Complete!</div>
+                                    <div class="workflow-complete-message">Complete!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            Workflow.init("#drone_imagery_upload_workflow_odm_micasense");
+                        </script>
+
+
+                    </form><br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="upload_drone_imagery_bulk_previous_dialog" name="upload_drone_imagery_bulk_previous_dialog"
+    tabindex="-1" role="dialog" aria-labelledby="uploadDroneImageryBulkPreviousDialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDroneImageryBulkPreviousDialog">Upload Aerial Imagery in Bulk For
+                    Previously Processed Imaging Events</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
+                        encoding="multipart/form-data" id="upload_drone_imagery_bulk_previous_form"
+                        name="upload_drone_imagery_bulk_previous_form"
+                        action="/drone_imagery/upload_drone_imagery_bulk_previous">
+
+                        <div id="drone_imagery_upload_bulk_previous_workflow" class="workflow">
+                            <ol class="workflow-prog">
+                                <li>
+                                    <div class="workflow-title">Intro</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Define Imaging Events</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Upload Orthophoto Images</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Define Plot Polygons GeoJSON</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Submit</div>
+                                </li>
+                            </ol>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <ol class="workflow-content">
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">This workflow will guide you through uploading
+                                                    aerial images to the database for previously processed imaging
+                                                    events</h3>
+                                            </div>
+
+                                            <p>Your field trial(s) must already be in the database before you can upload
+                                                images for it. Please go to <a href="/breeders/trials">Manage->Field
+                                                    Trials</a> if it is not. Make sure the planting date is also set!
+                                            </p>
+                                            <p>In this process first upload a spreadsheet detailing the individual
+                                                imaging events, then upload a zipfile containing the orthophotomosaic
+                                                images for the imaging events, and finally upload a zipfile containing
+                                                GeoJSON files detailing the positions of the plot-polygons for the
+                                                imaging events.</p>
+
+                                            <hr>
+                                            <p><b>Example Data:</b> <a
+                                                    href="https://imagebreed.org/static_content/imagebreed/RiceExampleRGBandDSMGeoJSONImagingEvent.xls"
+                                                    download>Imaging Event(s) Spreadsheet</a></p>
+                                            <p><b>Example Data:</b> <a
+                                                    href="https://imagebreed.org/static_content/imagebreed/RiceExampleRGBandDSMOrthophotosGeoTIFFs.zip"
+                                                    download>Imaging Event(s) Orthophoto GeoTIFFs (Includes an RGB and
+                                                    DSM GeoTIFF)</a></p>
+                                            <p><b>Example Data:</b> <a
+                                                    href="https://imagebreed.org/static_content/imagebreed/RiceExampleGeoJSONs.zip"
+                                                    download>Imaging Event(s) GeoJSON</a></p>
+
+                                            <br />
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    onclick="Workflow.complete(this); return false;">Go to next
+                                                    step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Define Imaging Events in Bulk</h3>
+                                            </div>
+
+                                            <h4>The uploaded Excel file (.xls) must have the following header:</h4>
+
+                                            <table class="table table-bordered table-hover">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Imaging Event Name</th>
+                                                        <th>Company</th>
+                                                        <th>Type</th>
+                                                        <th>Description</th>
+                                                        <th>Date</th>
+                                                        <th>Vehicle Name</th>
+                                                        <th>Vehicle Battery Set</th>
+                                                        <th>Sensor</th>
+                                                        <th>Field Trial Name</th>
+                                                        <th>GeoJSON Filename</th>
+                                                        <th>Image Filenames</th>
+                                                        <th>Coordinate System</th>
+                                                        <th>Orthophoto Product Type</th>
+                                                        <th>Rotation Angle</th>
+                                                        <th>Base Date</th>
+                                                        <th>Camera Rig</th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <ul>
+                                                <li><b>Imaging Event Name</b>: (required) The globally unique name of
+                                                    the imaging event name (e.g. Field1Ortho01012020)</li>
+                                                <li><b>Company</b>: (required) The company name. This must already exist
+                                                    in the database.</li>
+                                                <li><b>Type</b>: (required) Either "Aerial Medium to High Res" or
+                                                    "Aerial Low Res" to indicate high or low resolution imagery.</li>
+                                                <li><b>Description</b>: (required) Free-text description of the imaging
+                                                    event and how it was flown and/or processed.</li>
+                                                <li><b>Date</b>: (required) The date and time of the imaging event in
+                                                    YYYY/MM/DD hh:mm:ss format (e.g. 2021/03/02 12:00:00)</li>
+                                                <li><b>Vehicle Name</b>: (required) The name of the aerial vehicle which
+                                                    was used. This must already exist in the database.</li>
+                                                <li><b>Vehicle Battery Set</b>: (optional) The name of the aerial
+                                                    vehicle battery set which was used.</li>
+                                                <li><b>Sensor</b>: (required) The type of camera sensor used. Must be
+                                                    either "MicaSense 5 Channel Camera", "CCD Color Camera", or "CMOS
+                                                    Color Camera".</li>
+                                                <li><b>Field Trial Name</b>: (required) The name of the field trial
+                                                    which was imaged. This must already exist in the database.</li>
+                                                <li><b>GeoJSON Filename</b>: (required) The name of the GeoJSON
+                                                    plot-polygon file that corresponds to this imaging event. This
+                                                    filename must exist in the uploaded GeoJSON zipfile. The same
+                                                    GeoJSON file can be used for multiple imaging events.</li>
+                                                <li><b>Image Filenames</b>: (required) Comma-separated list of image
+                                                    filenames that corresponds to this imaging event (e.g.
+                                                    Field1Ortho01012020__nir.tiff,Field1Ortho01012020__rgb.tiff,Field1Ortho01012020__bw.tiff).
+                                                    The image filenames must exist in the uploaded images zipfile. The
+                                                    same image file can be used for multiple imaging events.</li>
+                                                <li><b>Coordinate System</b>: (required) The coordinate system for the
+                                                    supplied images and GeoJSON files of this imaging event. Must be
+                                                    either "Pixels", "UTM", or "WGS84". If "UTM" or "WGS84" are used,
+                                                    then the uploaded orthophoto images must be GeoTIFFs containing the
+                                                    coordinate system AND the GeoJSON files must be of the same
+                                                    coordinate system. If "Pixels" is used, then the uploaded orthophoto
+                                                    images must be simple raster images (.tiff, .png., .jpeg) and not
+                                                    GeoTIFFs, AND the GeoJSON files must describe the pixel positions of
+                                                    the plot-polygons relative to the provided images. If "UTM" is used,
+                                                    the provided GeoJSON is in Northing/Easting (e.g.
+                                                    [312295.7451,1567250.9971]). If "WGS84" is used, the provided
+                                                    GeoJSON is in Longitude/Latitude (e.g. [121.260723987719,
+                                                    14.1701625191025]). Currently only UTM is supported.</li>
+                                                <li><b>Orthophoto Product Type</b>: (required) The type of
+                                                    orthophotomosaic image type, described by the software that produced
+                                                    it. Must be either "None", "Pix4D", "Agisoft", "Other", or "ODM". If
+                                                    Pix4D, Other, or None then the images are assumed to be separated
+                                                    single band images. If Agisoft or ODM then the image is assumed to
+                                                    be a single MultiBand stack image.</li>
+                                                <li><b>Rotation Angle</b>: (optional) The clock-wise angle of rotation
+                                                    to apply to the uploaded imagery in degrees (0-360). Default is a 0
+                                                    degree rotation. If a value is provided, the plot-polygon images are
+                                                    expected to be straight after rotation. If no value is provided or 0
+                                                    is provided, then the plot-polgyon images will include only pixels
+                                                    that lie within the polygons; however, this is more computationally
+                                                    intensive.</li>
+                                                <li><b>Base Date</b>: (optional) The date and time to reference the
+                                                    imaging event in YYYY/MM/DD hh:mm:ss format (e.g. 2021/03/02
+                                                    12:00:00). This is useful when separate, fixed, camera rigs are
+                                                    capturing different sections of the field experiment, and they are
+                                                    not capturing images at precisely the same time.</li>
+                                                <li><b>Camera Rig</b>: (optional) Free-text description of the camera
+                                                    rig. This is useful when separate, fixed, camera rigs are capturing
+                                                    different sections of the field experiment.</li>
+                                            </ul>
+
+                                            <br />
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Bulk Imaging Events (.xls):
+                                                    </label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file"
+                                                            id="upload_drone_imagery_bulk_imaging_events_previous"
+                                                            name="upload_drone_imagery_bulk_imaging_events_previous"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    onclick="Workflow.complete(this); return false;">Go to next
+                                                    step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Upload Orthophoto Images For Imaging Events in
+                                                    Bulk</h3>
+                                            </div>
+
+                                            <h4>Upload a zipfile (.zip) which contains orthophotos images (.tiff, .png,
+                                                .jpeg) named in accordance with the "Image Filenames" defined in the
+                                                previous step.</h4>
+                                            <h4>The images must be named as a concatenation with the spectral type of
+                                                the image, with a double-underscore (__) in between (e.g.
+                                                Field1Ortho01012020__blue).</h4>
+
+                                            <p>The allowed spectral types are: blue, green, red, rededge, nir, mir, fir,
+                                                thir, rgb, and bw, corresponding to Blue (450-520nm), Green (515-600nm),
+                                                Red (600-690nm), Red Edge (690-750nm), NIR (780-3000nm), MIR
+                                                (3000-50000nm), FIR (50000-1000000nm), Thermal IR (9000-14000nm), RGB
+                                                Color Image, and Black and White Image, respectively.</p>
+                                            <p>For an imaging event using a MicaSense 5-channel camera, the 5 separate
+                                                orthophotos should be included in the zipfile and should be named as a
+                                                concatenation with the spectral type (e.g. Field1Ortho01012020__blue,
+                                                Field1Ortho01012020__green, Field1Ortho01012020__red,
+                                                Field1Ortho01012020__rededge, and Field1Ortho01012020__nir).</p>
+                                            <p>Digital surface map (DSM) raster images can be uploaded as black and
+                                                white images (e.g. Field1Ortho01012020__bw.png)</p>
+                                            <p>Do not upload duplicate spectral types for the same imaging event.</p>
+                                            <p>Images should be perfectly super-imposable for different spectra in the
+                                                same imaging event.</p>
+                                            <p>The same image can be used for several imaging events.</p>
+                                            <p>If the coordinate system of the imaging event is "WGS84" or "UTM", then
+                                                the orthophoto images must be GeoTIFFs (.tiff) containing the coordinate
+                                                system. If the coordinate system is "Pixels", then the orthophoto images
+                                                are simple raster images (.tiff, .jpeg, .png).</p>
+
+                                            <br />
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Orthophoto Images ZipFile
+                                                        (.zip): </label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file"
+                                                            id="upload_drone_imagery_bulk_images_zipfile_previous"
+                                                            name="upload_drone_imagery_bulk_images_zipfile_previous"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    onclick="Workflow.complete(this); return false;">Go to next
+                                                    step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Define Plot Polygons in Bulk</h3>
+                                            </div>
+
+
+                                            <h4>Upload a zipfile (.zip) which contains GeoJSON (.geojson) files
+                                                detailing the coordinate positions of the plot-polygons.</h4>
+
+                                            <p>The spreadsheets should be named in accordance with the "GeoJSON
+                                                Filenames" defined in the previous step.</p>
+                                            <p>The coordinate system (e.g. WGS84, UTM) of the orthophotos should be the
+                                                same as the coordinate system defining the GeoJSON files. If the
+                                                coordinate system is "Pixels", then the GeoJSON files should define the
+                                                pixel positions of the plot-polygons relative to the uploaded images.
+                                            </p>
+                                            <p>The same GeoJSON file can be used for several imaging events.</p>
+                                            <p>The GeoJSON UTM coordinates should be <b>Northing</b> followed by
+                                                <b>Easting</b> (e.g. [312295.7451,1567250.9971]).
+                                            </p>
+                                            <p>Only UTM and Pixel GeoJSON coordinate systems are currently suppoerted.
+                                                In the future, WGS84 will be supported (e.g. [121.260723987719,
+                                                14.1701625191025]) as Longitude followed by Latitude</p>
+
+                                            <p>The GeoJSON should be the following format:
+                                                <br />
+                                            <div class="well well-sm">
+                                                {<br />
+                                                &nbsp;&nbsp;"type":"FeatureCollection",<br />
+                                                &nbsp;&nbsp;"features":[<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;{<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type":"Feature",<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"properties":{<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ID":1<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"geometry":{<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type":"Polygon",<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"coordinates":[<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[312295.7451,1567250.9971],<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[312295.3147,1567250.5791],<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[312294.0605,1567251.8701],<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[312294.4909,1567252.2881],<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[312295.7451,1567250.9971]<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;},<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;...## ALL PLOT-POLYGONS ##<br />
+                                                &nbsp;&nbsp;]<br />
+                                                }
+                                            </div>
+                                            </p>
+                                            <p>The ID field should give the unique plot number for the plot polygon. The
+                                                plot number is defined in the field design as a unique number e.g. (1 to
+                                                100).</p>
+                                            <p>The coordinates should match the coordinate system of "WGS84/UTM" or
+                                                "Pixels".</p>
+
+                                            <br />
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Plot-polygon GeoJSON ZipFile
+                                                        (.zip): </label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file"
+                                                            id="upload_drone_imagery_bulk_geojson_zipfile_previous"
+                                                            name="upload_drone_imagery_bulk_geojson_zipfile_previous"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    onclick="Workflow.complete(this); return false;">Go to next
+                                                    step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Submit to database</h3>
+                                            </div>
+
+                                            <div id="upload_drone_imagery_bulk_previous_verify_status"></div>
+
+                                            <div>
+                                                <button type="submit" class="btn btn-info"
+                                                    name="upload_drone_imagery_bulk_previous_submit"
+                                                    id="upload_drone_imagery_bulk_previous_submit">Submit. Click Once
+                                                    and Be Patient As This Can Take A Long Time.</button>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                    <div class="workflow-pending-message">Complete!</div>
+                                    <div class="workflow-complete-message">Complete!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            Workflow.init("#drone_imagery_upload_bulk_previous_workflow");
+                        </script>
+
+                    </form><br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="upload_drone_imagery_bulk_dialog" name="upload_drone_imagery_bulk_dialog" tabindex="-1"
+    role="dialog" aria-labelledby="uploadDroneImageryBulkDialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDroneImageryBulkDialog">Upload Aerial Imagery in Bulk For Imaging
+                    Events</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
+                        encoding="multipart/form-data" id="upload_drone_imagery_bulk_form"
+                        name="upload_drone_imagery_bulk_form" action="/drone_imagery/upload_drone_imagery_bulk">
+                        <div id="drone_imagery_upload_bulk_workflow" class="workflow">
+                            <ol class="workflow-prog">
+                                <li>
+                                    <div class="workflow-title">Intro</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Define Imaging Events</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Upload Orthophoto Rasters</div>
+                                </li>
+                                <li>
+                                    <div class="workflow-title">Submit</div>
+                                </li>
+                            </ol>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <ol class="workflow-content">
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">This workflow will guide you through uploading
+                                                    aerial images to the database</h3>
+                                            </div>
+
+                                            <p>Your field trial(s) must already be in the database before you can upload
+                                                images for it. Please go to <a href="/breeders/trials">Manage->Field
+                                                    Trials</a> if it is not. Make sure the planting date is also set!
+                                            </p>
+                                            <p>In this process first upload a spreadsheet detailing the individual
+                                                imaging events, then upload a zipfile containing the orthophotomosaic
+                                                images for the imaging events.</p>
+                                            <p>This workflow is only for uploading orthophotomosaic raster images, not
+                                                for uploading raw captures to be stitched in orthophotomosaics.</p>
+
+                                            <hr>
+                                            <p><b>Example Data:</b> <a
+                                                    href="https://imagebreed.org/static_content/imagebreed/BulkUploadRGBRastersImagingEvents.xls"
+                                                    download>Imaging Event(s) Spreadsheet</a></p>
+                                            <p><b>Example Data:</b> <a
+                                                    href="https://imagebreed.org/static_content/imagebreed/BulkUploadRGBRastersOrthophotos.zip"
+                                                    download>Imaging Event(s) Orthophoto Raster Images (Includes .JPG
+                                                    and .PNG)</a></p>
+
+                                            <br />
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    onclick="Workflow.complete(this); return false;">Go to next
+                                                    step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Define Imaging Events in Bulk</h3>
+                                            </div>
+
+
+                                            <h4>The uploaded Excel file (.xls) must have the following header:</h4>
+
+                                            <table class="table table-bordered table-hover">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Imaging Event Name</th>
+                                                        <th>Company</th>
+                                                        <th>Type</th>
+                                                        <th>Description</th>
+                                                        <th>Date</th>
+                                                        <th>Vehicle Name</th>
+                                                        <th>Vehicle Battery Set</th>
+                                                        <th>Sensor</th>
+                                                        <th>Field Trial Name</th>
+                                                        <th>Image Filenames</th>
+                                                        <th>Coordinate System</th>
+                                                        <th>Orthophoto Product Type</th>
+                                                        <th>Base Date</th>
+                                                        <th>Camera Rig</th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <ul>
+                                                <li><b>Imaging Event Name</b>: (required) The globally unique name of
+                                                    the imaging event name (e.g. Field1Ortho01012020)</li>
+                                                <li><b>Company</b>: (required) The company name. This must already exist
+                                                    in the database.</li>
+                                                <li><b>Type</b>: (required) Either "Aerial Medium to High Res" or
+                                                    "Aerial Low Res" to indicate high or low resolution imagery.</li>
+                                                <li><b>Description</b>: (required) Free-text description of the imaging
+                                                    event and how it was flown and/or processed.</li>
+                                                <li><b>Date</b>: (required) The date and time of the imaging event in
+                                                    YYYY/MM/DD hh:mm:ss format (e.g. 2021/03/02 12:00:00)</li>
+                                                <li><b>Vehicle Name</b>: (required) The name of the aerial vehicle which
+                                                    was used. This must already exist in the database.</li>
+                                                <li><b>Vehicle Battery Set</b>: (optional) The name of the aerial
+                                                    vehicle battery set which was used.</li>
+                                                <li><b>Sensor</b>: (required) The type of camera sensor used. Must be
+                                                    either "MicaSense 5 Channel Camera", "CCD Color Camera", or "CMOS
+                                                    Color Camera".</li>
+                                                <li><b>Field Trial Name</b>: (required) The name of the field trial
+                                                    which was imaged. This must already exist in the database.</li>
+                                                <li><b>Image Filenames</b>: (required) Comma-separated list of image
+                                                    filenames that corresponds to this imaging event (e.g.
+                                                    Field1Ortho01012020__nir.tiff,Field1Ortho01012020__rgb.tiff,Field1Ortho01012020__bw.tiff).
+                                                    The image filenames must exist in the uploaded images zipfile. The
+                                                    same image file can be used for multiple imaging events.</li>
+                                                <li><b>Coordinate System</b>: (required) The coordinate system for the
+                                                    supplied images of this imaging event. Must be either "WGS84",
+                                                    "UTM", or "Pixels". If "WGS84" or "UTM" is used, then the uploaded
+                                                    orthophoto images must be GeoTIFFs containing the coordinate system.
+                                                    If "WGS84" or "UTM" are used then the images have either
+                                                    Longitude/Latitude (e.g. [121.260723987719, 14.1701625191025]) or
+                                                    Northing/Easting (e.g. [312295.7451,1567250.9971]) encoded in the
+                                                    GeoTIFF. If "Pixels" is used, then the uploaded orthophoto images
+                                                    must be simple raster images (.tiff, .png., .jpeg) and not GeoTIFFs.
+                                                </li>
+                                                <li><b>Orthophoto Product Type</b>: (required) The type of
+                                                    orthophotomosaic image type, described by the software that produced
+                                                    it. Must be either "None", "Pix4D", "Agisoft", "Other", or "ODM". If
+                                                    Pix4D, Other, or None then the images are assumed to be separated
+                                                    single band images. If Agisoft or ODM then the image is assumed to
+                                                    be a single MultiBand stack image.</li>
+                                                <li><b>Base Date</b>: (optional) The date and time to reference the
+                                                    imaging event in YYYY/MM/DD hh:mm:ss format (e.g. 2021/03/02
+                                                    12:00:00). This is useful when separate, fixed, camera rigs are
+                                                    capturing different sections of the field experiment, and they are
+                                                    not capturing images at precisely the same time.</li>
+                                                <li><b>Camera Rig</b>: (optional) Free-text description of the camera
+                                                    rig. This is useful when separate, fixed, camera rigs are capturing
+                                                    different sections of the field experiment.</li>
+                                            </ul>
+
+                                            <br />
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Bulk Imaging Events (.xls):
+                                                    </label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file" id="upload_drone_imagery_bulk_imaging_events"
+                                                            name="upload_drone_imagery_bulk_imaging_events"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    onclick="Workflow.complete(this); return false;">Go to next
+                                                    step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Upload Orthophoto Rasters For Imaging Events in
+                                                    Bulk</h3>
+                                            </div>
+
+
+                                            <h4>Upload a zipfile (.zip) which contains orthophotos images (.tiff, .png,
+                                                .jpeg) named in accordance with the "Image Filenames" defined in the
+                                                previous step.</h4>
+                                            <h4>The images must be named as a concatenation with the spectral type of
+                                                the image, with a double-underscore (__) in between (e.g.
+                                                Field1Ortho01012020__blue).</h4>
+
+                                            <p>The allowed spectral types are: blue, green, red, rededge, nir, mir, fir,
+                                                thir, rgb, and bw, corresponding to Blue (450-520nm), Green (515-600nm),
+                                                Red (600-690nm), Red Edge (690-750nm), NIR (780-3000nm), MIR
+                                                (3000-50000nm), FIR (50000-1000000nm), Thermal IR (9000-14000nm), RGB
+                                                Color Image, and Black and White Image, respectively.</p>
+                                            <p>For an imaging event using a MicaSense 5-channel camera, the 5 separate
+                                                orthophotos should be included in the zipfile and should be named as a
+                                                concatenation with the spectral type (e.g. Field1Ortho01012020__blue,
+                                                Field1Ortho01012020__green, Field1Ortho01012020__red,
+                                                Field1Ortho01012020__rededge, and Field1Ortho01012020__nir).</p>
+                                            <p>Digital surface map (DSM) raster images can be uploaded as black and
+                                                white images (e.g. Field1Ortho01012020__bw.png)</p>
+                                            <p>Do not upload duplicate spectral types for the same imaging event.</p>
+                                            <p>Images should be perfectly super-imposable for different spectra in the
+                                                same imaging event.</p>
+                                            <p>The same image can be used for several imaging events.</p>
+                                            <p>If the coordinate system of the imaging event is "WGS84/UTM", then the
+                                                orthophoto images must be GeoTIFFs (.tiff) containing the coordinate
+                                                system. If the coordinate system is "Pixels", then the orthophoto images
+                                                are simple raster images (.tiff, .jpeg, .png).</p>
+
+                                            <br />
+                                            <div class="well well-sm">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Orthophoto Images ZipFile
+                                                        (.zip): </label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file" id="upload_drone_imagery_bulk_images_zipfile"
+                                                            name="upload_drone_imagery_bulk_images_zipfile"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                    onclick="Workflow.complete(this); return false;">Go to next
+                                                    step</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="pagetitle">
+                                                <h3 id="pagetitle_h3">Submit to database</h3>
+                                            </div>
+
+
+                                            <div id="upload_drone_imagery_bulk_verify_status"></div>
+
+                                            <div>
+                                                <button type="submit" class="btn btn-primary"
+                                                    name="upload_drone_imagery_bulk_submit"
+                                                    id="upload_drone_imagery_bulk_submit">Submit. Click Once and Be
+                                                    Patient As This Can Take A Long Time.</button>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                    <div class="workflow-pending-message">Complete!</div>
+                                    <div class="workflow-complete-message">Complete!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            Workflow.init("#drone_imagery_upload_bulk_workflow");
+                        </script>
+
+                    </form><br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="upload_drone_imagery_standard_process_additional_raw_images_dialog"
+    name="upload_drone_imagery_standard_process_additional_raw_images_dialog" tabindex="-1" role="dialog"
+    aria-labelledby="uploadDroneImageryStandardProcessAdditionalRawImagesDialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDroneImageryStandardProcessAdditionalRawImagesDialog">Upload Raw Image
+                    Captures</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div id="drone_imagery_additional_raw_images_workflow" class="workflow">
+                        <ol class="workflow-prog">
+                            <li>
+                                <div class="workflow-title">Uploaded Raw Aerial Image Captures</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Upload New Aerial Image Captures</div>
+                            </li>
+                        </ol>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <ol class="workflow-content">
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Already Uploaded Raw Aerial Image Captures</h3>
+                                        </div>
+
+
+                                        <div class="well well-sm">
+                                            <div>
+                                                <h4>Raw aerial image captures can be shared in a ZipFile.</h4>
+                                            </div>
+
+                                            <ul>
+                                                <li>These ZipFiles are only for reference purposes and for distribution
+                                                    of the raw image captures.</li>
+                                                <li>Raw image captures from any camera (e.g. MicaSense or color cameras)
+                                                    can be saved in a zipfile and shared here.</li>
+                                                <li>The raw image captures are not stitched orthophotomosaic images.
+                                                </li>
+                                                <li>The ZipFile is not extracted or parsed by ImageBreed, it is only
+                                                    stored for distribution.</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="well well-sm">
+                                            <div id="upload_drone_imagery_additional_raw_images_div"></div>
+                                        </div>
+
+                                        <div>
+                                            <button class="btn btn-default"
+                                                onclick="Workflow.complete(this); return false;">Upload New Raw Image
+                                                Captures</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Upload New Raw Aerial Image Captures</h3>
+                                        </div>
+
+
+                                        <div class="well well-sm">
+                                            <div>
+                                                <h4>Raw aerial image captures can be shared in a ZipFile.</h4>
+                                            </div>
+
+                                            <ul>
+                                                <li>These ZipFiles are only for reference purposes and for distribution
+                                                    of the raw image captures.</li>
+                                                <li>Raw image captures from any camera (e.g. MicaSense or color cameras)
+                                                    can be saved in a zipfile and shared here.</li>
+                                                <li>The raw image captures are not stitched orthophotomosaic images.
+                                                </li>
+                                                <li>The ZipFile is not extracted or parsed by ImageBreed, it is only
+                                                    stored for distribution.</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="well well-sm">
+                                            <form class="form-horizontal" role="form" method="post"
+                                                enctype="multipart/form-data" encoding="multipart/form-data"
+                                                id="upload_drone_imagery_additional_raw_images_form"
+                                                name="upload_drone_imagery_additional_raw_images_form"
+                                                action="/drone_imagery/upload_drone_imagery_additional_raw_images">
+                                                <div class="form-group">
+                                                    <label class="col-sm-6 control-label">Aerial Image Captures ZipFile
+                                                        (.zip): </label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file"
+                                                            id="upload_drone_imagery_additional_raw_images_zipfile"
+                                                            name="upload_drone_imagery_additional_raw_images_zipfile"
+                                                            encoding="multipart/form-data" />
+                                                    </div>
+                                                </div>
+
+                                                <input type="hidden"
+                                                    id="upload_drone_imagery_additional_raw_images_private_company_id"
+                                                    name="upload_drone_imagery_additional_raw_images_private_company_id"
+                                                    value="" />
+                                                <input type="hidden"
+                                                    id="upload_drone_imagery_additional_raw_images_private_company_is_private"
+                                                    name="upload_drone_imagery_additional_raw_images_private_company_is_private"
+                                                    value="" />
+                                                <input type="hidden"
+                                                    id="upload_drone_imagery_additional_raw_images_drone_run_id"
+                                                    name="upload_drone_imagery_additional_raw_images_drone_run_id"
+                                                    value="" />
+                                                <input type="hidden"
+                                                    id="upload_drone_imagery_additional_raw_images_field_trial_id"
+                                                    name="upload_drone_imagery_additional_raw_images_field_trial_id"
+                                                    value="" />
+
+                                                <div>
+                                                    <button type="submit" class="btn btn-primary"
+                                                        name="upload_drone_imagery_additional_raw_images_submit"
+                                                        id="upload_drone_imagery_additional_raw_images_submit">Submit</button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+
+                                    </li>
+                                </ol>
+                                <div class="workflow-pending-message">Complete!</div>
+                                <div class="workflow-complete-message">Complete!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        Workflow.init("#drone_imagery_additional_raw_images_workflow");
+                    </script>
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

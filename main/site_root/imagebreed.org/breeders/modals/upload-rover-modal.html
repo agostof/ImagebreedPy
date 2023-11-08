@@ -1,0 +1,560 @@
+<div class="modal fade" id="upload_drone_rover_dialog" name="upload_drone_rover_dialog" tabindex="-1" role="dialog"
+  aria-labelledby="uploadDroneRoverDialog">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="uploadDroneRoverDialog">Upload Drone Rover Data</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+
+          <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
+            encoding="multipart/form-data" id="upload_drone_rover_form" name="upload_drone_rover_form"
+            action="/api/drone_rover/upload_drone_rover">
+
+
+
+
+
+
+
+
+            <style media="screen">
+              ol.workflow-prog {
+                display: table;
+                table-layout: fixed;
+                list-style-type: none;
+                text-align: div;
+                margin: 0 0 1em 0;
+                padding: 0;
+                width: 100%;
+                counter-reset: step;
+                font-size: 16px;
+              }
+
+              ol.workflow-prog>li {
+                display: table-cell;
+                text-align: div;
+                color: black;
+                position: relative;
+                font-size: 11px;
+              }
+
+              ol.workflow-prog>li>div.workflow-title {
+                display: inline-block;
+                width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+
+              ol.workflow-prog>li::after {
+                font-size: 14px;
+                width: 30px;
+                height: 30px;
+                content: counter(step);
+                counter-increment: step;
+                line-height: 1em;
+                padding-top: 0.3em;
+                border: 4px solid;
+                display: block;
+                text-align: div;
+                position: relative;
+                border-radius: 50%;
+                margin: 0 auto 0 auto;
+                background: white;
+                border-color: #bbb;
+                color: #bbb;
+              }
+
+              ol.workflow-prog>li.workflow-complete::after {
+                border-color: #5fba7d;
+                color: white;
+                background: #5fba7d;
+              }
+
+              @keyframes pend_blink {
+                0% {}
+
+                50% {
+                  border-color: white;
+                }
+
+                100% {}
+              }
+
+              ol.workflow-prog>li.workflow-pending::after {
+                animation: pend_blink 2s linear infinite;
+              }
+
+              ol.workflow-prog>li.workflow-skipped::after {
+                border-color: #eeb700;
+                background: #eeb700;
+                color: white;
+              }
+
+              ol.workflow-prog>li.workflow-focus::after {
+                border-color: #5fba7d;
+                background: white;
+                color: #5fba7d;
+              }
+
+
+              ol.workflow-prog>li::before {
+                width: 100%;
+                height: 2px;
+                content: '';
+                display: block;
+                position: relative;
+                top: 34px;
+                margin-left: 50%;
+                background-color: #bbb;
+              }
+
+              ol.workflow-prog>li:last-of-type::before {
+                width: 0%;
+              }
+
+              ol.workflow-prog>li.workflow-complete::before {
+                background: #5fba7d;
+              }
+
+              ol.workflow-content {
+                display: block;
+                table-layout: fixed;
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+              }
+
+              ol.workflow-content>li {
+                width: 100%;
+                position: relative;
+                display: none;
+              }
+
+              ol.workflow-content>li.workflow-focus {
+                display: block;
+              }
+
+              div.workflow-pending-message {
+                display: none;
+              }
+
+              div.workflow-complete-message {
+                display: none;
+              }
+
+              div.workflow-message-show {
+                display: block;
+              }
+            </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div id="drone_rover_upload_workflow" class="workflow">
+              <ol class="workflow-prog" style="text-align: center;">
+                <li>
+                  <div class="workflow-title">Intro</div>
+                </li>
+                <li>
+                  <div class="workflow-title">Field Trial</div>
+                </li>
+                <li>
+                  <div class="workflow-title">Rover Event</div>
+                </li>
+                <li>
+                  <div class="workflow-title">Ground Rover Info</div>
+                </li>
+              </ol>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <ol class="workflow-content">
+                    <li>
+                      <div id="pagetitle">
+                        <h3 id="pagetitle_h3">This workflow will guide you through uploading ground rover
+                          point cloud data to the database</h3>
+                      </div>
+
+                      <ul>
+                        <li>Your field trial must already be in the database before you can upload images for
+                          it. Please go to <a href="/breeders/trials">Manage->Field Trials</a> if it is not.
+                        </li>
+                      </ul>
+                      <hr>
+
+                      <p><b>Example Data:</b> <a
+                          href="https://imagebreed.org/static_content/imagebreed/AlfalfaExample35MeterMicasenseAerialDroneFlightRawCaptures.zip"
+                          download>EarthSense Lidar Point Clouds</a></p>
+
+                      <br />
+                      <div style="text-align: center;">
+                        <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to
+                          upload a single rover event</button>
+                      </div>
+                    </li>
+                    <li>
+                      <div id="pagetitle">
+                        <h3 id="pagetitle_h3">Select your field trial</h3>
+                      </div>
+
+
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Company: </label>
+                        <div class="col-sm-9">
+                          <div id="upload_drone_rover_company_select_div"></div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Field Trial: </label>
+                        <div class="col-sm-9">
+                          <div id="upload_drone_rover_trial_select_div"></div>
+                        </div>
+                      </div>
+
+                      <div id="upload_drone_rover_field_trial_info">
+                      </div>
+
+                      <div style="text-align: center;">
+                        <button class="btn btn-primary" id="upload_drone_rover_field_trial_select_continue">Go
+                          to Next Step</button>
+                      </div>
+                    </li>
+                    <li>
+                      <div id="pagetitle">
+                        <h3 id="pagetitle_h3">Create a new rover event</h3>
+                      </div>
+
+
+                      <table class="table table-bordered table-hover" id="drone_rover_upload_drone_runs_table">
+                        <thead>
+                          <tr>
+                            <th>Select</th>
+                            <th>Imaging Event Name</th>
+                            <th>Imaging Event Type</th>
+                            <th>Imaging Event Description</th>
+                            <th>Imaging Event Date</th>
+                            <th>Drone Run GDD</th>
+                            <th>Sensor</th>
+                            <th>Field Trial Name</th>
+                            <th>Field Trial Description</th>
+                          </tr>
+                        </thead>
+                      </table>
+
+                      <br />
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Sensor Type:</label>
+                        <div class="col-sm-9">
+                          <select class="form-control" id="drone_rover_upload_camera_info"
+                            name="drone_rover_upload_camera_info">
+                            <option value="">Select One</option>
+                            <option value="earthsense_lidar">EarthSense Ground Rover Lidar</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Ground Vehicle: <button class="btn btn-sm btn-default"
+                            name="drone_run_rover_vehicle_add_new" type="button">Add New Vehicle</button></label>
+                        <div class="col-sm-9">
+                          <div id="drone_run_rover_vehicle_div"></div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Rover Vehicle Battery Set:</label>
+                        <div class="col-sm-9">
+                          <div id="drone_run_rover_vehicle_battery_div"></div>
+                        </div>
+                      </div>
+                      <br />
+
+                      <div style="text-align: center;">
+                        <button class="btn btn-primary" id="drone_rover_upload_drone_run_continue">Go to Next
+                          Step</button>
+                      </div>
+                    </li>
+                    <li>
+                      <div id="pagetitle">
+                        <h3 id="pagetitle_h3">Type of Ground Rover Data to Upload</h3>
+                      </div>
+
+
+                      <div class="form-group" id="drone_run_upload_rover_type_div">
+                        <label class="col-sm-3 control-label">Ground Rover:</label>
+                        <div class="col-sm-9">
+                          <select class="form-control" id="drone_run_upload_rover_type"
+                            name="drone_run_upload_rover_type">
+                            <option value="">Select One</option>
+                            <option value="earthsense">EarthSense</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group" id="drone_run_upload_rover_data_type_div">
+                        <label class="col-sm-3 control-label">Date Type:</label>
+                        <div class="col-sm-9">
+                          <select class="form-control" id="drone_run_upload_rover_data_type"
+                            name="drone_run_upload_rover_data_type">
+                            <option value="">Select One</option>
+                            <option value="earthsense_raw_collections_point_clouds">EarthSense Raw Collections
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div style="text-align: center;">
+                        <button class="btn btn-primary" id="drone_rover_upload_continue">Go to Next
+                          Step</button>
+                      </div>
+                    </li>
+                  </ol>
+                  <div class="workflow-pending-message">Complete!</div>
+                  <div class="workflow-complete-message">Complete!</div>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+              Workflow.init("#drone_rover_upload_workflow");
+            </script>
+
+
+            <div id="upload_drone_rover_verify_status"></div>
+          </form><br />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="drone_rover_view_rover_vehicles_modal" name="drone_rover_view_rover_vehicles_modal"
+  tabindex="-1" role="dialog" aria-labelledby="droneRoverVehiclesDialog" data-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneRoverVehiclesDialog">Available Rover Vehicles</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+
+          <table class="table table-bordered table-hover" id="drone_rover_view_rover_vehicles_table">
+            <thead>
+              <tr>
+                <th>Vehicles Name</th>
+                <th>Description</th>
+                <th>Company</th>
+                <th>Battery Usage</th>
+              </tr>
+            </thead>
+          </table>
+
+          <button class="btn btn-primary" name="drone_run_rover_vehicle_add_new">Add New Rover
+            Vehicle</button>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="drone_run_rover_vehicle_add_new_modal" name="drone_run_rover_vehicle_add_new_modal"
+  tabindex="-1" role="dialog" aria-labelledby="uploadDroneRoverAddNewVehicleDialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="uploadDroneRoverAddNewVehicleDialog">Add New Ground Rover Vehicle</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Ground Rover Vehicle Name (Must be unique): </label>
+              <div class="col-sm-9">
+                <input class="form-control" id="drone_run_new_rover_vehicle_name"
+                  name="drone_run_new_rover_vehicle_name" type="text" placeholder="e.g. MyLabDrone1" />
+              </div>
+            </div>
+            <div id="new_rover_vehicle_company_hide_div" style="display:none">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Company: </label>
+                <div class="col-sm-9">
+                  <div id="drone_run_new_rover_vehicle_company_div"></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Rover Vehicle Description: </label>
+              <div class="col-sm-9">
+                <input class="form-control" id="drone_run_new_rover_vehicle_desc"
+                  name="drone_run_new_rover_vehicle_desc" type="text" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Battery Set Names (optional) (comma separated string of
+                names e.g. blue,green,red,black): </label>
+              <div class="col-sm-9">
+                <input class="form-control" id="drone_run_new_rover_vehicle_battery_names"
+                  name="drone_run_new_rover_vehicle_battery_names" type="text" placeholder="default_battery"
+                  value="default_battery" />
+              </div>
+            </div>
+          </div>
+          <br /><br />
+          <div style="text-align: center;">
+            <button class="btn btn-primary" type="button" id="drone_run_new_rover_vehicle_submit"
+              name="drone_run_new_rover_vehicle_submit">Submit</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="drone_run_rover_link_field_collection_names_modal"
+  name="drone_run_rover_link_field_collection_names_modal" tabindex="-1" role="dialog"
+  aria-labelledby="droneRunRoverLinkFieldNamesDialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneRunRoverLinkFieldNamesDialog">Add New Ground Rover Vehicle</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div id="drone_run_rover_link_field_collection_names_table">
+          </div>
+          <div>
+            <button class="btn btn-primary" type="button" id="drone_run_rover_link_field_collection_names_submit"
+              name="drone_run_rover_link_field_collection_names_submit">Submit</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="upload_drone_rover_earthsense_lidar_data_dialog"
+  name="upload_drone_rover_earthsense_lidar_data_dialog" tabindex="-1" role="dialog"
+  aria-labelledby="uploadDroneRoverEarthSenseLidarDataDialog">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="uploadDroneRoverEarthSenseLidarDataDialog">Upload EarthSense Ground Rover
+          Lidar Data</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div id="pagetitle">
+            <h3 id="pagetitle_h3">Select EarthSense Lidar Point Clouds to Upload</h3>
+          </div>
+
+          <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
+            encoding="multipart/form-data" id="upload_drone_rover_earthsense_lidar_form"
+            name="upload_drone_rover_earthsense_lidar_form" action="/api/drone_rover/upload_drone_rover">
+
+            <input type="hidden" name="rover_run_field_trial_id" value="">
+            <input type="hidden" name="rover_run_company_id" value="" />
+            <input type="hidden" name="rover_run_sensor_type" value="" />
+            <input type="hidden" name="rover_run_rover_type" value="" />
+            <input type="hidden" name="rover_run_rover_data_type" value="" />
+            <input type="hidden" name="rover_run_vehicle_id" value="" />
+            <input type="hidden" name="rover_run_vehicle_battery_name" value="" />
+
+            <div id="drone_rover_upload_workflow_earthsense_lidar" class="workflow">
+              <ol class="workflow-prog" style="text-align: center;">
+                <li>
+                  <div class="workflow-title">Select Point Clouds</div>
+                </li>
+                <li>
+                  <div class="workflow-title">Submit</div>
+                </li>
+              </ol>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <ol class="workflow-content">
+                    <li>
+                      <div id="pagetitle">
+                        <h3 id="pagetitle_h3">Select Point Clouds ZipFile</h3>
+                      </div>
+
+
+                      <div class="well well-sm">
+                        <div class="form-group">
+                          <label class="col-sm-6 control-label">Point Cloud Collections in ZipFile (.zip):
+                          </label>
+                          <div class="col-sm-6">
+                            <input type="file" id="upload_drone_rover_zipfile_lidar_earthsense_collections"
+                              name="upload_drone_rover_zipfile_lidar_earthsense_collections"
+                              encoding="multipart/form-data" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div style="text-align: center;">
+                        <button class="btn btn-primary" id="upload_drone_rover_select_point_clouds_earthsense_lidar"
+                          name="upload_drone_rover_select_point_clouds_earthsense_lidar">Go To Next
+                          Step</button>
+                      </div>
+                    </li>
+                    <li>
+                      <div id="pagetitle">
+                        <h3 id="pagetitle_h3">Submit Point Clouds</h3>
+                      </div>
+
+                      <div style="text-align: center;">
+                        <button type="submit" class="btn btn-info" name="upload_drone_rover_lidar_submit"
+                          id="upload_drone_rover_lidar_submit">Submit. Click Once and Be Patient As This Can
+                          Take A Long Time.</button>
+                      </div>
+                    </li>
+                  </ol>
+                  <div class="workflow-pending-message">Complete!</div>
+                  <div class="workflow-complete-message">Complete!</div>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+              Workflow.init("#drone_rover_upload_workflow_earthsense_lidar");
+            </script>
+
+          </form><br />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

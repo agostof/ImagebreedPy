@@ -18,6 +18,12 @@ app.include_router(ajax.router)
 app.include_router(api.router)
 templates = Jinja2Templates(directory=utils.DIRECTORY + "breeders/")
 
+
+@app.get("/", response_class=HTMLResponse)
+async def breeders_tool_box_drone_rover(request: Request):
+    print("STATIC_PAGE: index")
+    return templates.TemplateResponse("index.html", {"request": request, "id": id})
+
 # Dump ACTION_LOG
 @app.get("/dump_action_log")
 async def dump_action_log():
@@ -358,7 +364,9 @@ async def read_api(path: str, request: Request):
     return await read_all(api_path, request)
     #return path
 
-app.mount("/", StaticFiles(directory=utils.DIRECTORY, html=True), name="root")
+app.mount("/js", StaticFiles(directory=utils.DIRECTORY + 'js/', html=True), name="static-js")
+app.mount("/css", StaticFiles(directory=utils.DIRECTORY + 'css/', html=True), name="static-css")
+app.mount("/img", StaticFiles(directory=utils.DIRECTORY + 'img/', html=True), name="static-img")
 
 @app.get("/{path:path}")
 async def read_all(path: str, request: Request, request_method="GET"):

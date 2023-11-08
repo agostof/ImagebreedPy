@@ -1,0 +1,2043 @@
+
+<div class="modal fade" id="drone_imagery_analytics_dialog" name="drone_imagery_analytics_dialog" tabindex="-1"
+    role="dialog" aria-labelledby="droneImageryAnalyticsDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryAnalyticsDialog">Perform Analytics on Aerial Image Phenotypes
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="drone_imagery_analytics_workflow" class="workflow">
+                        <ol class="workflow-prog" style="text-align: center;">
+                            <li>
+                                <div class="workflow-title">Field Trial</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Analytics Reporting</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Results</div>
+                            </li>
+                        </ol>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <ol class="workflow-content" style="text-align: center;">
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the field trial you are interested in. Select
+                                                only one. Field trial MUST have row and column assigned and should be a
+                                                rectangular design.</h3>
+                                        </div>
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Field Trial(s): </label>
+                                                <div class="col-sm-9">
+                                                    <div id="drone_imagery_analytics_trial_select_div"></div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_analytics_field_trial_select_step">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Create a New Analytics Protocol</h3>
+                                        </div>
+                                        <div class="well well-sm">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Model: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_imagery_analytics_select_input">
+                                                            <option
+                                                                value="sommer_grm_univariate_spatial_pure_2dspl_genetic_blups">
+                                                                Sommer Spatial GBLUPs Y~replicate+GRM+2Dspline.
+                                                                Univariate genetic + 2Dspl spatial effects</option>
+                                                            <option value="sommer_grm_spatial_pure_2dspl_genetic_blups">
+                                                                Sommer Spatial GBLUPs Y~replicate+GRM+2Dspline.
+                                                                Multivariate genetic + 2Dspl spatial effects</option>
+                                                            <option value="airemlf90_grm_random_regression_dap_blups">
+                                                                AIREMLf90 GBLUPs Y~replicate+GRM+temporal random
+                                                                regression using days after planting. Multivariate
+                                                                genetic + permanent environment effects</option>
+                                                            <option
+                                                                value="asreml_grm_univariate_pure_spatial_genetic_blups">
+                                                                ASREML Spatial GBLUPs Y~replicate+GRM+spatial.
+                                                                Univariate genetic + AR1xAR1 spatial effects (License
+                                                                Required)</option>
+                                                            <option
+                                                                value="asreml_grm_multivariate_spatial_genetic_blups">
+                                                                ASREML Spatial GBLUPs Y~replicate+GRM+spatial.
+                                                                Multivariate genetic + AR1xAR1 spatial effects (License
+                                                                Required)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Analytics Name: </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control"
+                                                            id="drone_imagery_analytics_select_analytics_name" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Analytics Description:
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control"
+                                                            id="drone_imagery_analytics_select_analytics_desc" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the Aerial Image Phenotype(s). Only Select Time
+                                                Points for a Single Variable!</h3>
+                                        </div>
+                                        <div class="well well-sm">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Observation Variable Type:
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control"
+                                                            id="drone_imagery_analytics_select_observation_variable_type">
+                                                            <option value="time_ontology">Time Series</option>
+                                                            <option value="">Variable List</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Observation Variable(s)
+                                                        Phenotyped in the Selected Field Trial: </label>
+                                                    <div class="col-sm-8">
+                                                        <div id="drone_imagery_analytics_trait_select_div">Loading...
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Statistics Parameters</h3>
+                                        </div>
+
+                                        <div class="well well-sm">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Genetic Relationship
+                                                                Matrix Type: </label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control"
+                                                                    id="drone_imagery_analytics_relationship_matrix_type_select_div">
+                                                                    <option value="">Identity</option>
+                                                                    <option value="genotypes">Genotyping Data</option>
+                                                                    <option value="htp_phenotypes">High-throughput
+                                                                        Phenotyping Data</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="drone_imagery_analytics_genotyping_protocol_div"
+                                                        style="display:none">
+                                                        <div class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Genotyping
+                                                                    Protocol To Calculate Genomic Relationship Matrix
+                                                                    (optional. If none selected, an identity matrix is
+                                                                    used): </label>
+                                                                <div class="col-sm-8">
+                                                                    <div
+                                                                        id="drone_imagery_analytics_genotyping_protocol_select_div">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Compute Genotypes
+                                                                    From Parents: </label>
+                                                                <div class="col-sm-8">
+                                                                    <select class="form-control"
+                                                                        id="drone_image_analytics_genotyping_protocol_compute_from_parents_select">
+                                                                        <option value="no">No</option>
+                                                                        <option value="yes">Yes</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group"
+                                                                id="drone_image_analytics_genotyping_protocol_use_parental_grms_select_div"
+                                                                style="display:none">
+                                                                <label class="col-sm-4 control-label">Use Parental
+                                                                    Relationship Matrices: </label>
+                                                                <div class="col-sm-8">
+                                                                    <select class="form-control"
+                                                                        id="drone_image_analytics_genotyping_protocol_use_parental_grms_select">
+                                                                        <option value="no">No</option>
+                                                                        <option value="yes">Yes</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group"
+                                                                id="drone_image_analytics_genotyping_protocol_include_pedigree_select_div"
+                                                                style="display:none">
+                                                                <label class="col-sm-4 control-label">Include Pedigree
+                                                                    Info Into Relationship Matrix: </label>
+                                                                <div class="col-sm-8">
+                                                                    <select class="form-control"
+                                                                        id="drone_image_analytics_genotyping_protocol_include_pedigree_select">
+                                                                        <option value="no">No</option>
+                                                                        <option value="yes">Yes</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="drone_imagery_analytics_htp_phenotypes_rel_matrix_div"
+                                                        style="display:none">
+                                                        <div class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">How to calculate
+                                                                    the relationship matrix with high-throughput
+                                                                    phenotypes: </label>
+                                                                <div class="col-sm-8">
+                                                                    <select class="form-control"
+                                                                        id="drone_image_analytics_htp_phenotypes_rel_matrix_select">
+                                                                        <option value="correlations">Correlations
+                                                                        </option>
+                                                                        <option value="blues">BLUEs</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Time Points to
+                                                                    Use: </label>
+                                                                <div class="col-sm-8">
+                                                                    <select class="form-control"
+                                                                        id="drone_image_analytics_htp_phenotypes_rel_matrix_times_select">
+                                                                        <option value="all">All Available</option>
+                                                                        <option value="latest_trait">Up to latest days
+                                                                            after planting selecting in traits</option>
+                                                                        <option value="vegetative" disabled>Vegetative
+                                                                            Growth Stage</option>
+                                                                        <option value="reproductive" disabled>
+                                                                            Reproductive Growth Stage</option>
+                                                                        <option value="mature" disabled>Mature Growth
+                                                                            Stage</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group"
+                                                                id="drone_image_analytics_htp_phenotypes_rel_matrix_inversion_select_div"
+                                                                style="display:none">
+                                                                <label class="col-sm-4 control-label">HTP BLUEs
+                                                                    Inversion Tolerance: </label>
+                                                                <div class="col-sm-8">
+                                                                    <select class="form-control"
+                                                                        id="drone_image_analytics_htp_phenotypes_rel_matrix_inversion_select">
+                                                                        <option value="0.00001">0.00001</option>
+                                                                        <option value="0.0001">0.0001</option>
+                                                                        <option value="0.001">0.001</option>
+                                                                        <option value="0.01">0.01</option>
+                                                                        <option value="0.1">0.1</option>
+                                                                        <option value="0.5">0.5</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Legendre Polynomial
+                                                                Order: </label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control"
+                                                                    id="drone_image_analytics_legendre_order_number_select">
+                                                                    <option value="3">3</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">AIMREMLf90 Permanent
+                                                                Environment Structure: </label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control"
+                                                                    id="drone_image_analytics_permanent_env_structure_select">
+                                                                    <option value="identity">Identity Matrix</option>
+                                                                    <option value="phenotype_correlation">Phenotype
+                                                                        Correlation Matrix</option>
+                                                                    <option value="phenotype_2dspline_effect">Multi
+                                                                        2D-Spline Effect of Phenotype Correlation Matrix
+                                                                    </option>
+                                                                    <option value="phenotype_2dspline_uni_effect">Uni
+                                                                        2D-Spline Effect of Phenotype Correlation Matrix
+                                                                    </option>
+                                                                    <option value="phenotype_ar1xar1_effect">Multi
+                                                                        AR1xAR1 Effect of Phenotype Correlation Matrix
+                                                                    </option>
+                                                                    <option value="phenotype_ar1xar1_uni_effect">Uni
+                                                                        AR1xAR1 Effect of Phenotype Correlation Matrix
+                                                                    </option>
+                                                                    <option value="euclidean_rows_and_columns">Euclidean
+                                                                        Distance From Rows and Columns Matrix</option>
+                                                                    <option value="env_corr_structure">Simulated
+                                                                        Phenotype Correlation Matrix</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="drone_imagery_analytics_permanent_env_structure_phenotype_correlation_div"
+                                                        style="display:none">
+                                                        <div class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Phenotypes For
+                                                                    Correlation Matrix: </label>
+                                                                <div class="col-sm-8">
+                                                                    <div
+                                                                        id="drone_imagery_analytics_permanent_env_structure_phenotype_correlation_select_div">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="drone_imagery_analytics_permanent_env_structure_phenotype_effect_select_div"
+                                                        style="display:none">
+                                                        <div class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Phenotype For
+                                                                    2D-spline or AR1xAR1 Effects in Permanent
+                                                                    Environment Structure: </label>
+                                                                <div class="col-sm-8">
+                                                                    <div
+                                                                        id="drone_imagery_analytics_permanent_env_structure_phenotype_select_div">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Simulated Environment
+                                                                Processes: </label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control"
+                                                                    id="drone_imagery_analytics_simulated_environment_processes_select_div">
+                                                                    <option value="none">No Simulation Process</option>
+                                                                    <option value="6sims">Linear, 1D Normal, 2D Normal,
+                                                                        AR1xAR1, Random, Real Data</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div style="display:none"
+                                                            id="drone_imagery_analytics_simulated_environment_real_data_trait_select_section">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Simulated
+                                                                    Environments (Linear, 1D-Normal, 2D-Normal, Random,
+                                                                    AR1xAR1): </label>
+                                                                <div class="col-sm-8">
+                                                                    <select class="form-control"
+                                                                        id="drone_imagery_analytics_select_sim_env_change_over_time_type">
+                                                                        <option value="">Constant over timepoints
+                                                                        </option>
+                                                                        <option value="changing_gradual">Gradual change
+                                                                            over timepoints</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Simulated
+                                                                    Environment Correlation Through Time: </label>
+                                                                <div class="col-sm-8">
+                                                                    <select class="form-control"
+                                                                        id="drone_imagery_analytics_sim_env_change_over_time_correlation">
+                                                                        <option value="0.9">0.9</option>
+                                                                        <option value="0.75">0.75</option>
+                                                                        <option value="0.6">0.6</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Simulated
+                                                                    Environment Variance: </label>
+                                                                <div class="col-sm-8">
+                                                                    <select class="form-control"
+                                                                        id="drone_imagery_analytics_env_variance">
+                                                                        <option value="0.2">0.2</option>
+                                                                        <option value="0.1">0.1</option>
+                                                                        <option value="0.05">0.05</option>
+                                                                        <option value="0.01">0.01</option>
+                                                                        <option value="0.3">0.3</option>
+                                                                        <option value="0.2,0.1,0.05,0.01,0.3">
+                                                                            0.2,0.1,0.05,0.01,0.3</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Trait For Real
+                                                                    Data Environment Simulation: </label>
+                                                                <div class="col-sm-5">
+                                                                    <div
+                                                                        id="drone_imagery_analytics_simulated_environment_real_data_trait_select_div">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <button class="btn btn-default"
+                                                                        id="drone_imagery_analytics_simulated_environment_processes_select_example_button">Show
+                                                                        Simulations Example</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Fixed Effects:
+                                                            </label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control"
+                                                                    id="drone_imagery_analytics_fixed_effect_select_div">
+                                                                    <option value="replicate">Replicate</option>
+                                                                    <option value="fixed_effect_trait">Select a
+                                                                        continuous trait (e.g. soil elevation curvature)
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group"
+                                                            id="drone_imagery_analytics_fixed_effect_select_trait_div"
+                                                            style="display:none">
+                                                            <label class="col-sm-4 control-label">Fixed Effect Trait:
+                                                            </label>
+                                                            <div class="col-sm-8">
+                                                                <div
+                                                                    id="drone_imagery_analytics_fixed_effect_trait_select_div">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group"
+                                                            id="drone_imagery_analytics_fixed_effect_select_quantile_div"
+                                                            style="display:none">
+                                                            <label class="col-sm-4 control-label">Fixed Effect
+                                                                Continuous Trait Quantile Binning: </label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control"
+                                                                    id="drone_imagery_analytics_fixed_effect_select_quantile">
+                                                                    <option value="4">25% Quantiles</option>
+                                                                    <option value="5">20% Quantiles</option>
+                                                                    <option value="10">10% Quantiles</option>
+                                                                    <option value="3">33% Quantiles</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Inversion Tolerance:
+                                                            </label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control"
+                                                                    id="drone_image_analytics_tolparinv_select">
+                                                                    <option value="0.000001">0.000001</option>
+                                                                    <option value="0.00001">0.00001</option>
+                                                                    <option value="0.0001">0.0001</option>
+                                                                    <option value="0.0005">0.0005</option>
+                                                                    <option value="0.0008">0.0008</option>
+                                                                    <option value="0.001">0.001</option>
+                                                                    <option value="0.01">0.01</option>
+                                                                    <option value="0.05">0.05</option>
+                                                                    <option value="0.08">0.08</option>
+                                                                    <option value="0.1">0.1</option>
+                                                                    <option value="0.2">0.2</option>
+                                                                    <option value="0.5">0.5</option>
+                                                                    <option value="1">1</option>
+                                                                    <option value="10">10</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_analytics_select_step">Submit</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Statistics results</h3>
+                                        </div>
+                                        <hr>
+                                        <button class="btn btn-primary"
+                                            id="drone_imagery_analytics_analysis_save_blups_genetic_pe_residual"
+                                            style="display:none">Go To Save Analysis Results For Genetic and Environment
+                                            BLUPS and Residuals</button>
+                                        <button class="btn btn-primary"
+                                            id="drone_imagery_analytics_analysis_save_blups_genetic"
+                                            style="display:none">Go To Save Analysis Results For Genetic BLUPS</button>
+                                        <button class="btn btn-primary"
+                                            id="drone_imagery_analytics_analysis_save_blups_spatial"
+                                            style="display:none">Go To Save Analysis Results For Spatial BLUPS</button>
+                                        <button class="btn btn-primary"
+                                            id="drone_imagery_analytics_analysis_save_blups_pe" style="display:none">Go
+                                            To Save Analysis Results For Permanent Environmental BLUPS</button>
+                                        <button class="btn btn-primary"
+                                            id="drone_imagery_analytics_analysis_save_residuals" style="display:none">Go
+                                            To Save Analysis Results For Residuals</button>
+                                        <button class="btn btn-primary"
+                                            id="drone_imagery_analytics_analysis_save_fitted" style="display:none">Go To
+                                            Save Analysis Results For Fitted Values</button>
+                                        <hr>
+
+                                        <div id="drone_imagery_analytics_result_div">
+                                        </div>
+                                    </li>
+                                </ol>
+                                <div class="workflow-pending-message">Complete!</div>
+                                <div class="workflow-complete-message">Complete!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        Workflow.init("#drone_imagery_analytics_workflow");
+                    </script>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_imagery_analytics_temp_results_dialog"
+    name="drone_imagery_analytics_temp_results_dialog" tabindex="-1" role="dialog"
+    aria-labelledby="droneImageryAnalyticsTempResultsDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryAnalyticsTempResultsDialog">Results</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="drone_imagery_analytics_temp_results_dialog_div">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_imagery_calculate_statistics_dialog" name="drone_imagery_calculate_statistics_dialog"
+    tabindex="-1" role="dialog" aria-labelledby="droneImageryCalculateStatisticsDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryCalculateStatisticsDialog">Calculate statistics on aerial image
+                    phenotypes</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="drone_imagery_calculate_statistics_workflow" class="workflow">
+                        <ol class="workflow-prog" style="text-align: center;">
+                            <li>
+                                <div class="workflow-title">Intro</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Field Trial</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Trait Selection</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Statistics</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Results</div>
+                            </li>
+                        </ol>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <ol class="workflow-content">
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the type of analysis to perform</h3>
+                                        </div>
+
+                                        <div>
+                                            <button class="btn btn-default"
+                                                id="drone_imagery_calculate_statistics_intro_single_trial_select_step">Single
+                                                Trial Field Analysis</button>
+                                        </div>
+                                        <br />
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the field trial you are interested in. Select
+                                                only one.</h3>
+                                        </div>
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Field Trial(s): </label>
+                                                <div class="col-sm-9">
+                                                    <div id="drone_imagery_calculate_statistics_trial_select_div"></div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_calculate_statistics_field_trial_select_step">Go to
+                                                Next Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the observation variable(s) you are interested
+                                                in</h3>
+                                        </div>
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Observation Variable Type:
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control"
+                                                        id="drone_imagery_calculate_statistics_select_observation_variable_type">
+                                                        <option value="time_ontology">Time Series</option>
+                                                        <option value="">Single Trait</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Observation Variables Phenotyped
+                                                    in the Selected Field Trial: </label>
+                                                <div class="col-sm-9">
+                                                    <div id="drone_imagery_calculate_statistics_trait_select_div"></div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_calculate_statistics_trait_select_step">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select statistics to calculate</h3>
+                                        </div>
+                                        <select class="form-control"
+                                            id="drone_imagery_calculate_statistics_select_input">
+                                            <option value="">Select A Model</option>
+                                            <option value="sommer_grm_genetic_blups">Sommer GBLUPs Y~replicate+GRM.
+                                                Multivariate genetic effects using GRM</option>
+                                            <option value="sommer_grm_spatial_genetic_blups">Sommer Spatial GBLUPs
+                                                Y~replicate+GRM+spatial. Multivariate genetic + 2Dspl spatial effects
+                                            </option>
+                                            <option value="airemlf90_grm_random_regression_dap_blups">AIREMLf90 GBLUPs
+                                                Y~replicate+GRM+temporal random regression using days after planting.
+                                                Multivariate genetic + permanent environment effects</option>
+                                            <option value="airemlf90_grm_random_regression_gdd_blups">AIREMLf90 GBLUPs
+                                                Y~replicate+GRM+temporal random regression using growing degree days.
+                                                Multivariate genetic + permanent environment effects</option>
+                                        </select>
+                                        <div id="drone_imagery_calculate_statistics_relationship_matrix_type_div"
+                                            style="display:none">
+                                            <hr>
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Relationship Matrix Type:
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_imagery_calculate_statistics_relationship_matrix_type_select_div">
+                                                            <option value="">Identity</option>
+                                                            <option value="htp_phenotypes">High-throughput Phenotyping
+                                                                Data</option>
+                                                            <option value="genotypes">Genotyping Data</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="drone_imagery_calculate_statistics_genotyping_protocol_div"
+                                            class="well well-sm" style="display:none">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Genotyping Protocol To
+                                                        Calculate Genomic Relationship Matrix (optional. If none
+                                                        selected, an identity matrix is used): </label>
+                                                    <div class="col-sm-9">
+                                                        <div
+                                                            id="drone_imagery_calculate_statistics_genotyping_protocol_select_div">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Compute Genotypes From
+                                                        Parents: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_genotyping_protocol_compute_from_parents_select">
+                                                            <option value="no">No</option>
+                                                            <option value="yes">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group"
+                                                    id="drone_image_calculate_statistics_genotyping_protocol_use_parental_grms_select_div"
+                                                    style="display:none">
+                                                    <label class="col-sm-3 control-label">Use Parental Relationship
+                                                        Matrices: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_genotyping_protocol_use_parental_grms_select">
+                                                            <option value="no">No</option>
+                                                            <option value="yes">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group"
+                                                    id="drone_image_calculate_statistics_genotyping_protocol_include_pedigree_select_div"
+                                                    style="display:none">
+                                                    <label class="col-sm-3 control-label">Include Pedigree Info Into
+                                                        Relationship Matrix: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_genotyping_protocol_include_pedigree_select">
+                                                            <option value="no">No</option>
+                                                            <option value="yes">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="drone_imagery_calculate_statistics_htp_phenotypes_rel_matrix_div"
+                                            class="well well-sm" style="display:none">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">How to calculate the
+                                                        relationship matrix with high-throughput phenotypes: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_htp_phenotypes_rel_matrix_select">
+                                                            <option value="correlations">Correlations</option>
+                                                            <option value="blues">BLUEs</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Time Points to Use: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_htp_phenotypes_rel_matrix_times_select">
+                                                            <option value="all">All Available</option>
+                                                            <option value="latest_trait">Up to the latest date selected
+                                                                in traits</option>
+                                                            <option value="vegetative" disabled>Vegetative Growth Stage
+                                                            </option>
+                                                            <option value="reproductive" disabled>Reproductive Growth
+                                                                Stage</option>
+                                                            <option value="mature" disabled>Mature Growth Stage</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group"
+                                                    id="drone_image_calculate_statistics_htp_phenotypes_rel_matrix_inversion_select_div"
+                                                    style="display:none">
+                                                    <label class="col-sm-3 control-label">HTP BLUEs Inversion Tolerance:
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_htp_phenotypes_rel_matrix_inversion_select">
+                                                            <option value="0.00001">0.00001</option>
+                                                            <option value="0.0001">0.0001</option>
+                                                            <option value="0.001">0.001</option>
+                                                            <option value="0.01">0.01</option>
+                                                            <option value="0.1">0.1</option>
+                                                            <option value="0.5">0.5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="drone_image_calculate_statistics_use_area_under_curve_select_div"
+                                            style="display:none">
+                                            <hr>
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Use Cumulative
+                                                        Area-Under-Curve Phenotype in Analysis: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_use_area_under_curve_select">
+                                                            <option value="no">No</option>
+                                                            <option value="yes">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="drone_image_calculate_statistics_inversion_tolerance_select_div"
+                                            style="display:none">
+                                            <hr>
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Inversion Tolerance: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_tolparinv_select">
+                                                            <option value="0.000001">0.000001</option>
+                                                            <option value="0.00001">0.00001</option>
+                                                            <option value="0.0001">0.0001</option>
+                                                            <option value="0.001">0.001</option>
+                                                            <option value="0.01">0.01</option>
+                                                            <option value="0.05">0.05</option>
+                                                            <option value="0.08">0.08</option>
+                                                            <option value="0.1">0.1</option>
+                                                            <option value="0.2">0.2</option>
+                                                            <option value="0.5">0.5</option>
+                                                            <option value="1">1</option>
+                                                            <option value="10">10</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="drone_imagery_calculate_statistics_legendre_polynomial_div"
+                                            style="display:none">
+                                            <hr>
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Legendre Polynomial Order:
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_legendre_order_number_select">
+                                                            <option value="3">3</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="drone_imagery_calculate_statistics_marss_div" style="display:none">
+                                            $$x_t = Bx_{t-1} + u + w_t\\ w_t \sim MVN(0,Q)\\ y_t = Zx_t + a + v_t\\ v_t
+                                            \sim MVN(0,R)\\ x_0 \sim MVN(\pi, \Lambda)$$
+                                            <hr>
+                                            <select class="form-control"
+                                                id="drone_imagery_calculate_statistics_select_marss"
+                                                name="drone_imagery_calculate_statistics_select_marss">
+                                                <option value="marss_predict_last_time_point">Predict Last Time Point
+                                                </option>
+                                                <option value="marss_predict_last_two_time_points">Predict Last Two Time
+                                                    Point</option>
+                                            </select>
+                                        </div>
+                                        <div id="drone_imagery_calculate_statistics_permanent_env_structure_div"
+                                            style="display:none">
+                                            <hr>
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Permanent Environment
+                                                        Structure: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_permanent_env_structure_select">
+                                                            <option value="identity">Identity Matrix</option>
+                                                            <option value="phenotype_correlation">Phenotype Correlation
+                                                                Matrix</option>
+                                                            <option value="euclidean_rows_and_columns">Euclidean
+                                                                Distance From Rows and Columns Matrix</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="drone_imagery_calculate_statistics_permanent_env_structure_phenotype_correlation_div"
+                                                style="display:none">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">Phenotypes For Correlation
+                                                            Matrix: </label>
+                                                        <div class="col-sm-9">
+                                                            <div
+                                                                id="drone_imagery_calculate_statistics_permanent_env_structure_phenotype_correlation_select_div">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_calculate_statistics_select_step">Submit</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Statistics results</h3>
+                                        </div>
+                                        <hr>
+                                        <button class="btn btn-primary"
+                                            id="drone_imagery_calculate_statistics_analysis_save_blups_genetic_pe_residual"
+                                            style="display:none">Go To Save Analysis Results For Genetic and Environment
+                                            BLUPS and Residuals</button>
+                                        <button class="btn btn-primary"
+                                            id="drone_imagery_calculate_statistics_analysis_save_blups_genetic"
+                                            style="display:none">Go To Save Analysis Results For Genetic BLUPS</button>
+                                        <button class="btn btn-primary"
+                                            id="drone_imagery_calculate_statistics_analysis_save_blups_spatial"
+                                            style="display:none">Go To Save Analysis Results For Spatial BLUPS</button>
+                                        <button class="btn btn-primary"
+                                            id="drone_imagery_calculate_statistics_analysis_save_blups_pe"
+                                            style="display:none">Go To Save Analysis Results For Permanent Environmental
+                                            BLUPS</button>
+                                        <button class="btn btn-primary"
+                                            id="drone_imagery_calculate_statistics_analysis_save_residuals"
+                                            style="display:none">Go To Save Analysis Results For Residuals</button>
+                                        <button class="btn btn-primary"
+                                            id="drone_imagery_calculate_statistics_analysis_save_fitted"
+                                            style="display:none">Go To Save Analysis Results For Fitted Values</button>
+                                        <hr>
+                                        <div id="drone_imagery_calculate_statistics_result_div">
+                                        </div>
+                                    </li>
+                                </ol>
+                                <div class="workflow-pending-message">Complete!</div>
+                                <div class="workflow-complete-message">Complete!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        Workflow.init("#drone_imagery_calculate_statistics_workflow");
+                    </script>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_imagery_calculate_statistics_single_trial_multiseason_dialog"
+    name="drone_imagery_calculate_statistics_single_trial_multiseason_dialog" tabindex="-1" role="dialog"
+    aria-labelledby="droneImageryCalculateStatisticsSingleTrialMultiSeasonDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryCalculateStatisticsSingleTrialMultiSeasonDialog">Calculate
+                    statistics on aerial image phenotypes</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="drone_imagery_calculate_statistics_single_trial_multiseason_workflow" class="workflow">
+                        <ol class="workflow-prog" style="text-align: center;">
+                            <li>
+                                <div class="workflow-title">Field Trial</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Trait Selection</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Statistics</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Results</div>
+                            </li>
+                        </ol>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <ol class="workflow-content">
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the field trial you are interested in. Select
+                                                only one.</h3>
+                                        </div>
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Field Trial(s): </label>
+                                                <div class="col-sm-9">
+                                                    <div
+                                                        id="drone_imagery_calculate_statistics_multiseason_trial_select_div">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_calculate_statistics_multiseason_field_trial_select_step">Go
+                                                to Next Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the observation variable(s) you are interested
+                                                in</h3>
+                                        </div>
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Observation Variables Phenotyped
+                                                    in the Selected Field Trial: </label>
+                                                <div class="col-sm-9">
+                                                    <div
+                                                        id="drone_imagery_calculate_statistics_multiseason_trait_select_div">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_calculate_statistics_multiseason_trait_select_step">Go
+                                                to Next Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select statistics to calculate</h3>
+                                        </div>
+                                        <select class="form-control"
+                                            id="drone_imagery_calculate_statistics_multiseason_select_input">
+                                            <option value="">Select A Model</option>
+
+                                            <option value="sommer_grm_genetic_blups">Sommer GBLUPs Y~replicate+GRM.
+                                                Multivariate genetic effects using GRM</option>
+                                            <option value="sommer_grm_spatial_genetic_blups">Sommer Spatial GBLUPs
+                                                Y~replicate+GRM+spatial. Multivariate genetic + 2Dspl spatial effects
+                                            </option>
+                                        </select>
+                                        <hr>
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Relationship Matrix Type: </label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control"
+                                                        id="drone_imagery_calculate_statistics_multiseason_relationship_matrix_type_select_div">
+                                                        <option value="">Identity</option>
+                                                        <option value="htp_phenotypes">High-throughput Phenotyping Data
+                                                        </option>
+                                                        <option value="genotypes">Genotyping Data</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="drone_imagery_calculate_statistics_multiseason_genotyping_protocol_div"
+                                            class="well well-sm" style="display:none">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Genotyping Protocol To
+                                                        Calculate Genomic Relationship Matrix (optional. If none
+                                                        selected, an identity matrix is used): </label>
+                                                    <div class="col-sm-9">
+                                                        <div
+                                                            id="drone_imagery_calculate_statistics_multiseason_genotyping_protocol_select_div">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Compute Genotypes From
+                                                        Parents: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_multiseason_genotyping_protocol_compute_from_parents_select">
+                                                            <option value="no">No</option>
+                                                            <option value="yes">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group"
+                                                    id="drone_image_calculate_statistics_multiseason_genotyping_protocol_use_parental_grms_select_div"
+                                                    style="display:none">
+                                                    <label class="col-sm-3 control-label">Use Parental Relationship
+                                                        Matrices: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_multiseason_genotyping_protocol_use_parental_grms_select">
+                                                            <option value="no">No</option>
+                                                            <option value="yes">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group"
+                                                    id="drone_image_calculate_statistics_multiseason_genotyping_protocol_include_pedigree_select_div"
+                                                    style="display:none">
+                                                    <label class="col-sm-3 control-label">Include Pedigree Info Into
+                                                        Relationship Matrix: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_multiseason_genotyping_protocol_include_pedigree_select">
+                                                            <option value="no">No</option>
+                                                            <option value="yes">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="drone_imagery_calculate_statistics_multiseason_htp_phenotypes_rel_matrix_div"
+                                            class="well well-sm" style="display:none">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">How to calculate the
+                                                        relationship matrix with high-throughput phenotypes: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_multiseason_htp_phenotypes_rel_matrix_select">
+                                                            <option value="correlations">Correlations</option>
+                                                            <option value="blues">BLUEs</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Time Points to Use: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_multiseason_htp_phenotypes_rel_matrix_times_select">
+                                                            <option value="all">All Available</option>
+                                                            <option value="latest_trait">Up to the latest date selected
+                                                                in traits</option>
+                                                            <option value="vegetative" disabled>Vegetative Growth Stage
+                                                            </option>
+                                                            <option value="reproductive" disabled>Reproductive Growth
+                                                                Stage</option>
+                                                            <option value="mature" disabled>Mature Growth Stage</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group"
+                                                    id="drone_image_calculate_statistics_multiseason_htp_phenotypes_rel_matrix_inversion_select_div"
+                                                    style="display:none">
+                                                    <label class="col-sm-3 control-label">HTP BLUEs Inversion Tolerance:
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_multiseason_htp_phenotypes_rel_matrix_inversion_select">
+                                                            <option value="0.00001">0.00001</option>
+                                                            <option value="0.0001">0.0001</option>
+                                                            <option value="0.001">0.001</option>
+                                                            <option value="0.01">0.01</option>
+                                                            <option value="0.1">0.1</option>
+                                                            <option value="0.5">0.5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Inversion Tolerance: </label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control"
+                                                        id="drone_image_calculate_statistics_multiseason_tolparinv_select">
+                                                        <option value="0.000001">0.000001</option>
+                                                        <option value="0.00001">0.00001</option>
+                                                        <option value="0.0001">0.0001</option>
+                                                        <option value="0.001">0.001</option>
+                                                        <option value="0.01">0.01</option>
+                                                        <option value="0.05">0.05</option>
+                                                        <option value="0.08">0.08</option>
+                                                        <option value="0.1">0.1</option>
+                                                        <option value="0.2">0.2</option>
+                                                        <option value="0.5">0.5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="10">10</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="drone_imagery_calculate_statistics_multiseason_legendre_polynomial_div"
+                                            style="display:none">
+                                            <hr>
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Legendre Polynomial Order:
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_multiseason_legendre_order_number_select">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="drone_imagery_calculate_statistics_multiseason_permanent_env_structure_div"
+                                            style="display:none">
+                                            <hr>
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Permanent Environment
+                                                        Structure: </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control"
+                                                            id="drone_image_calculate_statistics_multiseason_permanent_env_structure_select">
+                                                            <option value="identity">Identity Matrix</option>
+                                                            <option value="phenotype_correlation">Phenotype Correlation
+                                                                Matrix</option>
+                                                            <option value="euclidean_rows_and_columns">Euclidean
+                                                                Distance From Rows and Columns Matrix</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="drone_imagery_calculate_statistics_multiseason_permanent_env_structure_phenotype_correlation_div"
+                                                style="display:none">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">Phenotypes For Correlation
+                                                            Matrix: </label>
+                                                        <div class="col-sm-9">
+                                                            <div
+                                                                id="drone_imagery_calculate_statistics_multiseason_permanent_env_structure_phenotype_correlation_select_div">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_calculate_statistics_multiseason_select_step">Submit</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Statistics results</h3>
+                                        </div>
+                                        <div id="drone_imagery_calculate_statistics_multiseason_result_div">
+                                        </div>
+                                    </li>
+                                </ol>
+                                <div class="workflow-pending-message">Complete!</div>
+                                <div class="workflow-complete-message">Complete!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        Workflow.init("#drone_imagery_calculate_statistics_single_trial_multiseason_workflow");
+                    </script>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="generic_save_analysis_dialog" name="generic_save_analysis_dialog" tabindex="-1"
+    role="dialog" aria-labelledby="genericStoreAnalysisDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="genericStoreAnalysisDialog">Save Analysis Results</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="generic_save_analysis_workflow" class="workflow">
+                        <ol class="workflow-prog" style="text-align: center;">
+                            <li>
+                                <div class="workflow-title">Intro</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Analysis Info</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Model Info</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Saved</div>
+                            </li>
+                        </ol>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <ol class="workflow-content">
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">This workflow will guide you through storing a new
+                                                analysis and the results, and saving model weights</h3>
+                                        </div>
+                                        <p>An analysis is stored independently; however, it maintains associations to
+                                            the results for the accessions and traits involved. In the case where a
+                                            model is being trained for predictions e.g. genomic selection or CNN image
+                                            predictions, those trained model weights can be saved.</p>
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                onclick="Workflow.complete(this); return false;">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Save analysis results</h3>
+                                        </div>
+                                        <p>This is an optional step and is only available when there are actual results
+                                            to save. Please move on to saving the model weights if there are no results
+                                            to save.</p>
+                                        <form class="form-horizontal">
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Do you want to save the analysis
+                                                    results?: </label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control"
+                                                        id="generic_save_analysis_analysis_to_save"
+                                                        name="generic_save_analysis_analysis_to_save">
+                                                        <option value="no">No</option>
+                                                        <option value="yes">Yes</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <hr>
+                                        <div>
+                                            <button class="btn btn-primary" id="generic_save_analysis_next">Go to Next
+                                                Step</button>
+                                        </div>
+                                        <br /><br />
+                                        <form class="form-horizontal" id="generic_save_analysis_analysis_form"
+                                            style="display:none">
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Analysis Name (must be unique):
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="generic_save_analysis_analysis_name"
+                                                        name="generic_save_analysis_analysis_name" type="text" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Analysis Description: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_analysis_description"
+                                                        name="generic_save_analysis_analysis_description" type="text" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Breeding Program: </label>
+                                                <div class="col-sm-9">
+                                                    <div id="generic_save_analysis_breeding_program_div"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Year: </label>
+                                                <div class="col-sm-9">
+                                                    <div id="generic_save_analysis_analysis_year_div"></div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Protocol: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="generic_save_analysis_protocol"
+                                                        name="generic_save_analysis_protocol" type="text"
+                                                        placeholder="e.g. lmer(grain_yield ~ replicate + 1|germplasmName)"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Dataset ID: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="generic_save_analysis_dataset_id"
+                                                        name="generic_save_analysis_dataset_id" type="number"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Accession Names: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_accession_names"
+                                                        name="generic_save_analysis_accession_names" type="text"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Trait Names: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="generic_save_analysis_trait_names"
+                                                        name="generic_save_analysis_trait_names" type="text" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Statistical Ontology Term:
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_statistical_ontology_term"
+                                                        name="generic_save_analysis_statistical_ontology_term"
+                                                        type="text" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Analysis Design (If left blank,
+                                                    design will be created using above accession names): </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="generic_save_analysis_design"
+                                                        name="generic_save_analysis_design" type="text" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Analysis Result Values: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="generic_save_analysis_result_values"
+                                                        name="generic_save_analysis_result_values" type="text"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Analysis Result Values Type:
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_result_values_type"
+                                                        name="generic_save_analysis_result_values_type" type="text"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Analysis Result Summary Values:
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_result_summary_values"
+                                                        name="generic_save_analysis_result_summary_values" type="text"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Compose Trait Info With Time
+                                                    Term(optional): </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_result_compose_trait_info"
+                                                        name="generic_save_analysis_result_compose_trait_info"
+                                                        type="text" disabled />
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Save model information</h3>
+                                        </div>
+                                        <p>This step may be pre-populated if you are using a model that is already saved
+                                            in the database. If there is no input enabled, move to the next step.</p>
+                                        <div class="form-horizontal" id="generic_save_analysis_model_select_form">
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Select a Model (If Not A New
+                                                    Model): </label>
+                                                <div class="col-sm-9">
+                                                    <div id="save_new_analysis_model_select_div"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <form class="form-horizontal" id="generic_save_analysis_model_form">
+                                            <div class="form-group form-group-sm"
+                                                id="generic_save_analysis_model_name_div">
+                                                <label class="col-sm-3 control-label">New Model Name (must be unique):
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="generic_save_analysis_model_name"
+                                                        name="generic_save_analysis_model_name" type="text" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm"
+                                                id="generic_save_analysis_model_description_div">
+                                                <label class="col-sm-3 control-label">New Model Description: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_model_description"
+                                                        name="generic_save_analysis_model_description" type="text" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm"
+                                                id="generic_save_analysis_model_is_public_div">
+                                                <label class="col-sm-3 control-label">New Model Is Public: </label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control"
+                                                        id="generic_save_analysis_model_is_public"
+                                                        name="generic_save_analysis_model_is_public">
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div>
+                                                <button class="btn btn-primary" id="generic_save_analysis_submit_button"
+                                                    onclick="return false;">Save Analysis Results And/Or Model</button>
+                                            </div>
+                                            <br /><br />
+
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Model ID: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="generic_save_analysis_model_id"
+                                                        name="generic_save_analysis_model_id" type="text" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Model Language: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_model_language"
+                                                        name="generic_save_analysis_model_language" type="text"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Model Type: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="generic_save_analysis_model_type"
+                                                        name="generic_save_analysis_model_type" type="text" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Model Properties: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_model_properties"
+                                                        name="generic_save_analysis_model_properties" type="text"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Application Name: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_model_application_name"
+                                                        name="generic_save_analysis_model_application_name" type="text"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Application Version: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_model_application_version"
+                                                        name="generic_save_analysis_model_application_version"
+                                                        type="text" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Model File To Archive: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="generic_save_analysis_model_file"
+                                                        name="generic_save_analysis_model_file" type="text" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Archive Model File Type: </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_model_archived_model_file_type"
+                                                        name="generic_save_analysis_model_archive_model_file_type"
+                                                        type="text" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Training Data File To Archive:
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_model_training_data_file"
+                                                        name="generic_save_analysis_model_training_data_file"
+                                                        type="text" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Archive Training Data File Type:
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_model_archived_training_data_file_type"
+                                                        name="generic_save_analysis_model_archived_training_data_file_type"
+                                                        type="text" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-group-sm">
+                                                <label class="col-sm-3 control-label">Auxiliary Files to Archive:
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control"
+                                                        id="generic_save_analysis_model_auxiliary_files"
+                                                        name="generic_save_analysis_model_auxiliary_files" type="text"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Saved successfully</h3>
+                                        </div>
+
+
+                                        <div id="generic_save_analysis_response_div"></div>
+                                    </li>
+                                </ol>
+                                <div class="workflow-pending-message">Complete!</div>
+                                <div class="workflow-complete-message">Complete!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        Workflow.init("#generic_save_analysis_workflow");
+                    </script>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="generic_save_analysis_template_dialog" name="generic_save_analysis_template_dialog"
+    tabindex="-1" role="dialog" aria-labelledby="genericStoreAnalysisTemplateDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="genericStoreAnalysisTemplateDialog">Save Analysis Results</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form class="form-horizontal" id="generic_save_analysis_template_analysis_form">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-3 control-label">Analysis Name Template (must be unique): </label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="generic_save_analysis_template_analysis_name"
+                                    name="generic_save_analysis_template_analysis_name" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-3 control-label">Analysis Description: </label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="generic_save_analysis_template_analysis_description"
+                                    name="generic_save_analysis_template_analysis_description" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-3 control-label">Breeding Program: </label>
+                            <div class="col-sm-9">
+                                <div id="generic_save_analysis_template_breeding_program_div"></div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-3 control-label">Year: </label>
+                            <div class="col-sm-9">
+                                <div id="generic_save_analysis_template_analysis_year_div"></div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div id="generic_save_analysis_template_response_div"></div>
+
+                    <hr>
+                    <div>
+                        <button class="btn btn-primary" id="generic_save_analysis_template_submit_button"
+                            onclick="return false;">Save Analysis Results And Model</button>
+                    </div>
+                    <br /><br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_imagery_calc_phenotypes_zonal_channel_dialog"
+    name="drone_imagery_calc_phenotypes_zonal_channel_dialog" tabindex="-1" role="dialog"
+    aria-labelledby="droneImageryCalcPhenotypesZonalChannelDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryCalcPhenotypesZonalChannelDialog">Select the Channel to
+                    Calculate Zonal Statistics On</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="drone_imagery_calculate_phenotypes_zonal_stats_week_term_div"></div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary"
+                    id="drone_imagery_calculate_phenotypes_zonal_stats_channel_select">Calculate Zonal
+                    Statistics</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_imagery_calc_phenotypes_trial_dialog"
+    name="drone_imagery_calc_phenotypes_trial_dialog" tabindex="-1" role="dialog"
+    aria-labelledby="droneImageryCalcPhenotypesZonalChannelTrialDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryCalcPhenotypesZonalChannelTrialDialog">Calculate Zonal
+                    Statistics Again</h4>
+            </div>
+            <div class="modal-body">
+                <div class="well well-sm">
+                    <div class="container-fluid">
+                        <div id="drone_imagery_week_term_div"></div>
+                    </div>
+                </div>
+
+                <div class="well well-sm">
+                    <div class="form-horizontal">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-5 control-label">Phenotype Process:</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" id="drone_imagery_generate_phenotypes_process_type"
+                                    name="drone_imagery_generate_phenotypes_process_type">
+                                    <option value="minimal,minimal_vi">Minimal</option>
+                                    <!-option value="extended">Extended</option-->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-5 control-label">Phenotype Plot-Polygon Margin on Top and
+                                Bottom:</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" type="number"
+                                    id="drone_imagery_generate_phenotypes_process_margin_top_bottom"
+                                    name="drone_imagery_generate_phenotypes_process_margin_top_bottom" value=5 />
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-5 control-label">Phenotype Plot-Polygon Margin on Left and
+                                Right:</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" type="number"
+                                    id="drone_imagery_generate_phenotypes_process_margin_left_right"
+                                    name="drone_imagery_generate_phenotypes_process_margin_left_right" value=5 />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="drone_imagery_generate_phenotypes_process_preview_svg_div">
+                    <div class="well well-sm">
+                        <p>LOADING... Please wait...</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary"
+                    id="drone_imagery_calculate_phenotypes_zonal_stats_trial_select">Calculate Zonal Statistics</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_imagery_minimal_vi_standard_process_dialog"
+    name="drone_imagery_minimal_vi_standard_process_dialog" tabindex="-1" role="dialog"
+    aria-labelledby="droneImageryMinimalVIStandardProcessDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryMinimalVIStandardProcessDialog">Run Minimal Vegetative Index
+                    Standard Process</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="drone_imagery_minimal_vi_standard_process_week_term_div"></div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="drone_imagery_minimal_vi_standard_process_select">Run
+                    Minimal Vegetative Index Standard Process</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_imagery_extended_standard_process_dialog"
+    name="drone_imagery_extended_standard_process_dialog" tabindex="-1" role="dialog"
+    aria-labelledby="droneImageryExtenededStandardProcessDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryExtenededStandardProcessDialog">Run Extended Standard Process
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="drone_imagery_extended_standard_process_week_term_div"></div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="drone_imagery_extended_standard_process_select">Run
+                    Extended Standard Process</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_imagery_apply_other_vi_dialog" name="drone_imagery_apply_other_vi_dialog"
+    tabindex="-1" role="dialog" aria-labelledby="droneImageryApplyOtherVIDialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryApplyOtherVIDialog">Apply Other Available Vegetation Indices
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="drone_imagery_apply_other_vi_div"></div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="drone_imagery_apply_other_vi_select">Run Selected
+                    Vegetation Indices</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="drone_imagery_calculate_gdd_dialog" name="drone_imagery_calculate_gdd_dialog" tabindex="-1"
+    role="dialog" aria-labelledby="droneImageryCalculateGDDDialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryCalculateGDDDialog">Calculate Growing Degree Days</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="well well-sm">
+                        Growing Degree Days (GDD) are calculated using the average high and low temperature for each day
+                        from planting date to the date of the imaging event. <a
+                            href="https://www.canr.msu.edu/news/understanding_growing_degree_days" target=_blank>More
+                            Information on GDD</a>. The average daily high and low temperature is fetched from the <a
+                            href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2" target=_blank>NOAA NCDC</a>.
+                    </div>
+
+                    <div id="drone_imagery_calculate_gdd_time_div"></div>
+
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Base Temperature:</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="drone_imagery_calculate_gdd_base_temperature_input">
+                                    <option value="">Select One</option>
+                                    <option value="10">10F</option>
+                                    <option value="11">11F</option>
+                                    <option value="12">12F</option>
+                                    <option value="13">13F</option>
+                                    <option value="14">14F</option>
+                                    <option value="15">15F</option>
+                                    <option value="16">16F</option>
+                                    <option value="17">17F</option>
+                                    <option value="18">18F</option>
+                                    <option value="19">19F</option>
+                                    <option value="20">20F</option>
+                                    <option value="21">21F</option>
+                                    <option value="22">22F</option>
+                                    <option value="23">23F</option>
+                                    <option value="24">24F</option>
+                                    <option value="25">25F</option>
+                                    <option value="26">26F</option>
+                                    <option value="27">27F</option>
+                                    <option value="28">28F</option>
+                                    <option value="29">29F</option>
+                                    <option value="30">30F</option>
+                                    <option value="31">31F</option>
+                                    <option value="32">32F</option>
+                                    <option value="33">33F</option>
+                                    <option value="34">34F</option>
+                                    <option value="35">35F</option>
+                                    <option value="36">36F</option>
+                                    <option value="37">37F</option>
+                                    <option value="38">38F</option>
+                                    <option value="39">39F</option>
+                                    <option value="40">40F</option>
+                                    <option value="41">41F</option>
+                                    <option value="42">42F</option>
+                                    <option value="43">43F</option>
+                                    <option value="44">44F</option>
+                                    <option value="45">45F</option>
+                                    <option value="46">46F</option>
+                                    <option value="47">47F</option>
+                                    <option value="48">48F</option>
+                                    <option value="49">49F</option>
+                                    <option value="50">50F</option>
+                                    <option value="51">51F</option>
+                                    <option value="52">52F</option>
+                                    <option value="53">53F</option>
+                                    <option value="54">54F</option>
+                                    <option value="55">55F</option>
+                                    <option value="56">56F</option>
+                                    <option value="57">57F</option>
+                                    <option value="58">58F</option>
+                                    <option value="59">59F</option>
+                                    <option value="60">60F</option>
+                                    <option value="61">61F</option>
+                                    <option value="62">62F</option>
+                                    <option value="63">63F</option>
+                                    <option value="64">64F</option>
+                                    <option value="65">65F</option>
+                                    <option value="66">66F</option>
+                                    <option value="67">67F</option>
+                                    <option value="68">68F</option>
+                                    <option value="69">69F</option>
+                                    <option value="70">70F</option>
+                                    <option value="71">71F</option>
+                                    <option value="72">72F</option>
+                                    <option value="73">73F</option>
+                                    <option value="74">74F</option>
+                                    <option value="75">75F</option>
+                                    <option value="76">76F</option>
+                                    <option value="77">77F</option>
+                                    <option value="78">78F</option>
+                                    <option value="79">79F</option>
+                                    <option value="80">80F</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Formula:</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="drone_imagery_calculate_gdd_formula_input">
+                                    <option value="average_daily_temp_sum">GDD = sum_over_days ( ( (Max Temp + Min
+                                        Temp)/2 ) - Base Temp)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="drone_imagery_upload_gdd_submit">Calculate</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_imagery_calculate_precipitation_dialog"
+    name="drone_imagery_calculate_precipitation_dialog" tabindex="-1" role="dialog"
+    aria-labelledby="droneImageryCalculatePrecipitationDialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryCalculatePrecipitationDialog">Calculate Precipitation Sum</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="well well-sm">
+                        The average daily precipitation is fetched from the <a
+                            href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2" target=_blank>NOAA NCDC</a>.
+                    </div>
+
+                    <div id="drone_imagery_calculate_precipitation_time_div"></div>
+
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Formula:</label>
+                            <div class="col-sm-9">
+                                <select class="form-control"
+                                    id="drone_imagery_calculate_precipitation_sum_formula_input">
+                                    <option value="average_daily_precipitation_sum">Precipitation Sum = sum_over_days (
+                                        Average Daily Precipitation )</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary"
+                    id="drone_imagery_upload_precipitation_sum_submit">Calculate</button>
+            </div>
+        </div>
+    </div>
+</div>

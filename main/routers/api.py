@@ -183,6 +183,11 @@ async def post_new_imaging_vehicle(request: VehicleRequest):
     print(request)
     return JSONResponse(content={"error": "", "success": "true", "new_vehicle_id": request.vehicle_name + "_12345"})
 
+@router.post("/drone_imagery/new_imaging_vehicle_rover")
+async def post_new_imaging_vehicle_rover(request: VehicleRequest):
+    print(request)
+    return JSONResponse(content={"error": "", "success": "true", "new_vehicle_id": request.vehicle_name + "_12345"})
+
 @router.post("/drone_imagery/upload_drone_imagery")
 async def post_upload_drone_imagery(
     request: Request,

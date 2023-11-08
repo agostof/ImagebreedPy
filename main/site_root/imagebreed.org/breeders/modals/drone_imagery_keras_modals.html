@@ -1,0 +1,930 @@
+
+<div class="modal fade" id="drone_imagery_keras_cnn_dialog" name="drone_imagery_keras_cnn_dialog" tabindex="-1"
+    role="dialog" aria-labelledby="droneImageryKerasCNNDialog" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryKerasCNNDialog">Train and Predict Using Keras CNN Model</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="drone_imagery_keras_cnn_train_link">Train Keras CNN Model Using
+                        Images and Phenotypes In Database</button>
+                    <br /><br />
+                    <button class="btn btn-primary" id="drone_imagery_keras_cnn_predict_link">Predict Phenotypes Using
+                        Images and Trained Keras Model CNN</button>
+                    <br /><br />
+                    <button class="btn btn-primary"
+                        id="drone_imagery_keras_cnn_autoencoder_vegetation_indices_link">Calculate NDVI and NDRE from
+                        Keras CNN Autoencoder Model</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_imagery_train_keras_cnn_dialog" name="drone_imagery_train_keras_cnn_dialog"
+    tabindex="-1" role="dialog" aria-labelledby="droneImageryTrainKerasCNNDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryTrainKerasCNNDialog">Train Keras CNN Model</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div id="drone_imagery_train_keras_model_workflow" class="workflow">
+                        <ol class="workflow-prog">
+                            <li>
+                                <div class="workflow-title">Intro</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Field Trial(s)</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Trait Selection</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Population Selection</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Imaging Event Selection</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Images Selection</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Confirm</div>
+                            </li>
+                        </ol>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <ol class="workflow-content">
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">This workflow will guide you through training a keras
+                                                model using images and phenotypes in the database.</h3>
+                                        </div>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                onclick="Workflow.complete(this); return false;">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the field trial(s) you are interested in</h3>
+                                        </div>
+
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Field Trial(s): </label>
+                                                <div class="col-sm-9">
+                                                    <div id="drone_imagery_train_keras_cnn_trial_select_div"></div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_train_keras_model_field_trial_select_step">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the trait you are interested in predicting</h3>
+                                        </div>
+
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Trait Phenotyped in the Selected
+                                                    Field Trial(s) To Predict: </label>
+                                                <div class="col-sm-9">
+                                                    <div id="drone_imagery_train_keras_cnn_trait_select_div"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Traits Phenotyped in the Selected
+                                                    Field Trial(s) As Auxiliary Trait(s): </label>
+                                                <div class="col-sm-9">
+                                                    <div id="drone_imagery_train_keras_cnn_aux_trait_select_div"></div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br /><br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_train_keras_model_trait_select_step">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the population(s) you are specifically
+                                                interested in predicting. Leave blank if you want to train on images
+                                                from all germplasm in the selected field trial(s).</h3>
+                                        </div>
+
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label">Population(s) to include in
+                                                    training (Leave blank to include images from all germplasm in the
+                                                    selected field trials): </label>
+                                                <div class="col-sm-7">
+                                                    <div id="drone_imagery_train_keras_cnn_population_select_div"></div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br /><br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_train_keras_model_population_select_step">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the imaging event(s) you are interested in
+                                                using in the model</h3>
+                                        </div>
+
+
+                                        <table class="table table-bordered table-hover"
+                                            id="drone_image_train_keras_drone_runs_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Select <br /><input type="checkbox"
+                                                            id="drone_image_train_keras_drone_runs_table_select_all"
+                                                            checked>Select All</th>
+                                                    <th>Imaging Event Name</th>
+                                                    <th>Imaging Event Type</th>
+                                                    <th>Description</th>
+                                                    <th>Imaging Event Date</th>
+                                                    <th>Imaging Event GDD</th>
+                                                    <th>Camera Type</th>
+                                                    <th>Field Trial Name</th>
+                                                    <th>Field Trial Description</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_train_keras_model_drone_run_select_step">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the types of images you are interested in using
+                                                in the model</h3>
+                                        </div>
+
+
+                                        <table class="table table-bordered table-hover"
+                                            id="drone_image_train_keras_plot_polygon_image_type_table">
+                                            <thead>
+                                                <tr>
+                                                    <!--th>Select <br/><input type="checkbox" id="drone_image_train_keras_plot_polygon_image_type_table_select_all" checked>Select All</th-->
+                                                    <th>Select</th>
+                                                    <th>Field Trial</th>
+                                                    <th>Imaging Event Name</th>
+                                                    <th>Imaging Event Band Name</th>
+                                                    <th>Imaging Event Band Type</th>
+                                                    <th>Plot Polygon Type</th>
+                                                    <th>Number of Images</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_train_keras_model_plot_polygon_type_select_step">Go to
+                                                Next Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Train the model!</h3>
+                                        </div>
+
+
+                                        <br /><br />
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Model Type: </label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="drone_image_train_keras_model_type"
+                                                        name="drone_image_train_keras_model_type">
+                                                        <option value="KerasCNNSequentialSoftmaxCategorical">Keras CNN
+                                                            Sequential 16-32-64-128-512 Linear Regression</option>
+                                                        <option value="KerasCNNMLPExample">Keras CNN and MLP Example
+                                                        </option>
+                                                        <option value="SimpleKerasTunerCNNSequentialSoftmaxCategorical">
+                                                            Simple Keras Tuner CNN Sequential 16-32-64-128-512 Linear
+                                                            Regression</option>
+                                                        <option value="KerasTunerCNNSequentialSoftmaxCategorical">Keras
+                                                            Tuner CNN Sequential 16-32-64-128-512 Linear Regression
+                                                        </option>
+                                                        <option value="KerasCNNInceptionResNetV2">Keras CNN
+                                                            InceptionResNetV2 Linear Regression</option>
+                                                        <option value="KerasCNNLSTMDenseNet121ImageNetWeights">Keras
+                                                            LSTM DenseNet121 ImageNet Weights Linear Regression</option>
+                                                        <option value="KerasCNNInceptionResNetV2ImageNetWeights">Keras
+                                                            CNN Pre-Trained InceptionResNetV2 ImageNet Weights Linear
+                                                            Regression</option>
+                                                        <option value="KerasCNNDenseNet121ImageNetWeights">Keras
+                                                            DenseNet121 ImageNet Weights Linear Regression</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Model Name: </label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control" type="text"
+                                                        id="drone_image_train_keras_model_name"
+                                                        name="drone_image_train_keras_model_name" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Model Description: </label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control" type="text"
+                                                        id="drone_image_train_keras_model_desc"
+                                                        name="drone_image_train_keras_model_desc" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Genotyping Protocol for GRM:
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <div id="drone_image_train_keras_model_genotyping_protocol_div">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Use Parents of Accessions For
+                                                    In-silico Hybrid: </label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control"
+                                                        id="drone_image_train_keras_model_use_parents_grm"
+                                                        name="drone_image_train_keras_model_use_parents_grm">
+                                                        <option value="yes">Yes, GRM for parents of accessions if
+                                                            genotyped</option>
+                                                        <option value="no">No, GRM for accessions if genotyped</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_train_keras_model_confirm_step">Train and Save Keras
+                                                CNN Model</button>
+                                        </div>
+
+                                        <div id="drone_imagery_train_keras_model_results_div">
+                                        </div>
+                                    </li>
+                                </ol>
+                                <div class="workflow-pending-message">Complete!</div>
+                                <div class="workflow-complete-message">Complete!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        Workflow.init("#drone_imagery_train_keras_model_workflow");
+                    </script>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_imagery_predict_keras_cnn_dialog" name="drone_imagery_predict_keras_cnn_dialog"
+    tabindex="-1" role="dialog" aria-labelledby="droneImageryPredictKerasCNNDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryPredictKerasCNNDialog">Predict Phenotypes Using Trained Keras
+                    CNN Model</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div id="drone_imagery_predict_keras_model_workflow" class="workflow">
+                        <ol class="workflow-prog">
+                            <li>
+                                <div class="workflow-title">Intro</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Field Trial</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Keras CNN Model Selection</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Population Selection</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Imaging Event Selection</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Images Selection</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Confirm</div>
+                            </li>
+                        </ol>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <ol class="workflow-content">
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">This workflow will guide you through predicting
+                                                phenotypes from trained Kera CNN Models and images in the database.</h3>
+                                        </div>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                onclick="Workflow.complete(this); return false;">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the field trial(s) you are interested in
+                                                sourcing images from for prediction</h3>
+                                        </div>
+
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Field Trial: </label>
+                                                <div class="col-sm-9">
+                                                    <div id="drone_imagery_predict_keras_cnn_trial_select_div"></div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_predict_keras_model_field_trial_select_step">Go to
+                                                Next Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the Keras CNN Model for prediction</h3>
+                                        </div>
+
+
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Trained Keras CNN Model: </label>
+                                                <div class="col-sm-9">
+                                                    <div id="drone_imagery_predict_keras_cnn_model_select_div"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Traits Phenotyped in the Selected
+                                                    Field Trial(s) As Auxiliary Trait(s) (Currently Only For Mixed
+                                                    MLP/CNN Model): </label>
+                                                <div class="col-sm-9">
+                                                    <div id="drone_imagery_predict_keras_cnn_aux_trait_select_div">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br /><br />
+
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_predict_keras_model_select_step">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the population(s) you are specifically
+                                                interested in predicting. Leave blank if you want to train on images
+                                                from all germplasm in the selected field trial(s).</h3>
+                                        </div>
+
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label">Population(s) to include in
+                                                    training (Leave blank to include images from all germplasm in the
+                                                    selected field trials): </label>
+                                                <div class="col-sm-7">
+                                                    <div id="drone_imagery_predict_keras_cnn_population_select_div">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br /><br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_predict_keras_model_population_select_step">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the imaging event(s) you are interested in
+                                                sourcing images from for prediction</h3>
+                                        </div>
+
+
+                                        <table class="table table-bordered table-hover"
+                                            id="drone_image_predict_keras_drone_runs_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Select <br /><input type="checkbox"
+                                                            id="drone_image_predict_keras_drone_runs_table_select_all"
+                                                            checked>Select All</th>
+                                                    <th>Imaging Event Name</th>
+                                                    <th>Imaging Event Type</th>
+                                                    <th>Description</th>
+                                                    <th>Imaging Event Date</th>
+                                                    <th>Imaging Event GDD</th>
+                                                    <th>Camera Type</th>
+                                                    <th>Field Trial Name</th>
+                                                    <th>Field Trial Description</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_predict_keras_model_drone_run_select_step">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the types of images you are interested sourcing
+                                                images from for prediction</h3>
+                                        </div>
+
+
+                                        <table class="table table-bordered table-hover"
+                                            id="drone_image_predict_keras_plot_polygon_image_type_table">
+                                            <thead>
+                                                <tr>
+                                                    <!--th>Select <br/><input type="checkbox" id="drone_image_predict_keras_plot_polygon_image_type_table_select_all" checked>Select All</th-->
+                                                    <th>Select</th>
+                                                    <th>Field Trial</th>
+                                                    <th>Imaging Event Name</th>
+                                                    <th>Imaging Event Band Name</th>
+                                                    <th>Imaging Event Band Type</th>
+                                                    <th>Plot Polygon Type</th>
+                                                    <th>Number of Images</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_predict_keras_model_plot_polygon_type_select_step">Go
+                                                to Next Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Predict Phenotypes!</h3>
+                                        </div>
+
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Prediction Model: </label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control"
+                                                        id="drone_imagery_keras_model_prediction_select">
+                                                        <option value="standard_cnn">Standard CNN Prediction</option>
+                                                        <option value="cnn_prediction_mixed_model">CNN Prediction For
+                                                            Mixed Model Prediction</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <div id="drone_imagery_keras_model_prediction_cnn_prediction_mixed_model_div"
+                                            style="display:none">
+                                            $$y_t = \beta_{CNN,pred} + rep + 1|\mbox{GermplasmName}$$
+                                        </div>
+                                        <br /><br />
+
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_predict_keras_model_confirm_step">Submit</button>
+                                        </div>
+
+                                        <div id="drone_imagery_predict_keras_model_results_div">
+                                        </div>
+                                    </li>
+                                </ol>
+                                <div class="workflow-pending-message">Complete!</div>
+                                <div class="workflow-complete-message">Complete!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        Workflow.init("#drone_imagery_predict_keras_model_workflow");
+                    </script>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_imagery_keras_cnn_autoencoder_vi_dialog"
+    name="drone_imagery_keras_cnn_autoencoder_vi_dialog" tabindex="-1" role="dialog"
+    aria-labelledby="droneImageryAutoencoderKerasCNNVIDialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryAutoencoderKerasCNNVIDialog">NDVI and NDRE from autoencoder
+                    Keras CNN</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div id="drone_imagery_autoencoder_keras_model_vi_workflow" class="workflow">
+                        <ol class="workflow-prog">
+                            <li>
+                                <div class="workflow-title">Intro</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Field Trial Training</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Training</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Images Training</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Field Trial Prediction</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Prediction</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Images Prediction</div>
+                            </li>
+                            <li>
+                                <div class="workflow-title">Confirm</div>
+                            </li>
+                        </ol>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <ol class="workflow-content">
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">This workflow will guide you through extracted NDVI
+                                                and NDRE values for autoencoder Keras CNN.</h3>
+                                        </div>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                onclick="Workflow.complete(this); return false;">Go to Next
+                                                Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the field trial(s) you are interested in
+                                                sourcing images from for training</h3>
+                                        </div>
+
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Field Trial: </label>
+                                                <div class="col-sm-9">
+                                                    <div
+                                                        id="drone_imagery_autoencoder_keras_cnn_vi_trial_training_select_div">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_autoencoder_keras_vi_model_field_trial_training_select_step">Go
+                                                to Next Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the imaging event(s) you are interested in
+                                                sourcing images from for training</h3>
+                                        </div>
+
+
+                                        <table class="table table-bordered table-hover"
+                                            id="drone_image_autoencoder_keras_vi_drone_runs_training_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Select <br /><input type="checkbox"
+                                                            id="drone_image_autoencoder_keras_vi_drone_runs_training_table_select_all"
+                                                            checked>Select All</th>
+                                                    <th>Imaging Event Name</th>
+                                                    <th>Imaging Event Type</th>
+                                                    <th>Description</th>
+                                                    <th>Imaging Event Date</th>
+                                                    <th>Imaging Event GDD</th>
+                                                    <th>Camera Type</th>
+                                                    <th>Field Trial Name</th>
+                                                    <th>Field Trial Description</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_autoencoder_keras_vi_model_drone_run_training_select_step">Go
+                                                to Next Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the types of images you are interested sourcing
+                                                images from for training</h3>
+                                        </div>
+
+
+                                        <table class="table table-bordered table-hover"
+                                            id="drone_image_autoencoder_keras_vi_plot_polygon_image_type_training_table">
+                                            <thead>
+                                                <tr>
+                                                    <!--th>Select <br/><input type="checkbox" id="drone_image_autoencoder_keras_vi_plot_polygon_image_type_training_table_select_all" checked>Select All</th-->
+                                                    <th>Select</th>
+                                                    <th>Field Trial</th>
+                                                    <th>Imaging Event Name</th>
+                                                    <th>Imaging Event Band Name</th>
+                                                    <th>Imaging Event Band Type</th>
+                                                    <th>Plot Polygon Type</th>
+                                                    <th>Number of Images</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_autoencoder_keras_vi_model_plot_polygon_type_training_select_step">Go
+                                                to Next Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the field trial(s) you are interested in
+                                                sourcing images from for prediction</h3>
+                                        </div>
+
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Field Trial: </label>
+                                                <div class="col-sm-9">
+                                                    <div id="drone_imagery_autoencoder_keras_cnn_vi_trial_select_div">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_autoencoder_keras_vi_model_field_trial_select_step">Go
+                                                to Next Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the imaging event(s) you are interested in
+                                                sourcing images from for prediction</h3>
+                                        </div>
+
+
+                                        <table class="table table-bordered table-hover"
+                                            id="drone_image_autoencoder_keras_vi_drone_runs_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Select <br /><input type="checkbox"
+                                                            id="drone_image_autoencoder_keras_vi_drone_runs_table_select_all"
+                                                            checked>Select All</th>
+                                                    <th>Imaging Event Name</th>
+                                                    <th>Imaging Event Type</th>
+                                                    <th>Description</th>
+                                                    <th>Imaging Event Date</th>
+                                                    <th>Imaging Event GDD</th>
+                                                    <th>Camera Type</th>
+                                                    <th>Field Trial Name</th>
+                                                    <th>Field Trial Description</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_autoencoder_keras_vi_model_drone_run_select_step">Go
+                                                to Next Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Select the types of images you are interested sourcing
+                                                images from for prediction</h3>
+                                        </div>
+
+
+                                        <table class="table table-bordered table-hover"
+                                            id="drone_image_autoencoder_keras_vi_plot_polygon_image_type_table">
+                                            <thead>
+                                                <tr>
+                                                    <!--th>Select <br/><input type="checkbox" id="drone_image_autoencoder_keras_vi_plot_polygon_image_type_table_select_all" checked>Select All</th-->
+                                                    <th>Select</th>
+                                                    <th>Field Trial</th>
+                                                    <th>Imaging Event Name</th>
+                                                    <th>Imaging Event Band Name</th>
+                                                    <th>Imaging Event Band Type</th>
+                                                    <th>Plot Polygon Type</th>
+                                                    <th>Number of Images</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                        <br /><br />
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_autoencoder_keras_vi_model_plot_polygon_type_select_step">Go
+                                                to Next Step</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="pagetitle">
+                                            <h3 id="pagetitle_h3">Calculate NDVI and NDRE Autoencoder Phenotypes</h3>
+                                        </div>
+
+                                        <br /><br />
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Autoencoder Model: </label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control"
+                                                        id="drone_imagery_keras_model_autoencoder_vi_select">
+                                                        <option value="keras_autoencoder_64_32_filters_16_latent">Keras
+                                                            Autoencoder</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <div>
+                                            <button class="btn btn-primary"
+                                                id="drone_imagery_autoencoder_keras_vi_model_confirm_step">Submit</button>
+                                        </div>
+
+                                        <div id="drone_imagery_autoencoder_keras_vi_model_results_div">
+                                        </div>
+                                    </li>
+                                </ol>
+                                <div class="workflow-pending-message">Complete!</div>
+                                <div class="workflow-complete-message">Complete!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        Workflow.init("#drone_imagery_autoencoder_keras_model_vi_workflow");
+                    </script>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

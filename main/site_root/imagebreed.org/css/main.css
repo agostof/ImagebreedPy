@@ -1,0 +1,208 @@
+li {
+    margin-bottom: 0;
+}
+
+body {
+    padding-top: 30px;
+}
+
+@media (min-width: 0px) and (max-width: 768px) {
+    body {
+        padding-top: 30px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 856px) {
+    body {
+        padding-top: 90px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sgn_brand_name {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .sgn_brand_name {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
+@media (min-width: 768px) {
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+        padding-bottom: 10px;
+    }
+
+    .dropdown-menu>li>a {
+        line-height: 14px;
+        font-size: 14px;
+        margin-top: 0px;
+        padding-top: 0px;
+    }
+}
+
+.devbar_tmp {
+    width: 100%;
+    padding: 5px;
+    margin: 0px 0 0px 0px;
+    text-align: center;
+    background-color: #eef;
+    border-bottom: 2px solid #905;
+}
+
+.ui-autocomplete {
+    z-index: 2147483647;
+}
+
+.fc-div h2 {
+    font-size: 1.4em;
+}
+
+.fc-day-header {
+    font-size: 0.9em;
+}
+
+.datepicker {
+    z-index: 1151 !important;
+}
+
+ol.workflow-prog {
+    display: table;
+    table-layout: fixed;
+    list-style-type: none;
+    text-align: center;
+    margin: 0 0 1em 0;
+    padding: 0;
+    width: 100%;
+    counter-reset: step;
+    font-size: 16px;
+}
+
+ol.workflow-prog>li {
+    display: table-cell;
+    text-align: center;
+    color: black;
+    position: relative;
+    font-size: 11px;
+}
+
+ol.workflow-prog>li>div.workflow-title {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+ol.workflow-prog>li::after {
+    font-size: 14px;
+    width: 30px;
+    height: 30px;
+    content: counter(step);
+    counter-increment: step;
+    line-height: 1em;
+    padding-top: 0.3em;
+    border: 4px solid;
+    display: block;
+    text-align: center;
+    position: relative;
+    border-radius: 50%;
+    margin: 0 auto 0 auto;
+    background: white;
+    border-color: #bbb;
+    color: #bbb;
+}
+
+ol.workflow-prog>li.workflow-complete::after {
+    border-color: #5fba7d;
+    color: white;
+    background: #5fba7d;
+}
+
+@keyframes pend_blink {
+    0% {}
+
+    50% {
+        border-color: white;
+    }
+
+    100% {}
+}
+
+ol.workflow-prog>li.workflow-pending::after {
+    animation: pend_blink 2s linear infinite;
+}
+
+ol.workflow-prog>li.workflow-skipped::after {
+    border-color: #eeb700;
+    background: #eeb700;
+    color: white;
+}
+
+ol.workflow-prog>li.workflow-focus::after {
+    border-color: #5fba7d;
+    background: white;
+    color: #5fba7d;
+}
+
+
+ol.workflow-prog>li::before {
+    width: 100%;
+    height: 2px;
+    content: '';
+    display: block;
+    position: relative;
+    top: 34px;
+    margin-left: 50%;
+    background-color: #bbb;
+}
+
+ol.workflow-prog>li:last-of-type::before {
+    width: 0%;
+}
+
+ol.workflow-prog>li.workflow-complete::before {
+    background: #5fba7d;
+}
+
+ol.workflow-content {
+    display: block;
+    table-layout: fixed;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+ol.workflow-content>li {
+    width: 100%;
+    position: relative;
+    display: none;
+}
+
+ol.workflow-content>li.workflow-focus {
+    display: block;
+}
+
+div.workflow-pending-message {
+    display: none;
+}
+
+div.workflow-complete-message {
+    display: none;
+}
+
+div.workflow-message-show {
+    display: block;
+}
+
+.straightLine,
+.hrLine {
+    position: absolute;
+    background-color: red;
+    transition: transform .05s ease-in-out;
+}
