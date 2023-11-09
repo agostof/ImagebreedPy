@@ -240,11 +240,19 @@
 
             jQuery('#drone_rover_upload_drone_runs_table').DataTable({
                 destroy: true,
-                ajax: '/api/drone_imagery/drone_runs?is_rover=1&select_checkbox_name=upload_drone_rover_drone_run_select&field_trial_ids=' + upload_drone_rover_field_trial_ids_string + '&disable=1'
+                ajax: {
+                    url: '/api/drone_imagery/drone_runs?is_rover=1&select_checkbox_name=upload_drone_rover_drone_run_select&field_trial_ids=' + upload_drone_rover_field_trial_ids_string + '&disable=1',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                    }
+                }
             });
 
             jQuery.ajax({
                 url: '/api/drone_imagery/check_field_trial_ids?field_trial_ids=' + upload_drone_rover_field_trial_ids_string,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                },
                 success: function (response) {
                     console.log(response);
                     if (response.html) {
@@ -280,6 +288,9 @@
         function _show_rover_vehicle_battery_select() {
             jQuery.ajax({
                 url: '/api/drone_imagery/get_vehicle?vehicle_id=' + upload_drone_rover_vehicle_id,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                },
                 success: function (response) {
                     console.log(response);
                     if (response.success) {

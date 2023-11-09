@@ -6,8 +6,9 @@ function delete_phenotype_data_by_trial_id(trial_id) {
 
 	jQuery.ajax( {
       url: '/ajax/breeders/trial/'+trial_id+'/delete/phenotypes',
-      beforeSend: function(){
+      beforeSend: function(xhr){
         jQuery('#working_modal').modal('show');
+        xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
       },
       success: function(response) {
         jQuery('#working_modal').modal('hide');
@@ -34,9 +35,10 @@ function delete_layout_data_by_trial_id(trial_id) {
 
         jQuery.ajax( {
             url: '/ajax/breeders/trial/'+trial_id+'/delete/layout',
-            beforeSend: function(){
+            beforeSend: function(xhr){
                 jQuery('#working_modal').modal('show');
                 jQuery('#working_msg').html("Deleting trial layout...<br />");
+                xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
             },
             success: function(response) {
                 if (response.error) {

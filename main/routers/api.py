@@ -1,19 +1,18 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request, UploadFile, File, Form, Depends
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import RedirectResponse, HTMLResponse, JSONResponse
-from fastapi import Request, UploadFile, File, Form
+from fastapi.responses import JSONResponse
 from typing import Annotated
-from main.services.models import AnalyticsRequest, AnalyticsResponse, VehicleRequest, AnalysisQueryRequest;
-import requests
-import os
-import main.services.utils as utils
 
-templates = Jinja2Templates(directory=utils.DIRECTORY + "breeders")
+from main.services.models import AnalyticsRequest, AnalyticsResponse, VehicleRequest, AnalysisQueryRequest
+from main.services.settings import DIRECTORY
+from main.services.auth import User, getCurrentUser
+
+templates = Jinja2Templates(directory=DIRECTORY + "html/")
 router = APIRouter(prefix="/api")
 
 
 @router.get("/drone_rover/drone_rover_top")
-async def get_drone_rover_top():
+async def get_drone_rover_top(current_user: User = Depends(getCurrentUser)):
     MOCK_droneRoverEvents = [
         ["imaging event 1", "rover", "description", "2022-10-10", "", "EarthSense", "test_trial1", "test_trial1"],
         ["imaging event 2", "rover", "description 2", "2023-10-10", "", "EarthSense", "test_trial1", "test_trial1"],
@@ -21,7 +20,7 @@ async def get_drone_rover_top():
     return JSONResponse(content={"data": MOCK_droneRoverEvents})
 
 @router.get("/drone_imagery/raw_drone_imagery_top")
-async def get_raw_drone_imagery_top():
+async def get_raw_drone_imagery_top(current_user: User = Depends(getCurrentUser)):
     MOCK_droneImageryEvents = [
         ["imaging event 1", "drone", "description", "2022-10-10", "", "EarthSense", "test_trial1", "test_trial1"],
         ["imaging event 2", "drone", "description 2", "2023-10-10", "", "EarthSense", "test_trial1", "test_trial1"],
@@ -29,7 +28,7 @@ async def get_raw_drone_imagery_top():
     return JSONResponse(content={"data": MOCK_droneImageryEvents})
 
 @router.get("/drone_rover/processed_plot_point_cloud_count")
-async def get_processed_plot_point_cloud_count():
+async def get_processed_plot_point_cloud_count(current_user: User = Depends(getCurrentUser)):
     MOCK_pointCloudCount = {
         "pc123":{
             "total_plot_point_cloud_count": 10,
@@ -47,7 +46,7 @@ async def get_processed_plot_point_cloud_count():
     return JSONResponse(content={"data": MOCK_pointCloudCount})
 
 @router.get("/drone_imagery/raw_drone_imagery_plot_image_count")
-async def get_raw_drone_imagery_plot_image_count():
+async def get_raw_drone_imagery_plot_image_count(current_user: User = Depends(getCurrentUser)):
     MOCK_imageCount = {
         "pc123":{
             "total_plot_point_cloud_count": 10,
@@ -66,7 +65,7 @@ async def get_raw_drone_imagery_plot_image_count():
 
 
 @router.get("/drone_imagery/get_vehicle")
-async def get_vehicle(vehicle_id: str):
+async def get_vehicle(vehicle_id: str, current_user: User = Depends(getCurrentUser)):
     MOCK_vehicles = {
             "r123": {"properties":
               {"batteries":
@@ -122,7 +121,7 @@ async def get_vehicle(vehicle_id: str):
 
 
 @router.get("/drone_imagery/drone_runs")
-async def get_drone_runs(select_checkbox_name: str, field_trial_ids: str, disable: int = 0, is_rover: int = 0):
+async def get_drone_runs(select_checkbox_name: str, field_trial_ids: str, disable: int = 0, is_rover: int = 0, current_user: User = Depends(getCurrentUser)):
     MOCK_droneRuns = [
         ["", "imaging event 1", "rover", "description", "2022-10-10", "", "EarthSense", "test_trial1", "test_trial1"],
         ["", "imaging event 2", "rover", "description 2", "2023-10-10", "", "EarthSense", "test_trial1", "test_trial1"],
@@ -139,7 +138,7 @@ async def get_imaging_vehicles():
 
 
 @router.get("/drone_imagery/check_field_trial_ids")
-async def get_check_field_trial_ids(field_trial_ids: str):
+async def get_check_field_trial_ids(field_trial_ids: str, current_user: User = Depends(getCurrentUser)):
     MOCK_fieldTrialIds = {
         "field_trial_names": [field_trial_ids],
         "html": "The "+field_trial_ids+" field trial has planting date: 2023-November-01 and NOAA Station ID: GHCND:USC00300331.",
@@ -149,7 +148,7 @@ async def get_check_field_trial_ids(field_trial_ids: str):
 
 
 @router.get("/drone_imagery/upload_drone_imagery_check_drone_name")
-async def get_check_drone_name(drone_run_name: str):
+async def get_check_drone_name(drone_run_name: str, current_user: User = Depends(getCurrentUser)):
     MOCK_checkDroneName = {
         "success": drone_run_name,
         "error": ""
@@ -157,7 +156,7 @@ async def get_check_drone_name(drone_run_name: str):
     return JSONResponse(content=MOCK_checkDroneName)
 
 @router.get("/drone_imagery/export_drone_runs")
-async def get_export_drone_runs(drone_run_project_ids: str, field_trial_id: str):
+async def get_export_drone_runs(drone_run_project_ids: str, field_trial_id: str, current_user: User = Depends(getCurrentUser)):
     MOCK_exportRuns = {
         "imaging_events_spreadsheet": "https://brapi.org",
         "orthoimage_zipfile": "https://brapi.org",
@@ -173,24 +172,25 @@ async def post_upload_drone_rover(
     upload_drone_rover_zipfile_lidar_earthsense_collections: Annotated[UploadFile, File()],
     rover_run_company_id: Annotated[str, Form()],
     rover_run_field_trial_id: Annotated[str, Form()],
+    current_user: User = Depends(getCurrentUser)
     ):
     print(upload_drone_rover_zipfile_lidar_earthsense_collections)
     print(rover_run_company_id)
     return templates.TemplateResponse("drone_rover.html", {"request": request, "id": id})
 
 @router.post("/drone_imagery/new_imaging_vehicle")
-async def post_new_imaging_vehicle(request: VehicleRequest):
+async def post_new_imaging_vehicle(request: VehicleRequest, current_user: User = Depends(getCurrentUser)):
     print(request)
     return JSONResponse(content={"error": "", "success": "true", "new_vehicle_id": request.vehicle_name + "_12345"})
 
 @router.post("/drone_imagery/new_imaging_vehicle_rover")
-async def post_new_imaging_vehicle_rover(request: VehicleRequest):
+async def post_new_imaging_vehicle_rover(request: VehicleRequest, current_user: User = Depends(getCurrentUser)):
     print(request)
     return JSONResponse(content={"error": "", "success": "true", "new_vehicle_id": request.vehicle_name + "_12345"})
 
 @router.post("/drone_imagery/upload_drone_imagery")
 async def post_upload_drone_imagery(
-    request: Request,
+    request: Request, current_user: User = Depends(getCurrentUser),
     upload_drone_images_zipfile: Annotated[UploadFile, File()] = None,
     upload_drone_images_panel_zipfile: Annotated[UploadFile, File()] = None,
     drone_run_band_stitched_ortho_report: Annotated[UploadFile, File()] = None,
@@ -215,7 +215,7 @@ async def post_upload_drone_imagery(
     return templates.TemplateResponse("drone_imagery.html", {"request": request, "id": id})
 
 @router.post("/drone_imagery/calculate_analytics")
-async def post_calculate_analytics(request: AnalyticsRequest) -> AnalyticsResponse:
+async def post_calculate_analytics(request: AnalyticsRequest, current_user: User = Depends(getCurrentUser)) -> AnalyticsResponse:
     print(request)
     response = AnalyticsResponse(
         analytics_protocol_id="apid123", 
@@ -225,24 +225,6 @@ async def post_calculate_analytics(request: AnalyticsRequest) -> AnalyticsRespon
     return response
 
 @router.post("/drone_imagery/analysis_query")
-async def post_analysis_query (request: AnalysisQueryRequest):
+async def post_analysis_query (request: AnalysisQueryRequest, current_user: User = Depends(getCurrentUser)):
     print(request)
     return JSONResponse(content={"error": "", "success": "true", "file": "https://brapi.org"})
-
-
-@router.get("/{path:path}")
-async def read_ajax_api(path: str, in_request: Request):
-    url = f'{utils.UPSTREAM_HOST}/api/{path}'
-    print("API CATCHALL", url, in_request.query_params)
-    print("API CATCHALL HEADERS", in_request.headers)
-    app_cookies = utils.dump_cookies(in_request)
-    print("APP_COOKIES", app_cookies)
-    
-    print("API", path)
-    ajax_api_path = os.path.join("api", path)
-    print("REDIRECTING TO", ajax_api_path)
-    
-    return HTMLResponse(content=f"API call not found", status_code=404)
-
-
-print("break point")

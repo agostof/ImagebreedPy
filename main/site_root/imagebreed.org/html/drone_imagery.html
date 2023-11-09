@@ -1,5 +1,5 @@
 {% extends "template.html" %}
-{% block includes %} 
+{% block includes %}
 <script src="/js/drone_imagery_upload.js" type="text/javascript"></script>
 {% endblock %}
 {% block title %} <h3 id="pagetitle_h3">Manage Aerial Imagery</h3> {% endblock %}
@@ -25,7 +25,7 @@
                                     Effects.hideElement('manage_drone_imagery_main_content');
                                     
                                     return false;" id="manage_drone_imagery_main_offswitch">
-                                    <img class="collapser_img" src="/documents/img/collapser_minus.png" />
+                                    <img class="collapser_img" src="/img/collapser_minus.png" />
                                     <h4 style='display:inline'>Aerial Imagery</h4>
                                 </a>
                                 <a class="collapser collapser_show" target="" href="" style="display:none;" onclick="
@@ -33,7 +33,7 @@
                                     Effects.showElement('manage_drone_imagery_main_content');
                                     
                                     return false;" id="manage_drone_imagery_main_onswitch">
-                                    <img class="collapser_img" src="/documents/img/collapser_plus.png" />
+                                    <img class="collapser_img" src="/img/collapser_plus.png" />
                                     <h4 style='display:inline'>Aerial Imagery</h4>
                                 </a>
                             </td>
@@ -76,13 +76,21 @@
                                         jQuery(document).ready(function () {
 
                                             var raw_drone_imagery_table = jQuery('#raw_drone_image_datatable').DataTable({
-                                                'ajax': '/api/drone_imagery/raw_drone_imagery_top',
+                                                'ajax': {
+                                                    url: '/api/drone_imagery/raw_drone_imagery_top',
+                                                    beforeSend: function (xhr) {
+                                                        xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                                                    }
+                                                },
                                                 'paging': false
                                             });
 
                                             raw_drone_imagery_table.on('draw', function () {
                                                 jQuery.ajax({
                                                     url: '/api/drone_imagery/raw_drone_imagery_plot_image_count',
+                                                    beforeSend: function (xhr) {
+                                                        xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                                                    },
                                                     success: function (response) {
                                                         //console.log(response);
                                                         jQuery('div[name="drone_run_band_total_plot_image_div"]').html('<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" >No Plot Images Saved</a></h4></div></div></div>');
@@ -109,8 +117,9 @@
                                                 if (confirm("Are you sure you want to remove this image?")) {
                                                     jQuery.ajax({
                                                         url: '/api/drone_imagery/remove_image?image_id=' + image_id,
-                                                        beforeSend: function () {
+                                                        beforeSend: function (xhr) {
                                                             jQuery("#working_modal").modal("show");
+                                                            xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
                                                         },
                                                         success: function (response) {
                                                             console.log(response);
@@ -135,8 +144,9 @@
                                         function manageDroneImageryDroneRunBandDisplay(project_drone_run_band_id) {
                                             jQuery.ajax({
                                                 url: '/api/drone_imagery/raw_drone_imagery_drone_run_band?drone_run_band_project_id=' + project_drone_run_band_id,
-                                                beforeSend: function () {
+                                                beforeSend: function (xhr) {
                                                     jQuery("#working_modal").modal("show");
+                                                    xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
                                                 },
                                                 success: function (response) {
                                                     console.log(response);

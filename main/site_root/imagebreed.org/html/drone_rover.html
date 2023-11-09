@@ -19,7 +19,7 @@
                       Effects.hideElement('manage_drone_rover_main_content');
                       
                       return false;" id="manage_drone_rover_main_offswitch">
-                  <img class="collapser_img" src="/documents/img/collapser_minus.png" />
+                  <img class="collapser_img" src="/img/collapser_minus.png" />
                   <h4 style='display:inline'>Ground Rover</h4>
                 </a>
                 <a class="collapser collapser_show" target="" href="" style="display:none;"
@@ -28,7 +28,7 @@
                       Effects.showElement('manage_drone_rover_main_content');
                       
                       return false;">
-                  <img class="collapser_img" src="/documents/img/collapser_plus.png" />
+                  <img class="collapser_img" src="/img/collapser_plus.png" />
                   <h4 style='display:inline'>Ground Rover</h4>
                 </a>
               </td>
@@ -64,13 +64,21 @@
                     jQuery(document).ready(function () {
 
                       var raw_drone_rover_table = jQuery('#raw_drone_rover_datatable').DataTable({
-                        'ajax': '/api/drone_rover/drone_rover_top',
+                        'ajax': {
+                          url: '/api/drone_rover/drone_rover_top',
+                          beforeSend: function (xhr) {
+                            xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                          }},
                         'paging': false
                       });
 
                       raw_drone_rover_table.on('draw', function () {
                         jQuery.ajax({
                           url: '/api/drone_rover/processed_plot_point_cloud_count',
+                          beforeSend: function (xhr) {
+                            jQuery("#working_modal").modal("show");
+                            xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                          },
                           success: function (response) {
                             //console.log(response);
                             jQuery('div[name="drone_run_band_total_plot_point_cloud_div"]').html('<div class="panel-group"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" >No Plot Point Clouds Saved</a></h4></div></div></div>');
@@ -100,18 +108,30 @@
 
                       jQuery.ajax({
                         url: '/ajax/image/' + original_image_id,
+                        beforeSend: function (xhr) {
+                          jQuery("#working_modal").modal("show");
+                          xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                        },
                         success: function (response) {
                           console.log(response);
                           var html = '<a href="/image/view/' + original_image_id + '" target="_blank">' + response.medium_tag + '</a><br/>';
 
                           jQuery.ajax({
                             url: '/ajax/image/' + filtered_image_id,
+                            beforeSend: function (xhr) {
+                              jQuery("#working_modal").modal("show");
+                              xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                            },
                             success: function (response) {
                               console.log(response);
                               html = html + '<a href="/image/view/' + filtered_image_id + '" target="_blank">' + response.medium_tag + '</a>';
 
                               jQuery.ajax({
                                 url: '/api/drone_rover/get_collection?drone_run_project_id=' + project_drone_run_id + '&collection_number=' + collection_number,
+                                beforeSend: function (xhr) {
+                                  jQuery("#working_modal").modal("show");
+                                  xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                                },
                                 success: function (response) {
                                   console.log(response);
 

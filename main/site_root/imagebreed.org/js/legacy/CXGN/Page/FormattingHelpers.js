@@ -61,7 +61,7 @@ CXGN.Page.FormattingHelpers.update_numerical_range_input = function(id,unitstr) 
 CXGN.Page.FormattingHelpers.modesel_switch_highlight =  function(frombutton,tobutton) {
   var id_leaves      = new Array( '_bl','_b','_br','_l','_c','_r','_tl','_t','_tr');
   var needs_fg_image = new Array(   1,    0,    1,   1,   0,   1,    1,   0,    1 );
-  var image_file_name = new Array('<img class="modesel" src="/documents/img/modesel','.gif" alt="" />');
+  var image_file_name = new Array('<img class="modesel" src="/img/modesel','.gif" alt="" />');
 
   for(var i=0;i<id_leaves.length;i++) {
     if(frombutton) {

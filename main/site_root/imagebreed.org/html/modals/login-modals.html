@@ -294,8 +294,9 @@
             //alert(JSON.stringify(form_data));
             jQuery.ajax({
                 url: '/ajax/user/new',
-                beforeSend: function () {
+                beforeSend: function (xhr) {
                     jQuery('#working_modal').modal('show');
+                    xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
                 },
                 data: form_data,
                 success: function (r) {

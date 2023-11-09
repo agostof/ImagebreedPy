@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+{% block title %} <h1>Welcome to ImageBreed!</h1> {% endblock %}
+
+
+{% block content %}
+<script type="text/javascript">
+  jQuery(document).ready(function () {
+    var hash = window.location.hash.substr(1);
+
+    var result = hash.split('&').reduce(function (res, item) {
+      var parts = item.split('=');
+      res[parts[0]] = parts[1];
+      return res;
+    }, {});
+
+    localStorage.setItem("access_token", "Bearer " + result["access_token"]);
+    window.location.replace('/');
+  });
+</script>
+
+
+{% endblock %}

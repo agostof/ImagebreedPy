@@ -1,21 +1,20 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import RedirectResponse, HTMLResponse, JSONResponse
-from fastapi import Request
-import requests
-import os
-import main.services.utils as utils
+from fastapi.responses import JSONResponse
 
-templates = Jinja2Templates(directory=utils.DIRECTORY + "breeders")
+from main.services.settings import DIRECTORY
+from main.services.auth import User, getCurrentUser
+
+templates = Jinja2Templates(directory=DIRECTORY + "html/")
 router = APIRouter(prefix="/ajax")
 
 
 @router.get("/user/login_button_html")
-async def get_login_button_html():
+async def get_login_button_html(current_user: User = Depends(getCurrentUser)):
     return JSONResponse(content={"logged_in": ""})
 
 @router.get("/html/select/private_companies")
-async def get_private_companies():
+async def get_private_companies(current_user: User = Depends(getCurrentUser)):
     MOCK_privateCompanies = [{
         "name": "test company",
         "id": "123"
@@ -26,7 +25,7 @@ async def get_private_companies():
     return JSONResponse(content={"options": MOCK_privateCompanies})
 
 @router.get("/html/select/trials")
-async def get_trials():
+async def get_trials(current_user: User = Depends(getCurrentUser)):
     MOCK_trials = [{
         "name": "test trial 1",
         "id": "t123"
@@ -37,7 +36,7 @@ async def get_trials():
     return JSONResponse(content={"options": MOCK_trials})
 
 @router.get("/html/select/imaging_event_vehicles_rovers")
-async def get_imaging_event_vehicles_rovers():
+async def get_imaging_event_vehicles_rovers(current_user: User = Depends(getCurrentUser)):
     MOCK_rovers = [{
         "name": "test rover 1",
         "id": "r123"
@@ -48,7 +47,7 @@ async def get_imaging_event_vehicles_rovers():
     return JSONResponse(content={"options": MOCK_rovers})
 
 @router.get("/html/select/imaging_event_vehicles")
-async def get_imaging_event_vehicles():
+async def get_imaging_event_vehicles(current_user: User = Depends(getCurrentUser)):
     MOCK_drones = [{
         "name": "test drone 1",
         "id": "d123"
@@ -59,7 +58,7 @@ async def get_imaging_event_vehicles():
     return JSONResponse(content={"options": MOCK_drones})
 
 @router.get("/html/select/breeding_programs")
-async def get_breeding_programs():
+async def get_breeding_programs(current_user: User = Depends(getCurrentUser)):
     MOCK_breedingPrograms = [{
         "name": "test Breeding Program 1",
         "id": "bp123"
@@ -70,7 +69,7 @@ async def get_breeding_programs():
     return JSONResponse(content={"options": MOCK_breedingPrograms})
 
 @router.get("/html/select/years")
-async def get_years():
+async def get_years(current_user: User = Depends(getCurrentUser)):
     MOCK_years = [{
         "name": "2020",
         "id": "2020"
@@ -81,7 +80,7 @@ async def get_years():
     return JSONResponse(content={"options": MOCK_years})
 
 @router.get("/html/select/models")
-async def get_models():
+async def get_models(current_user: User = Depends(getCurrentUser)):
     MOCK_years = [{
         "name": "basic model",
         "id": "m123"
@@ -92,7 +91,7 @@ async def get_models():
     return JSONResponse(content={"options": MOCK_years})
 
 @router.get("/html/select/traits")
-async def get_traits():
+async def get_traits(current_user: User = Depends(getCurrentUser)):
     MOCK_traits = [{
         "name": "basic trait",
         "id": "t123"
@@ -103,7 +102,7 @@ async def get_traits():
     return JSONResponse(content={"options": MOCK_traits})
 
 @router.get("/html/select/drone_imagery_plot_polygon_types")
-async def get_drone_imagery_plot_polygon_types():
+async def get_drone_imagery_plot_polygon_types(current_user: User = Depends(getCurrentUser)):
     MOCK_polygonTypes = [{
         "name": "basic drone_imagery_plot_polygon_types",
         "id": "pp123"
@@ -114,7 +113,7 @@ async def get_drone_imagery_plot_polygon_types():
     return JSONResponse(content={"options": MOCK_polygonTypes})
 
 @router.get("/html/select/genotyping_protocol")
-async def get_genotyping_protocol():
+async def get_genotyping_protocol(current_user: User = Depends(getCurrentUser)):
     MOCK_genotypingProtocol = [{
         "name": "basic protocol",
         "id": "gp123"
@@ -123,22 +122,3 @@ async def get_genotyping_protocol():
         "id": "gp456"
     }]
     return JSONResponse(content={"options": MOCK_genotypingProtocol})
-
-
-
-@router.get("/{path:path}")
-async def read_ajax_api(path: str, in_request: Request):
-    url = f'{utils.UPSTREAM_HOST}/ajax/{path}'
-    print("AJAX CATCHALL", url, in_request.query_params)
-    print("AJAX CATCHALL HEADERS", in_request.headers)
-    app_cookies = utils.dump_cookies(in_request)
-    print("APP_COOKIES", app_cookies)
-    
-    print("AJAX API", path)
-    ajax_api_path = os.path.join("ajax", path)
-    print("REDIRECTING TO", ajax_api_path)
-    
-    return HTMLResponse(content=f"ajax call not found", status_code=404)
-
-
-print("break point")

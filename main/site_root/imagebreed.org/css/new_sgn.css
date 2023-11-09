@@ -160,7 +160,7 @@ a.mytools, a.mytools:link, a.mytools:visited {
 }
 
 /*a.external, a[href ^="http:"] {
-  background: url(/documents/img/external.png) center right no-repeat;
+  background: url(/img/external.png) center right no-repeat;
   padding-right: 13px;
 }
 */
@@ -170,7 +170,7 @@ a.footer {
 }
 
 a[href ^="mailto:"]  { 
-	background: url(/documents/img/mail_icon.gif) center right no-repeat;
+	background: url(/img/mail_icon.gif) center right no-repeat;
 	padding-right: 16px;
 }
 
@@ -746,20 +746,20 @@ td.modesel_b_hi {
 }
 
 /* now for the background images */
-td.modesel_l_hi {       background: url(/documents/img/modesel_l_back_hi.gif) repeat-y top right; }
-td.modesel_r_hi {       background: url(/documents/img/modesel_r_back_hi.gif) repeat-y top left; }
-td.modesel_t_hi {       background: url(/documents/img/modesel_t_hi.gif) repeat-x bottom left; }
-td.modesel_b_hi {       background: url(/documents/img/modesel_b_hi.gif) repeat-x top left; }
+td.modesel_l_hi {       background: url(/img/modesel_l_back_hi.gif) repeat-y top right; }
+td.modesel_r_hi {       background: url(/img/modesel_r_back_hi.gif) repeat-y top left; }
+td.modesel_t_hi {       background: url(/img/modesel_t_hi.gif) repeat-x bottom left; }
+td.modesel_b_hi {       background: url(/img/modesel_b_hi.gif) repeat-x top left; }
 td.modesel_c_hi { 
-  background: #bbbbe5 url(/documents/img/modesel_content_back_hi.gif) repeat-x top left; 
+  background: #bbbbe5 url(/img/modesel_content_back_hi.gif) repeat-x top left; 
 /*   padding-top: 2px; */
 }
-td.modesel_l {       background: url(/documents/img/modesel_l_back.gif) repeat-y top left; }
-td.modesel_r {       background: url(/documents/img/modesel_r_back.gif) repeat-y top left; }
-td.modesel_t {       background: url(/documents/img/modesel_t.gif) repeat-x bottom left; }
-td.modesel_b {       background: url(/documents/img/modesel_b.gif) repeat-x top left; }
+td.modesel_l {       background: url(/img/modesel_l_back.gif) repeat-y top left; }
+td.modesel_r {       background: url(/img/modesel_r_back.gif) repeat-y top left; }
+td.modesel_t {       background: url(/img/modesel_t.gif) repeat-x bottom left; }
+td.modesel_b {       background: url(/img/modesel_b.gif) repeat-x top left; }
 td.modesel_c { 
-  background: #dbdbdb  url(/documents/img/modesel_content_back.gif) repeat-x top left; 
+  background: #dbdbdb  url(/img/modesel_content_back.gif) repeat-x top left; 
 }
 
 /*****************************     MULTILEVEL SELECT BOX     *****************************************/
@@ -780,12 +780,12 @@ a.multilevel_modesel_parent, a.multilevel_modesel_parent:visited, a.multilevel_m
   color: black;
   display: block;	
   width: 90%;
-  background: #e6e6e6 url(/documents/img/gr_wht_trans.png) top left repeat-x;
+  background: #e6e6e6 url(/img/gr_wht_trans.png) top left repeat-x;
 }
 
 a.multilevel_modesel, a.multilevel_modesel:visited,
 a.multilevel_modesel_parent, a.multilevel_modesel_parent:visited {
-  background: #e6e6e6 url(/documents/img/gr_wht_trans_2.png) top left repeat-x;
+  background: #e6e6e6 url(/img/gr_wht_trans_2.png) top left repeat-x;
 }
 
 a.multilevel_modesel_parent_active {
@@ -987,7 +987,7 @@ td.toolbar_l, td.toolbar_r {
   width: 10px;
 }
 td.toolbar_content { 
-  background: white url(/documents/img/toolbar_content_back.gif) repeat-x top left;
+  background: white url(/img/toolbar_content_back.gif) repeat-x top left;
   padding: 3px 23px 3px 4px;
   color: black;
   font-size: 125%;
@@ -1150,7 +1150,7 @@ div.abstract_optional_show {
 /* style for displaying lists of links to file folders */
 /* currently used on bulk download ftp listing */
 a.folderlink:before {
-	content:   url(/documents/img/folder_yellow_3.png); 
+	content:   url(/img/folder_yellow_3.png); 
 	vertical-align: -8px;
 }
 a.folderlink { 
