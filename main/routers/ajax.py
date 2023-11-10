@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse
 
 from main.services.settings import DIRECTORY
-from main.services.auth import User, getCurrentUser
+from main.services.auth import User, getCurrentUser, getAccessToken
 from main.services.vehicles import getVehicleSummaries
+from main.services.brapi import getStudySummaries
 
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
 router = APIRouter(prefix="/ajax")
@@ -21,7 +22,9 @@ async def get_private_companies(current_user: User = Depends(getCurrentUser)):
     return JSONResponse(content={"options": MOCK_privateCompanies})
 
 @router.get("/html/select/trials")
-async def get_trials(current_user: User = Depends(getCurrentUser)):
+async def get_trials( request: Request, current_user: User = Depends(getCurrentUser)):
+    token = getAccessToken(request)
+    trials = getStudySummaries(token=token)
     MOCK_trials = [{
         "name": "test trial 1",
         "id": "t123"
@@ -29,30 +32,19 @@ async def get_trials(current_user: User = Depends(getCurrentUser)):
         "name": "test trial 2",
         "id": "t456"
     }]
-    return JSONResponse(content={"options": MOCK_trials})
+    return JSONResponse(content={"options": trials})
 
 @router.get("/html/select/imaging_event_vehicles_rovers")
 async def get_imaging_event_vehicles_rovers(current_user: User = Depends(getCurrentUser)):
     rovers = getVehicleSummaries(includeDrones= False, includeRovers= True)
-    MOCK_rovers = [{
-        "name": "test rover 1",
-        "id": "r123"
-    },{
-        "name": "test rover 2",
-        "id": "r456"
-    }]
+
     return JSONResponse(content={"options": rovers})
 
 @router.get("/html/select/imaging_event_vehicles")
 async def get_imaging_event_vehicles(current_user: User = Depends(getCurrentUser)):
-    MOCK_drones = [{
-        "name": "test drone 1",
-        "id": "d123"
-    },{
-        "name": "test drone 2",
-        "id": "d456"
-    }]
-    return JSONResponse(content={"options": MOCK_drones})
+    drones = getVehicleSummaries(includeDrones= True, includeRovers= False)
+
+    return JSONResponse(content={"options": drones})
 
 @router.get("/html/select/breeding_programs")
 async def get_breeding_programs(current_user: User = Depends(getCurrentUser)):

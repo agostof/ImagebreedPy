@@ -8,9 +8,7 @@ class Settings(BaseSettings):
     oidc_issuer: str
     oidc_client_id: str
     db_uri: str
-    oauth_domain: str = ""
-    oauth_api_audience: str = ""
-    oauth_algorithms: str = ""
+    brapi_base_url: str
     
     model_config = SettingsConfigDict(env_file='.env', env_file_encoding='utf-8')
 

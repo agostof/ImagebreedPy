@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Security
+from fastapi import APIRouter, Security, Request
 from pydantic import BaseModel
 from requests.models import PreparedRequest
 from fastapi_resource_server import JwtDecodeOptions, OidcResourceServer
@@ -33,6 +33,10 @@ def getCurrentUser(claims: dict = Security(auth_scheme)):
     claims.update(username=claims["preferred_username"])
     user = User.model_validate(claims)
     return user
+
+def getAccessToken(request: Request):
+    authorization: str = request.headers.get("Authorization")
+    return authorization
 
 def getOAuthLoginURL(redirectURI: str):
     req = PreparedRequest()
