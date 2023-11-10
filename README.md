@@ -1,17 +1,34 @@
 # Imagebreed-FastAPI
 
-This attemps to implement Imagebreed's functionality using Python.
+This project attempts to implement Imagebreed's functionality using Python.
 
-This app servers static content downloaded from the Imagebreed app. It is currently setup to capture and forward requests in a Man-In-The-Middle fashion. Static content is served from the [site_root](site_root) directory.
+## Project Install
 
-## Starting server
+This project requires Python 3.
 
-Make sure to have the dependencies installed (use of an enviroment recomended):
-pip install -r requirements-locked.txt
+After checking out the project into a working directory, use the following commands to get setup and running:
 
 ```bash
-# assuming pyenv virtual environment adjust as needed
-pyenv activate ImageBreed
-python -m uvicorn app:app  --port 8000 --reload
+# setup virtual python environment
+$> python -m venv .venv
+
+# activate the virtual environment
+$> source .venv/Scripts/activate
+
+# install dependencies
+$> pip install -r requirements-locked.txt
+
+# copy and edit the .env file (or set environment variables)
+$> cp example.env .env
+$> vim .env
+
+# initialize the database
+$> python -m main.database.db --drop --init
+
+# run the server
+$> python -m uvicorn main.app:app --port 8000 --reload
 ```
 
+## Docker Install
+
+Coming Soon!

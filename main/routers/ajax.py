@@ -4,14 +4,10 @@ from fastapi.responses import JSONResponse
 
 from main.services.settings import DIRECTORY
 from main.services.auth import User, getCurrentUser
+from main.services.vehicles import getVehicleSummaries
 
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
 router = APIRouter(prefix="/ajax")
-
-
-@router.get("/user/login_button_html")
-async def get_login_button_html(current_user: User = Depends(getCurrentUser)):
-    return JSONResponse(content={"logged_in": ""})
 
 @router.get("/html/select/private_companies")
 async def get_private_companies(current_user: User = Depends(getCurrentUser)):
@@ -37,6 +33,7 @@ async def get_trials(current_user: User = Depends(getCurrentUser)):
 
 @router.get("/html/select/imaging_event_vehicles_rovers")
 async def get_imaging_event_vehicles_rovers(current_user: User = Depends(getCurrentUser)):
+    rovers = getVehicleSummaries(includeDrones= False, includeRovers= True)
     MOCK_rovers = [{
         "name": "test rover 1",
         "id": "r123"
@@ -44,7 +41,7 @@ async def get_imaging_event_vehicles_rovers(current_user: User = Depends(getCurr
         "name": "test rover 2",
         "id": "r456"
     }]
-    return JSONResponse(content={"options": MOCK_rovers})
+    return JSONResponse(content={"options": rovers})
 
 @router.get("/html/select/imaging_event_vehicles")
 async def get_imaging_event_vehicles(current_user: User = Depends(getCurrentUser)):

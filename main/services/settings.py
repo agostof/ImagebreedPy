@@ -7,6 +7,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     oidc_issuer: str
     oidc_client_id: str
+    db_uri: str
     oauth_domain: str = ""
     oauth_api_audience: str = ""
     oauth_algorithms: str = ""

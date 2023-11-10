@@ -57,14 +57,6 @@ class AnalyticsResponse(BaseModel):
     stats_out_htp_rel_tempfile_out_string: str | None = None
     error: str | None = None
 
-
-class VehicleRequest(BaseModel):
-    vehicle_name: str | None = None
-    vehicle_description: str | None = None
-    battery_names: str | None = None
-    private_company_id: str | None = None
-
-
 class AnalysisQueryRequest(BaseModel):
     vehicle_name: list[str] | None = None
     observation_variable_id_list: list[str] | None = None

@@ -3,7 +3,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse
 from typing import Annotated
 
-from main.services.models import AnalyticsRequest, AnalyticsResponse, VehicleRequest, AnalysisQueryRequest
+from main.services.models import AnalyticsRequest, AnalyticsResponse, AnalysisQueryRequest
+from main.services.vehicles import VehicleRequest
 from main.services.settings import DIRECTORY
 from main.services.auth import User, getCurrentUser
 
