@@ -14,13 +14,7 @@ router = APIRouter(prefix="/ajax")
 async def get_private_companies(request: Request, current_user: User = Depends(AuthUtils.getCurrentUser)):
     token = AuthUtils.getAccessToken(request)
     privateCompanies = BrAPI.getProgramSummaries(token=token)
-    MOCK_privateCompanies = [{
-        "name": "test company",
-        "id": "123"
-    },{
-        "name": "test company 2",
-        "id": "456"
-    }]
+
     return JSONResponse(content={"options": privateCompanies})
 
 @router.get("/html/select/trials")
@@ -43,26 +37,24 @@ async def get_imaging_event_vehicles(current_user: User = Depends(AuthUtils.getC
     return JSONResponse(content={"options": drones})
 
 @router.get("/html/select/breeding_programs")
-async def get_breeding_programs(current_user: User = Depends(AuthUtils.getCurrentUser)):
-    MOCK_breedingPrograms = [{
-        "name": "test Breeding Program 1",
-        "id": "bp123"
-    },{
-        "name": "test Breeding Program 2",
-        "id": "bp456"
-    }]
-    return JSONResponse(content={"options": MOCK_breedingPrograms})
+async def get_breeding_programs(request: Request, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    token = AuthUtils.getAccessToken(request)
+    programs = BrAPI.getProgramSummaries(token=token)
+    
+    return JSONResponse(content={"options": programs})
 
 @router.get("/html/select/years")
-async def get_years(current_user: User = Depends(AuthUtils.getCurrentUser)):
-    MOCK_years = [{
-        "name": "2020",
-        "id": "2020"
-    },{
-        "name": "2021",
-        "id": "2021"
-    }]
-    return JSONResponse(content={"options": MOCK_years})
+async def get_years(request: Request, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    token = AuthUtils.getAccessToken(request)
+    brapi_seasons = BrAPI.getSeasons(token=token)
+    years = []
+
+    for season in brapi_seasons.result.data:
+        years.append({
+            "name": f"{season.seasonName} - {season.year}",
+            "id": season.seasonDbId
+            })
+    return JSONResponse(content={"options": years})
 
 @router.get("/html/select/models")
 async def get_models(current_user: User = Depends(AuthUtils.getCurrentUser)):
@@ -76,15 +68,11 @@ async def get_models(current_user: User = Depends(AuthUtils.getCurrentUser)):
     return JSONResponse(content={"options": MOCK_years})
 
 @router.get("/html/select/traits")
-async def get_traits(current_user: User = Depends(AuthUtils.getCurrentUser)):
-    MOCK_traits = [{
-        "name": "basic trait",
-        "id": "t123"
-    },{
-        "name": "advanced trait",
-        "id": "t456"
-    }]
-    return JSONResponse(content={"options": MOCK_traits})
+async def get_traits(request: Request, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    token = AuthUtils.getAccessToken(request)
+    traits = BrAPI.getTraitSummaries(token=token)
+    
+    return JSONResponse(content={"options": traits})
 
 @router.get("/html/select/drone_imagery_plot_polygon_types")
 async def get_drone_imagery_plot_polygon_types(current_user: User = Depends(AuthUtils.getCurrentUser)):

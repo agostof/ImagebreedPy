@@ -2,11 +2,12 @@ import requests
 from requests.models import PreparedRequest
 
 from main.services.settings import settings
-from main.services.brapi_models import StudyListResponse, ProgramListResponse
+from main.services.brapi_core_models import StudyListResponse, ProgramListResponse, SeasonListResponse
+from main.services.brapi_pheno_models import ObservationVariableListResponse
 
 BASE_URL = settings.brapi_base_url
 
-class BrAPI_class:
+class BrAPI_class():
     def getStudies(self, token:str= "") -> StudyListResponse:
         req = PreparedRequest()
         url = BASE_URL + "/studies"
@@ -64,5 +65,52 @@ class BrAPI_class:
 
         return programSummaries
 
+
+    def getSeasons(self, token:str= "") -> SeasonListResponse:
+        req = PreparedRequest()
+        url = BASE_URL + "/seasons"
+        queryParams = {
+            "pageSize" : 100
+            }
+        req.prepare_url(url, queryParams)
+        print(req.url)
+
+        headers = {
+            "Authorization": token
+        }
+        
+        responseJSON = requests.get(req.url, headers=headers)
+        response = SeasonListResponse.model_validate(responseJSON.json())
+        return response
+
+
+    def getTraits(self, token:str= "") -> ObservationVariableListResponse:
+        req = PreparedRequest()
+        url = BASE_URL + "/variables"
+        queryParams = {
+            "pageSize" : 100
+            }
+        req.prepare_url(url, queryParams)
+        print(req.url)
+
+        headers = {
+            "Authorization": token
+        }
+        
+        responseJSON = requests.get(req.url, headers=headers)
+        response = ObservationVariableListResponse.model_validate(responseJSON.json())
+        return response
+    
+    def getTraitSummaries(self, token:str= ""):
+        traits: ObservationVariableListResponse = self.getTraits(token=token)
+        traitSummaries = []
+        for trait in traits.result.data:
+            traitSummaries.append({
+                "name": trait.observationVariableName,
+                "id": trait.observationVariableDbId
+            })
+
+        return traitSummaries
+    
 
 BrAPI = BrAPI_class()

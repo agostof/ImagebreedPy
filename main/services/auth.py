@@ -12,7 +12,7 @@ class User(BaseModel):
     family_name: str
     email: str
 
-class AuthUtilsClass:
+class AuthUtilsClass():
     router = APIRouter(prefix="/breeders")
 
     decode_options = JwtDecodeOptions(

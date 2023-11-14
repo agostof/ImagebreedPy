@@ -11,7 +11,7 @@ class VehicleRequest(BaseModel):
     private_company_id: str | None = None
 
 
-class VehicleServiceClass:
+class VehicleServiceClass():
     def getVehicles(self, includeDrones: bool = True, includeRovers: bool = True):
         sqlStatement = select(Vehicle)
 
