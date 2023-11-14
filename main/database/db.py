@@ -2,18 +2,16 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.orm import scoped_session, sessionmaker
 import click
 
-from main.database.models import Base, Vehicle
+from main.database.models import Base, Vehicle, DRONE, ROVER
 from main.services.settings import settings
 
 
-def get_db():
-    return scoped_session(sessionmaker(autocommit=False,
+engine = create_engine(settings.db_uri)
+db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
 
-engine = create_engine(settings().db_uri)
-
-Base.query = get_db().query_property()
+Base.query = db_session.query_property()
 
 
 # Use the command `python -m main.database.db --drop --init` to initialize a new database 
@@ -31,8 +29,8 @@ def insert_initial_values(target, connection, **kwargs):
     print(f"Initialize vehicle data")
     Session = sessionmaker(engine)
     with Session(bind=connection) as session:
-        session.add(Vehicle(name='test drone 1', description= "test drone 1", type=Vehicle.DRONE))
-        session.add(Vehicle(name='test rover 1', description= "test rover 1", type=Vehicle.ROVER))
+        session.add(Vehicle(name='test drone 1', description= "test drone 1", type=DRONE))
+        session.add(Vehicle(name='test rover 1', description= "test rover 1", type=ROVER))
         session.commit()
         session.close()
 

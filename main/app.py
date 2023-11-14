@@ -4,8 +4,11 @@ from fastapi.responses import HTMLResponse, Response, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+import mimetypes
+mimetypes.add_type('text/javascript', '.js')
+
 from main.services.settings import DIRECTORY
-from main.services.auth import getOAuthLoginURL
+from main.services.auth import AuthUtils
 
 app = FastAPI()
 
@@ -21,7 +24,7 @@ async def breeders_tool_box_drone_rover(request: Request):
 
 @app.get("/login")
 async def breeders_tool_box_drone_rover(request: Request):
-    return RedirectResponse(getOAuthLoginURL(str(request.url) + '/redirect'))
+    return RedirectResponse(AuthUtils.getOAuthLoginURL(redirectURI=str(request.url) + '/redirect'))
 
 @app.get("/login/redirect")
 async def breeders_tool_box_drone_rover(request: Request):
@@ -34,9 +37,9 @@ async def favicon():
         content = fp.read()
     return Response(content=content, media_type="image/x-icon")
 
-app.mount("/js", StaticFiles(directory=DIRECTORY + 'js/', html=True), name="static-js")
-app.mount("/css", StaticFiles(directory=DIRECTORY + 'css/', html=True), name="static-css")
-app.mount("/img", StaticFiles(directory=DIRECTORY + 'img/', html=True), name="static-img")
-app.mount("/fonts", StaticFiles(directory=DIRECTORY + 'fonts/', html=True), name="static-fonts")
+app.mount("/js", StaticFiles(directory=DIRECTORY + 'js/'), name="static-js")
+app.mount("/css", StaticFiles(directory=DIRECTORY + 'css/'), name="static-css")
+app.mount("/img", StaticFiles(directory=DIRECTORY + 'img/'), name="static-img")
+app.mount("/fonts", StaticFiles(directory=DIRECTORY + 'fonts/'), name="static-fonts")
 
 print("app loaded")

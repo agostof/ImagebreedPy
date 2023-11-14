@@ -354,6 +354,9 @@
                     'battery_names': vehicle_batteries,
                     'private_company_id': private_company_id
                 }),
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                },
                 success: function (response) {
                     console.log(response);
                     if (response.error) {
@@ -512,6 +515,9 @@
             jQuery.ajax({
                 url: '/api/drone_rover/collections_field_names?drone_run_id=' + manage_drone_rover_field_collection_names_drone_run_project_id,
                 type: 'GET',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                },
                 success: function (response) {
                     console.log(response);
                     if (response.error) {
@@ -555,6 +561,9 @@
                 data: {
                     'drone_run_id': manage_drone_rover_field_collection_names_drone_run_project_id,
                     'field_collection_names': JSON.stringify(manage_drone_rover_field_collection_names)
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
                 },
                 success: function (response) {
                     console.log(response);
