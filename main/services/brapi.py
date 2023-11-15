@@ -8,12 +8,13 @@ from main.services.brapi_pheno_models import ObservationVariableListResponse
 BASE_URL = settings.brapi_base_url
 
 class BrAPI_class():
-    def getStudies(self, token:str= "") -> StudyListResponse:
+    def getStudies(self, programDbId: str, token:str= "") -> StudyListResponse:
         req = PreparedRequest()
         url = BASE_URL + "/studies"
-        queryParams = {
-            "pageSize" : 100
-            }
+        queryParams = {"pageSize" : 100}
+        if programDbId:
+            queryParams["programDbId"] = programDbId
+            
         req.prepare_url(url, queryParams)
         print(req.url)
 
@@ -25,8 +26,8 @@ class BrAPI_class():
         response = StudyListResponse.model_validate(responseJSON.json())
         return response
     
-    def getStudySummaries(self, token:str= ""):
-        studies: StudyListResponse = self.getStudies(token=token)
+    def getStudySummaries(self, programDbId: str, token:str= ""):
+        studies: StudyListResponse = self.getStudies(programDbId, token=token)
         studySummaries = []
         for study in studies.result.data:
             studySummaries.append({

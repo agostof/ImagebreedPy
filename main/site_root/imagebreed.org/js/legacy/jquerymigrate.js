@@ -80,7 +80,7 @@ if ( document.compatMode === "BackCompat" ) {
 }
 
 
-var attrFn = jQuery( "<input/>", { size: 1 } ).attr("size") && jQuery.attrFn,
+var attrFn = $( "<input/>", { size: 1 } ).attr("size") && jQuery.attrFn,
 	oldAttr = jQuery.attr,
 	valueAttrGet = jQuery.attrHooks.value && jQuery.attrHooks.value.get ||
 		function() { return null; },
@@ -106,7 +106,7 @@ jQuery.attr = function( elem, name, value, pass ) {
 		}
 		if ( elem && !rnoAttrNodeType.test( nType ) &&
 			(attrFn ? name in attrFn : jQuery.isFunction(jQuery.fn[name])) ) {
-			return jQuery( elem )[ name ]( value );
+			return $( elem )[ name ]( value );
 		}
 	}
 
@@ -472,7 +472,7 @@ jQuery.fn.live = function( types, data, fn ) {
 	if ( oldLive ) {
 		return oldLive.apply( this, arguments );
 	}
-	jQuery( this.context ).on( types, this.selector, data, fn );
+	$( this.context ).on( types, this.selector, data, fn );
 	return this;
 };
 
@@ -481,7 +481,7 @@ jQuery.fn.die = function( types, fn ) {
 	if ( oldDie ) {
 		return oldDie.apply( this, arguments );
 	}
-	jQuery( this.context ).off( types, this.selector || "**", fn );
+	$( this.context ).off( types, this.selector || "**", fn );
 	return this;
 };
 

@@ -5,7 +5,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="uploadDroneImageryGeocoordinateParamDialog">Add GeoCoordinate Params</h4>
             </div>
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="uploadDroneImageryDialog">Upload Aerial Imagery</h4>
             </div>
@@ -171,10 +171,10 @@
                                                     onclick="Workflow.complete(this); return false;">Go to upload a
                                                     single imaging event</button>
                                                 <br /><br />
-                                                <button class="btn btn-default" id="upload_drone_imagery_bulk_button">Go
+                                                <button class="btn btn-outline-secondary" id="upload_drone_imagery_bulk_button">Go
                                                     to bulk upload of imaging events</button>
                                                 <br /><br />
-                                                <button class="btn btn-default"
+                                                <button class="btn btn-outline-secondary"
                                                     id="upload_drone_imagery_bulk_previous_button">Go to bulk upload of
                                                     previously processed imaging events (GeoJSON defitions
                                                     included)</button>
@@ -237,7 +237,7 @@
                                             </div>
 
 
-                                            <table class="table table-bordered table-hover"
+                                            <table class="display"
                                                 id="drone_image_upload_drone_runs_table">
                                                 <thead>
                                                     <tr>
@@ -312,7 +312,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-3 control-label">Imaging Vehicle: <button
-                                                            class="btn btn-sm btn-default"
+                                                            class="btn btn-sm btn-outline-secondary"
                                                             name="drone_run_imaging_vehicle_add_new" type="button">Add
                                                             New Vehicle</button></label>
                                                     <div class="col-sm-9">
@@ -504,7 +504,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -515,7 +515,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="uploadDroneImageryODMDialog">Upload Aerial Imagery</h4>
             </div>
@@ -583,7 +583,7 @@
                                             </div>
 
 
-                                            <div class="well well-sm">
+                                            <div class="card bg-light">
                                                 <div class="form-group">
                                                     <label class="col-sm-6 control-label">Imaging Event Images ZipFile
                                                         (.zip) (At least 25 images): </label>
@@ -631,7 +631,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -642,7 +642,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="uploadDroneImageryODMMicaSenseDialog">Upload Aerial Imagery</h4>
             </div>
@@ -710,7 +710,7 @@
                                             </div>
 
 
-                                            <div class="well well-sm">
+                                            <div class="card bg-light">
                                                 <div class="form-group">
                                                     <label class="col-sm-6 control-label">Imaging Event Images ZipFile
                                                         (.zip) (At least 25 images): </label>
@@ -783,7 +783,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -794,7 +794,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="uploadDroneImageryBulkPreviousDialog">Upload Aerial Imagery in Bulk For
                     Previously Processed Imaging Events</h4>
@@ -871,7 +871,7 @@
 
                                             <h4>The uploaded Excel file (.xls) must have the following header:</h4>
 
-                                            <table class="table table-bordered table-hover">
+                                            <table class="display">
                                                 <tbody>
                                                     <tr>
                                                         <th>Imaging Event Name</th>
@@ -960,7 +960,7 @@
                                             </ul>
 
                                             <br />
-                                            <div class="well well-sm">
+                                            <div class="card bg-light">
                                                 <div class="form-group">
                                                     <label class="col-sm-6 control-label">Bulk Imaging Events (.xls):
                                                     </label>
@@ -1014,7 +1014,7 @@
                                                 are simple raster images (.tiff, .jpeg, .png).</p>
 
                                             <br />
-                                            <div class="well well-sm">
+                                            <div class="card bg-light">
                                                 <div class="form-group">
                                                     <label class="col-sm-6 control-label">Orthophoto Images ZipFile
                                                         (.zip): </label>
@@ -1059,7 +1059,7 @@
 
                                             <p>The GeoJSON should be the following format:
                                                 <br />
-                                            <div class="well well-sm">
+                                            <div class="card bg-light">
                                                 {<br />
                                                 &nbsp;&nbsp;"type":"FeatureCollection",<br />
                                                 &nbsp;&nbsp;"features":[<br />
@@ -1093,7 +1093,7 @@
                                                 "Pixels".</p>
 
                                             <br />
-                                            <div class="well well-sm">
+                                            <div class="card bg-light">
                                                 <div class="form-group">
                                                     <label class="col-sm-6 control-label">Plot-polygon GeoJSON ZipFile
                                                         (.zip): </label>
@@ -1141,7 +1141,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -1152,7 +1152,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="uploadDroneImageryBulkDialog">Upload Aerial Imagery in Bulk For Imaging
                     Events</h4>
@@ -1221,7 +1221,7 @@
 
                                             <h4>The uploaded Excel file (.xls) must have the following header:</h4>
 
-                                            <table class="table table-bordered table-hover">
+                                            <table class="display">
                                                 <tbody>
                                                     <tr>
                                                         <th>Imaging Event Name</th>
@@ -1294,7 +1294,7 @@
                                             </ul>
 
                                             <br />
-                                            <div class="well well-sm">
+                                            <div class="card bg-light">
                                                 <div class="form-group">
                                                     <label class="col-sm-6 control-label">Bulk Imaging Events (.xls):
                                                     </label>
@@ -1348,7 +1348,7 @@
                                                 are simple raster images (.tiff, .jpeg, .png).</p>
 
                                             <br />
-                                            <div class="well well-sm">
+                                            <div class="card bg-light">
                                                 <div class="form-group">
                                                     <label class="col-sm-6 control-label">Orthophoto Images ZipFile
                                                         (.zip): </label>
@@ -1395,7 +1395,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -1408,7 +1408,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="uploadDroneImageryStandardProcessAdditionalRawImagesDialog">Upload Raw Image
                     Captures</h4>
@@ -1449,7 +1449,7 @@
                                         </div>
 
 
-                                        <div class="well well-sm">
+                                        <div class="card bg-light">
                                             <div style="text-align: center;">
                                                 <h4>Raw aerial image captures can be shared in a ZipFile.</h4>
                                             </div>
@@ -1466,12 +1466,12 @@
                                             </ul>
                                         </div>
 
-                                        <div class="well well-sm">
+                                        <div class="card bg-light">
                                             <div id="upload_drone_imagery_additional_raw_images_div"></div>
                                         </div>
 
                                         <div style="text-align: center;">
-                                            <button class="btn btn-default"
+                                            <button class="btn btn-outline-secondary"
                                                 onclick="Workflow.complete(this); return false;">Upload New Raw Image
                                                 Captures</button>
                                         </div>
@@ -1482,7 +1482,7 @@
                                         </div>
 
 
-                                        <div class="well well-sm">
+                                        <div class="card bg-light">
                                             <div style="text-align: center;">
                                                 <h4>Raw aerial image captures can be shared in a ZipFile.</h4>
                                             </div>
@@ -1499,7 +1499,7 @@
                                             </ul>
                                         </div>
 
-                                        <div class="well well-sm">
+                                        <div class="card bg-light">
                                             <form class="form-horizontal" role="form" method="post"
                                                 enctype="multipart/form-data" encoding="multipart/form-data"
                                                 id="upload_drone_imagery_additional_raw_images_form"
@@ -1557,7 +1557,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

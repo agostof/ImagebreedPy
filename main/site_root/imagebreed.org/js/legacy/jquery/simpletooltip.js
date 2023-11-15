@@ -39,6 +39,6 @@
 }})(jQuery);
 
 
-jQuery( function() {
-    jQuery('.tooltipped').simpletooltip();
+$( function() {
+    $('.tooltipped').simpletooltip();
 });

@@ -81,5 +81,5 @@ function check_clonecart()
 
 
 JSAN.use('jquery');
-jQuery( check_clonecart ); // check the clone cart on document load
-jQuery( count_clones );
+$( check_clonecart ); // check the clone cart on document load
+$( count_clones );

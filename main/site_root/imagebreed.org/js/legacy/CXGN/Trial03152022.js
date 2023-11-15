@@ -7,11 +7,11 @@ function delete_phenotype_data_by_trial_id(trial_id) {
 	jQuery.ajax( {
       url: '/ajax/breeders/trial/'+trial_id+'/delete/phenotypes',
       beforeSend: function(xhr){
-        jQuery('#working_modal').modal('show');
+        $('#working_modal').modal('show');
         xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
       },
       success: function(response) {
-        jQuery('#working_modal').modal('hide');
+        $('#working_modal').modal('hide');
         if (response.error) {
            alert(response.error);
 		       }
@@ -21,7 +21,7 @@ function delete_phenotype_data_by_trial_id(trial_id) {
 		}
             },
       error: function(response) {
-		    jQuery('#working_modal').modal('hide');
+		    $('#working_modal').modal('hide');
 		    alert("An error occurred.");
             }
 	});
@@ -36,8 +36,8 @@ function delete_layout_data_by_trial_id(trial_id) {
         jQuery.ajax( {
             url: '/ajax/breeders/trial/'+trial_id+'/delete/layout',
             beforeSend: function(xhr){
-                jQuery('#working_modal').modal('show');
-                jQuery('#working_msg').html("Deleting trial layout...<br />");
+                $('#working_modal').modal('show');
+                $('#working_msg').html("Deleting trial layout...<br />");
                 xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
             },
             success: function(response) {
@@ -45,15 +45,15 @@ function delete_layout_data_by_trial_id(trial_id) {
                     alert(response.error);
                 }
                 else {
-                    jQuery('#working_modal').modal('hide');
-                    jQuery('#working_msg').html('');
+                    $('#working_modal').modal('hide');
+                    $('#working_msg').html('');
                     alert('The field trial has been deleted.'); // to do: give some idea how many items were deleted.
                     window.location.href="/breeders/trial/"+trial_id;
                 }
             },
             error: function(response) {
-                jQuery('#working_modal').modal('hide');
-                jQuery('#working_msg').html('');
+                $('#working_modal').modal('hide');
+                $('#working_msg').html('');
                 alert("An error occurred.");
             }
         });
@@ -62,7 +62,7 @@ function delete_layout_data_by_trial_id(trial_id) {
 
 
 function associate_breeding_program() {
-    var program = jQuery('#breeding_program_select').val();
+    var program = $('#breeding_program_select').val();
 
     var trial_id = get_trial_id();
     jQuery.ajax( {
@@ -80,7 +80,7 @@ function load_breeding_program_info(trial_id) {
 	url:'/breeders/programs_by_trial/'+trial_id,
 	success: function(response) {
             if (response.error) {
-		jQuery('#breeding_programs').html('[ An error occurred fetching the breeding program information ]');
+		$('#breeding_programs').html('[ An error occurred fetching the breeding program information ]');
             }
             else {
 		var programs = response.projects;
@@ -88,33 +88,33 @@ function load_breeding_program_info(trial_id) {
 		    var html =  programs[0][1] + ' (' + programs[0][2] + ') ';
 		}
 		if (programs.length == 0) { html = "(none)"; }
-		jQuery('#breeding_programs').html(html);
+		$('#breeding_programs').html(html);
             }
 	},
 	error: function() {
-	    jQuery('#breeding_programs').html('[ An error occurred ]');
+	    $('#breeding_programs').html('[ An error occurred ]');
 	}
     });
 }
 
 
 function open_create_DataCollector_dialog() {
-    //jQuery('#working').dialog("open");
-    jQuery('#working_modal').modal("show");
+    //$('#working').dialog("open");
+    $('#working_modal').modal("show");
     var list = new CXGN.List();
-    jQuery("#trait_list_dc").html(list.listSelect("trait_list", [ 'traits' ], undefined, undefined, undefined));
-    //jQuery('#working').dialog("close");
-    jQuery('#working_modal').modal("hide");
-    jQuery('#create_DataCollector_dialog').dialog("open");
+    $("#trait_list_dc").html(list.listSelect("trait_list", [ 'traits' ], undefined, undefined, undefined));
+    //$('#working').dialog("close");
+    $('#working_modal').modal("hide");
+    $('#create_DataCollector_dialog').dialog("open");
 }
 
 
 function create_DataCollector() {
-    //jQuery('#working').dialog("open");
-    jQuery('#working_modal').modal("show");
-    var trialID = parseInt(jQuery('#trialIDDiv').text());
+    //$('#working').dialog("open");
+    $('#working_modal').modal("show");
+    var trialID = parseInt($('#trialIDDiv').text());
     var list = new CXGN.List();
-    var trait_list_id = jQuery('#trait_list_list_select').val();
+    var trait_list_id = $('#trait_list_list_select').val();
     var trait_list;
     if (! trait_list_id == "") {
 	trait_list = JSON.stringify(list.getList(trait_list_id));
@@ -130,46 +130,46 @@ function create_DataCollector() {
 
 	 success: function (response) {
      //console.log("success "+JSON.stringify(response));
-     jQuery('#working_modal').modal("hide");
+     $('#working_modal').modal("hide");
 
      if (response.error) {
        console.log("error: "+response.error);
        alert("error: "+response.error);
-       jQuery('#open_create_DataCollector_dialog').dialog("close");
+       $('#open_create_DataCollector_dialog').dialog("close");
      } else {
        //alert("success: "+response.filename);
-       jQuery('#open_create_DataCollector_dialog').dialog("close");
-       jQuery('#working_modal').modal("hide");
+       $('#open_create_DataCollector_dialog').dialog("close");
+       $('#working_modal').modal("hide");
        window.location.href = "/download/"+response.filename;
      }
 	 },
 	 error: function () {
-	     //jQuery('#working').dialog("close");
-	     jQuery('#working_modal').modal("hide");
+	     //$('#working').dialog("close");
+	     $('#working_modal').modal("hide");
              alert('An error occurred creating a DataCollector file.');
-             jQuery('#open_download_DataCollector_dialog').dialog("close");
+             $('#open_download_DataCollector_dialog').dialog("close");
 	 }
      });
 }
 
 function open_derived_trait_dialog() {
-    jQuery('#working_modal').modal("show");
-    jQuery('#compute_derived_trait_dialog').dialog("open");
-    var trait = jQuery('#sel1').val();
-    jQuery("#test_xyz").html(trait);
-    jQuery('#working_modal').modal("hide");
+    $('#working_modal').modal("show");
+    $('#compute_derived_trait_dialog').dialog("open");
+    var trait = $('#sel1').val();
+    $("#test_xyz").html(trait);
+    $('#working_modal').modal("hide");
 
 }
 
 function close_view_plot_image_dialog() {
-    jQuery("#view_plot_image_dialog").modal("hide");
-    jQuery("#hm_replace_plot_accessions_dialog").modal("hide");
+    $("#view_plot_image_dialog").modal("hide");
+    $("#hm_replace_plot_accessions_dialog").modal("hide");
 }
 
 function compute_derived_trait() {
-    jQuery('#working_modal').modal("show");
-    var trait = jQuery('#derived_trait_select').val();
-    var trialID = parseInt(jQuery('#trialIDDiv').text());
+    $('#working_modal').modal("show");
+    var trait = $('#derived_trait_select').val();
+    var trialID = parseInt($('#trialIDDiv').text());
     if (trait === '') {
 		alert("No trait selected");
 	    }
@@ -184,23 +184,23 @@ function compute_derived_trait() {
 	 },
 
 	 success: function (response) {
-	     jQuery('#working_modal').modal("hide");
+	     $('#working_modal').modal("hide");
 
              if (response.error) {
 		 alert("Computation stopped: "+response.error);
 		 //alert("Computation for "+trait+" stopped: "+response.error);
-		 jQuery('#open_derived_trait_dialog').dialog("close");
+		 $('#open_derived_trait_dialog').dialog("close");
 
              } else {
-		 jQuery('#open_derived_trait_dialog').dialog("close");
-		 jQuery('#working_modal').modal("hide");
-		 jQuery('derived_trait_saved_dialog_message');
+		 $('#open_derived_trait_dialog').dialog("close");
+		 $('#working_modal').modal("hide");
+		 $('derived_trait_saved_dialog_message');
 		 alert("Successfully derived and uploaded phenotype");
 		// alert("Successfully derived and uploaded ' "+trait+" ' values for this trial");
              }
 	 },
 	 error: function () {
-	     jQuery('#working_modal').modal("hide");
+	     $('#working_modal').modal("hide");
              alert('An error occurred creating trait.');
 	 }
      });
@@ -208,35 +208,35 @@ function compute_derived_trait() {
 
 
 function delete_field_map() {
-    jQuery('#working_modal').modal("show");
+    $('#working_modal').modal("show");
 
-    var trialID = parseInt(jQuery('#trialIDDiv').text());
+    var trialID = parseInt($('#trialIDDiv').text());
     new jQuery.ajax({
         type: 'POST',
         url: '/ajax/breeders/trial/'+trialID+'/delete_field_coords',
         dataType: "json",
         success: function (response) {
-            jQuery('#working_modal').modal("hide");
+            $('#working_modal').modal("hide");
             if (response.error) {
                 alert("Error Deleting Field Map: "+response.error);
             } else {
                 //alert("Field map deletion Successful...");
-                jQuery('#delete_field_map_dialog_message').dialog("open");
+                $('#delete_field_map_dialog_message').dialog("open");
             }
         },
         error: function () {
-            jQuery('#working_modal').modal("hide");
+            $('#working_modal').modal("hide");
             alert('An error occurred deleting field map.');
         }
     });
 }
 
 function replace_accessions() {
-  jQuery('#working_modal').modal("show");
+  $('#working_modal').modal("show");
 
-  var trialID = parseInt(jQuery('#trialIDDiv').text());
-  var old_accession_name = jQuery('#old_accession').val();
-  var new_accession_name = jQuery('#new_accession').val();
+  var trialID = parseInt($('#trialIDDiv').text());
+  var old_accession_name = $('#old_accession').val();
+  var new_accession_name = $('#new_accession').val();
   new jQuery.ajax({
     type: 'POST',
     url: '/ajax/phenotype/replace_accessions',
@@ -248,17 +248,17 @@ function replace_accessions() {
     },
 
     success: function (response) {
- 	     jQuery('#working_modal').modal("hide");
+ 	     $('#working_modal').modal("hide");
 
        if (response.error) {
  		      alert("Error replacing accessions: "+response.error);
        } else {
            //alert("Field map deletion Successful...");
- 		      jQuery('#replace_accessions_dialog_message').dialog("open");
+ 		      $('#replace_accessions_dialog_message').dialog("open");
            }
  	 },
  	 error: function () {
- 	     jQuery('#working_modal').modal("hide");
+ 	     $('#working_modal').modal("hide");
               alert('An error occurred replacing accessions.');
  	 }
  });
@@ -267,18 +267,18 @@ function replace_accessions() {
 
 function edit_trial_details(){
 
-    jQuery('#clear_planting_date').click(function(){
+    $('#clear_planting_date').click(function(){
         planting_date_element.val('');
         highlight_changed_details(planting_date_element);
     });
 
-    jQuery('#clear_harvest_date').click(function(){
+    $('#clear_harvest_date').click(function(){
         harvest_date_element.val('');
         highlight_changed_details(harvest_date_element);
     });
 
-    jQuery('[id^="edit_trial_"]').change(function (){
-        var this_element = jQuery(this);
+    $('[id^="edit_trial_"]').change(function (){
+        var this_element = $(this);
         highlight_changed_details(this_element);
     });
 
@@ -288,47 +288,47 @@ function edit_trial_details(){
     //populate breeding_programs, locations, years, and types dropdowns, and save defaults
     var default_bp = document.getElementById("edit_trial_breeding_program").getAttribute("value");
     get_select_box('breeding_programs', 'edit_trial_breeding_program', { 'default' : default_bp });
-    jQuery('#edit_trial_breeding_program').data("originalValue", default_bp);
+    $('#edit_trial_breeding_program').data("originalValue", default_bp);
 
     var default_loc = document.getElementById("edit_trial_location").getAttribute("value");
     get_select_box('locations', 'edit_trial_location', { 'default' : default_loc });
-    jQuery('#edit_trial_location').data("originalValue", default_loc);
+    $('#edit_trial_location').data("originalValue", default_loc);
 
     var default_year = document.getElementById("edit_trial_year").getAttribute("value");
     get_select_box('years', 'edit_trial_year', { 'default' : default_year, 'auto_generate': 1 });
-    jQuery('#edit_trial_year').data("originalValue", default_year);
+    $('#edit_trial_year').data("originalValue", default_year);
 
     var default_company = document.getElementById("edit_trial_company").getAttribute("value");
     get_select_box('private_companies', 'edit_trial_company', { 'selected' : default_company });
-    jQuery('#edit_trial_company').data("originalValue", default_company);
+    $('#edit_trial_company').data("originalValue", default_company);
 
     var default_type = document.getElementById("edit_trial_type").getAttribute("value");
     get_select_box('trial_types', 'edit_trial_type',  { 'default' : default_type });
-    jQuery('#edit_trial_type option[value="'+default_type+'"]').attr('selected','selected');
+    $('#edit_trial_type option[value="'+default_type+'"]').attr('selected','selected');
 
     var default_type = document.getElementById("edit_trial_plot_width").getAttribute("value");
-    jQuery('#edit_trial_plot_width option[value="'+default_type+'"]').attr('selected','selected');
+    $('#edit_trial_plot_width option[value="'+default_type+'"]').attr('selected','selected');
 
     var default_type = document.getElementById("edit_trial_plot_length").getAttribute("value");
-    jQuery('#edit_trial_plot_length option[value="'+default_type+'"]').attr('selected','selected');
+    $('#edit_trial_plot_length option[value="'+default_type+'"]').attr('selected','selected');
 
     var default_type = document.getElementById("edit_trial_plan_to_genotype").getAttribute("value");
-    jQuery('#edit_trial_plan_to_genotype option[value="'+default_type+'"]').attr('selected','selected');
+    $('#edit_trial_plan_to_genotype option[value="'+default_type+'"]').attr('selected','selected');
 
     var default_type = document.getElementById("edit_trial_plan_to_cross").getAttribute("value");
-    jQuery('#edit_trial_plan_to_cross option[value="'+default_type+'"]').attr('selected','selected');
+    $('#edit_trial_plan_to_cross option[value="'+default_type+'"]').attr('selected','selected');
 
-    jQuery(document).on('change', '#edit_trial_company', function(){
-        get_select_box('breeding_programs', 'edit_trial_breeding_program', { 'private_company_id':jQuery(this).val() });
-        get_select_box('locations', 'edit_trial_location', { 'private_company_id':jQuery(this).val() });
-        jQuery('#edit_trial_breeding_program').data("originalValue", default_bp);
-        jQuery('#edit_trial_location').data("originalValue", default_loc);
+    $(document).on('change', '#edit_trial_company', function(){
+        get_select_box('breeding_programs', 'edit_trial_breeding_program', { 'private_company_id':$(this).val() });
+        get_select_box('locations', 'edit_trial_location', { 'private_company_id':$(this).val() });
+        $('#edit_trial_breeding_program').data("originalValue", default_bp);
+        $('#edit_trial_location').data("originalValue", default_loc);
     });
 
     //create bootstrap daterangepickers for planting and harvest dates
-    var planting_date_element = jQuery("#edit_trial_planting_date");
+    var planting_date_element = $("#edit_trial_planting_date");
     set_daterangepicker_default (planting_date_element);
-    jQuery('input[title="planting_date"]').daterangepicker(
+    $('input[title="planting_date"]').daterangepicker(
         {
             "singleDatePicker": true,
             "showDropdowns": true,
@@ -340,7 +340,7 @@ function edit_trial_details(){
         }
     );
 
-    var harvest_date_element = jQuery("#edit_trial_harvest_date");
+    var harvest_date_element = $("#edit_trial_harvest_date");
     set_daterangepicker_default (harvest_date_element);
     harvest_date_element.daterangepicker(
         {
@@ -354,11 +354,11 @@ function edit_trial_details(){
         }
     );
 
-    jQuery('#edit_trial_details_cancel_button').click(function(){
+    $('#edit_trial_details_cancel_button').click(function(){
         reset_dialog_body('trial_details_edit_body', edit_details_body_html);
     });
 
-    jQuery('#save_trial_details').click(function(){
+    $('#save_trial_details').click(function(){
         var changed_elements = document.getElementsByName("changed");
         var categories = [];
         var new_details = {};
@@ -376,7 +376,7 @@ function edit_trial_details(){
             }
             categories.push(type);
             new_details[type] = new_value;
-            if(jQuery('#'+id).is("select")){
+            if($('#'+id).is("select")){
                 new_value = changed_elements[i].options[changed_elements[i].selectedIndex].text
             }
             success_message += "<li class='list-group-item list-group-item-success'> Changed "+type+" to: <b>"+new_value+"</b></li>";
@@ -386,12 +386,12 @@ function edit_trial_details(){
 
     });
 
-    jQuery('#trial_details_error_close_button').click( function() {
+    $('#trial_details_error_close_button').click( function() {
         document.getElementById('trial_details_error_message').innerHTML = "";
         location.reload();
     });
 
-    jQuery('#trial_details_saved_close_button').click( function() {
+    $('#trial_details_saved_close_button').click( function() {
         location.reload();
     });
 
@@ -399,7 +399,7 @@ function edit_trial_details(){
 
 function trial_detail_page_setup_dialogs() {
 
-     jQuery('#compute_derived_trait_dialog').dialog({
+     $('#compute_derived_trait_dialog').dialog({
 	autoOpen: false,
 	modal: true,
 	autoResize:true,
@@ -408,34 +408,34 @@ function trial_detail_page_setup_dialogs() {
 	modal: true,
 	buttons: {
 	    Cancel: function() {
-		jQuery( this ).dialog( "close" );
+		$( this ).dialog( "close" );
 		return;
 	    },
 	    Create: {text: "Create", id:"create_derived_trait_submit_button", click:function() {
 		compute_derived_trait();
-		jQuery( this ).dialog( "close" );
+		$( this ).dialog( "close" );
 		}
 	    },
 	},
     });
 
-    jQuery('#delete_phenotype_data_by_trial_id').click(function() {
-        jQuery('#delete_phenotype_data_dialog').modal("show");
+    $('#delete_phenotype_data_by_trial_id').click(function() {
+        $('#delete_phenotype_data_dialog').modal("show");
 	});
 
-    jQuery('#delete_layout_data_by_trial_id').click(
+    $('#delete_layout_data_by_trial_id').click(
 	function() {
 	    var trial_id = get_trial_id();
 	    delete_layout_data_by_trial_id(trial_id);
 	});
 
 
-    jQuery('#view_layout_link').click(function () {
-        jQuery('#trial_design_view_layout').dialog("open");
+    $('#view_layout_link').click(function () {
+        $('#trial_design_view_layout').dialog("open");
     });
 
-    jQuery('#compute_derived_trait_link').click( function () {
-	jQuery('#compute_derived_trait_dialog').dialog("open");
+    $('#compute_derived_trait_link').click( function () {
+	$('#compute_derived_trait_dialog').dialog("open");
 	jQuery.ajax( {
 		url: '/ajax/breeders/trial/trait_formula',
 		success: function(response) {
@@ -457,7 +457,7 @@ function trial_detail_page_setup_dialogs() {
 			html = '<option active="false">No derived trait available</option>';
 		    }
 		}
-		jQuery('#derived_trait_select').html(html);
+		$('#derived_trait_select').html(html);
 	    },
 	    error: function(response) {
 		alert("An error occurred trying to retrieve derived traits.");
@@ -466,7 +466,7 @@ function trial_detail_page_setup_dialogs() {
 
 });
 
-jQuery("#delete_field_map_dialog").dialog({
+$("#delete_field_map_dialog").dialog({
 autoOpen: false,
 modal: true,
 autoResize:true,
@@ -474,22 +474,22 @@ autoResize:true,
     position: ['top', 75],
 buttons: {
         "Cancel": function () {
-            jQuery('#delete_field_map_dialog').dialog("close");
+            $('#delete_field_map_dialog').dialog("close");
         },
   "Ok": {text: "Ok", id:"delete_field_coords_ok_button", click:function () {
 delete_field_map();
-            jQuery('#delete_field_map_dialog').dialog("close");
+            $('#delete_field_map_dialog').dialog("close");
     }
   }
 }
 });
 
 
-jQuery('#delete_field_map_hm_link').click(function () {
-    jQuery('#delete_field_map_dialog').dialog("open");
+$('#delete_field_map_hm_link').click(function () {
+    $('#delete_field_map_dialog').dialog("open");
 });
 
-jQuery("#delete_field_map_dialog_message").dialog({
+$("#delete_field_map_dialog_message").dialog({
 autoOpen: false,
 modal: true,
 buttons: {
@@ -503,7 +503,7 @@ buttons: {
 
 });
 
-jQuery("#update_field_map_dialog_message").dialog({
+$("#update_field_map_dialog_message").dialog({
 autoOpen: false,
 modal: true,
 buttons: {
@@ -517,7 +517,7 @@ buttons: {
 
 });
 
-jQuery("#replace_accessions_dialog_message").dialog({
+$("#replace_accessions_dialog_message").dialog({
 autoOpen: false,
 modal: true,
 buttons: {
@@ -531,8 +531,8 @@ buttons: {
 
 });
 
-jQuery('#update_field_map_link').click(function () {
-    jQuery('#update_field_map_dialog').dialog("open");
+$('#update_field_map_link').click(function () {
+    $('#update_field_map_dialog').dialog("open");
 });
 
 }
@@ -578,36 +578,36 @@ function save_trial_details (categories, details, success_message) {
     success: function(response) {
       if (response.success) {
         document.getElementById('trial_details_saved_message').innerHTML = success_message;
-        jQuery('#trial_details_saved_dialog').modal("show");
+        $('#trial_details_saved_dialog').modal("show");
         return;
       }
       else {
         document.getElementById('trial_details_error_message').innerHTML = "<li class='list-group-item list-group-item-danger'>"+response.error+"</li>";
-        jQuery('#trial_details_error_dialog').modal("show");
+        $('#trial_details_error_dialog').modal("show");
       }
     },
     error: function(response) {
       document.getElementById('trial_details_error_message').innerHTML = "<li class='list-group-item list-group-item-danger'> Trial detail update AJAX request failed. Update not completed.</li>";
-      jQuery('#trial_details_error_dialog').modal("show");
+      $('#trial_details_error_dialog').modal("show");
     },
   });
 }
 
 function trial_folder_dialog() {
-    jQuery('#set_folder_dialog').dialog("open");
+    $('#set_folder_dialog').dialog("open");
 
 }
 
 
 function get_trial_id() {
-    var trial_id = parseInt(jQuery('#trialIDDiv').text());
+    var trial_id = parseInt($('#trialIDDiv').text());
     return trial_id;
 }
 
 
 var $j = jQuery.noConflict();
 
-jQuery(document).ready(function ($) {
+$(document).ready(function ($) {
 
     $('#upload_trial_coords_link').click(function () {
         open_upload_trial_coord_dialog();
@@ -617,7 +617,7 @@ jQuery(document).ready(function ($) {
         open_upload_trial_coord_dialog();
     });
 
-    jQuery('#upload_trial_coords_ok_button').click(function(){
+    $('#upload_trial_coords_ok_button').click(function(){
         upload_trial_coord_file();
     });
 
@@ -640,7 +640,7 @@ jQuery(document).ready(function ($) {
             if (response.error_string) {
 		$("#upload_trial_coord_error_display tbody").html('');
 		$("#upload_trial_coord_error_display tbody").append(response.error_string);
-        jQuery('#upload_trial_coord_error_display').modal('show');
+        $('#upload_trial_coord_error_display').modal('show');
 
 		return;
             }
@@ -670,38 +670,38 @@ jQuery(document).ready(function ($) {
     }
 
     function open_replace_trial_accession_dialog() {
-      jQuery('#replace_trial_stocks_dialog').modal('show');
+      $('#replace_trial_stocks_dialog').modal('show');
     }
 
     $('#replace_trial_stock_submit').click(function () {
-      jQuery('#edit_field_map_dialog').modal('hide');
+      $('#edit_field_map_dialog').modal('hide');
       open_replace_trial_accession_dialog();
     });
 
     function open_subtitute_plot_accession_dialog() {
-      jQuery('#substitute_plot_stocks_dialog').modal('show');
+      $('#substitute_plot_stocks_dialog').modal('show');
     }
 
     $('#substitute_stock_submit').click(function () {
-      jQuery('#edit_field_map_dialog').modal('hide');
+      $('#edit_field_map_dialog').modal('hide');
       open_subtitute_plot_accession_dialog();
     });
 
-    jQuery('#generate_trial_barcode_link').click(function () {
+    $('#generate_trial_barcode_link').click(function () {
         $('#generate_trial_barcode_button_dialog').modal("show");
     });
 
-    jQuery('#trial_plot_barcode').click(function () {
+    $('#trial_plot_barcode').click(function () {
         $('#generate_trial_barcode_button_dialog').modal("hide");
         $('#generate_trial_barcode_dialog').modal("show");
     });
 
-    jQuery('#trial_stock_barcode').click(function () {
+    $('#trial_stock_barcode').click(function () {
         $('#generate_trial_barcode_button_dialog').modal("hide");
         $('#generate_trial_barcode_dialog').modal("show");
     });
 
-    jQuery('#trial_plant_barcode').click(function () {
+    $('#trial_plant_barcode').click(function () {
         $('#generate_trial_barcode_button_dialog').modal("hide");
         $('#generate_trial_barcode_dialog').modal("show");
     });

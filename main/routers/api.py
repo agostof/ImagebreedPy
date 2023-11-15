@@ -15,6 +15,12 @@ router = APIRouter(prefix="/api")
 
 
 
+
+@router.get("/verifytoken")
+async def get_verifytoken(current_user: User = Depends(AuthUtils.getCurrentUser)):
+    return JSONResponse(content= {"username": current_user.username})
+
+
 @router.get("/drone_imagery/get_field_trial_drone_run_projects_in_same_orthophoto")
 async def get_field_trial_drone_run_projects_in_same_orthophoto(current_user: User = Depends(AuthUtils.getCurrentUser)):
     MOCK_drone_run_projects = {

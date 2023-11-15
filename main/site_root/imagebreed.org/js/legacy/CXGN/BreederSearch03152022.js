@@ -1,22 +1,22 @@
 window.onload = function initialize() {
 
-  jQuery('#select1').change( // reset start from list if select1 changes
+  $('#select1').change( // reset start from list if select1 changes
     function () {
-      if (jQuery('#paste_list_list_select').val()) {
+      if ($('#paste_list_list_select').val()) {
         create_list_start('Start from a list');
       }
     });
 
-  jQuery('#select1, #select2, #select3, #select4').change(  // retrieve new data once new category is selected
+  $('#select1, #select2, #select3, #select4').change(  // retrieve new data once new category is selected
     function () {
-      var this_section = jQuery(this).attr('name');
+      var this_section = $(this).attr('name');
       reset_downstream_sections(this_section);
       update_select_categories(this_section);
-      var category = jQuery(this).val();
+      var category = $(this).val();
 
       if (!category) { // reset by returning empty if no category was defined
         var data_element = "c" + this_section + "_data";
-        jQuery("#" + data_element).html('');
+        $("#" + data_element).html('');
         return;
       }
       var categories = get_selected_categories(this_section);
@@ -30,38 +30,38 @@ window.onload = function initialize() {
       update_download_options(this_section);
     });
 
-  jQuery('#c1_data, #c2_data, #c3_data, #c4_data').change( // update wizard panels and categories when data selections change
+  $('#c1_data, #c2_data, #c3_data, #c4_data').change( // update wizard panels and categories when data selections change
     function () {
-      var this_section = jQuery(this).attr('name');
+      var this_section = $(this).attr('name');
 
-      var data_id = jQuery(this).attr('id');
-      var data = jQuery('#' + data_id).val() || [];;
+      var data_id = $(this).attr('id');
+      var data = $('#' + data_id).val() || [];;
       var count_id = "c" + this_section + "_data_count";
 
       var categories = get_selected_categories(this_section);
       reset_downstream_sections(this_section);
       update_select_categories(this_section, categories);
-      show_list_counts(count_id, jQuery('#' + data_id).text().split("\n").length - 1, data.length);
+      show_list_counts(count_id, $('#' + data_id).text().split("\n").length - 1, data.length);
       update_download_options(this_section, categories);
     });
 
-  jQuery('#c1_select_all, #c2_select_all, #c3_select_all, #c4_select_all').click( // select all data in a wizard panel
+  $('#c1_select_all, #c2_select_all, #c3_select_all, #c4_select_all').click( // select all data in a wizard panel
     function () {
-      var this_section = jQuery(this).attr('name');
+      var this_section = $(this).attr('name');
       var data_id = "c" + this_section + "_data";
       selectAllOptions(document.getElementById(data_id));
 
-      var data = jQuery("#" + data_id).val() || [];;
+      var data = $("#" + data_id).val() || [];;
       var count_id = "c" + this_section + "_data_count";
 
-      show_list_counts(count_id, jQuery('#' + data_id).text().split("\n").length - 1, data.length);
+      show_list_counts(count_id, $('#' + data_id).text().split("\n").length - 1, data.length);
       var categories = get_selected_categories(this_section);
       update_select_categories(this_section, categories);
       update_download_options(this_section, categories);
     });
 
-  jQuery('select').dblclick(function () { // open detail page in new window or tab on double-click
-    var this_section = jQuery(this).attr('name');
+  $('select').dblclick(function () { // open detail page in new window or tab on double-click
+    var this_section = $(this).attr('name');
     var categories = get_selected_categories(this_section);
     var category = categories.pop();
     switch (category) {
@@ -89,25 +89,25 @@ window.onload = function initialize() {
     }
   });
 
-  jQuery('#open_update_dialog').on('click', function () {
-    jQuery('#update_wizard_dialog').modal("show");
+  $('#open_update_dialog').on('click', function () {
+    $('#update_wizard_dialog').modal("show");
     matviews_update_options();
   });
 
-  jQuery('#update_wizard_dialog, #upload_datacollector_phenotypes_dialog, #upload_phenotype_spreadsheet_dialog, #upload_fieldbook_phenotypes_dialog').on("click", '.wiz-update', function () {
+  $('#update_wizard_dialog, #upload_datacollector_phenotypes_dialog, #upload_phenotype_spreadsheet_dialog, #upload_fieldbook_phenotypes_dialog').on("click", '.wiz-update', function () {
     //if (window.console) console.log("refreshing materialized views . . .");
     refresh_matviews("fullview");
   });
 
-  jQuery('#wizard_download_phenotypes_button').click(function () {
-    jQuery('#download_wizard_phenotypes_dialog').modal("show");
+  $('#wizard_download_phenotypes_button').click(function () {
+    $('#download_wizard_phenotypes_dialog').modal("show");
   });
 
-  jQuery('#wizard_download_metadata_button').click(function () {
-    jQuery('#download_wizard_metadata_dialog').modal("show");
+  $('#wizard_download_metadata_button').click(function () {
+    $('#download_wizard_metadata_dialog').modal("show");
   });
 
-  jQuery('#download_wizard_phenotypes_submit_button').on('click', function (event) {
+  $('#download_wizard_phenotypes_submit_button').on('click', function (event) {
     event.preventDefault();
     var selected_trials = get_selected_results('trials');
     var selected_locations = get_selected_results('locations');
@@ -117,14 +117,14 @@ window.onload = function initialize() {
     var selected_plots = get_selected_results('plots');
     var selected_plants = get_selected_results('plants');
     var selected_years = get_selected_results('years');
-    var format = jQuery("#download_wizard_phenotypes_format").val();
-    var timestamp = jQuery("#download_wizard_phenotypes_timestamp_option").val();
-    var exclude_phenotype_outlier = jQuery("#download_wizard_phenotypes_exclude_outliers").val();
-    var trait_contains = jQuery("#download_wizard_phenotype_trait_contains").val();
+    var format = $("#download_wizard_phenotypes_format").val();
+    var timestamp = $("#download_wizard_phenotypes_timestamp_option").val();
+    var exclude_phenotype_outlier = $("#download_wizard_phenotypes_exclude_outliers").val();
+    var trait_contains = $("#download_wizard_phenotype_trait_contains").val();
     var trait_contains_array = trait_contains.split(",");
-    var data_level = jQuery("#download_wizard_phenotypes_level_option").val();
-    var phenotype_min_value = jQuery("#download_wizard_phenotype_phenotype_min").val();
-    var phenotype_max_value = jQuery("#download_wizard_phenotype_phenotype_max").val();
+    var data_level = $("#download_wizard_phenotypes_level_option").val();
+    var phenotype_min_value = $("#download_wizard_phenotype_phenotype_min").val();
+    var phenotype_max_value = $("#download_wizard_phenotype_phenotype_max").val();
     console.log("plot list=" + JSON.stringify(selected_plots));
 
     if (selected_trials.length !== 0 || selected_locations.length !== 0 || selected_accessions.length !== 0 || selected_traits.length !== 0 || selected_trait_components.length !== 0 || selected_plots.length !== 0 || selected_plants.length !== 0 || selected_years.length !== 0) {
@@ -134,10 +134,10 @@ window.onload = function initialize() {
     }
   });
 
-  jQuery('#download_wizard_metadata_submit_button').on('click', function (event) {
+  $('#download_wizard_metadata_submit_button').on('click', function (event) {
     event.preventDefault();
     var selected_trials = get_selected_results('trials');
-    var format = jQuery("#download_wizard_metadata_format").val();
+    var format = $("#download_wizard_metadata_format").val();
     var data_level = 'metadata';
     if (selected_trials.length !== 0) {
       window.open("/breeders/trials/phenotype/download?trial_list=" + JSON.stringify(selected_trials) + "&format=" + format + "&dataLevel=" + data_level);
@@ -146,7 +146,7 @@ window.onload = function initialize() {
     }
   });
 
-  jQuery('#download_button_genotypes').on('click', function (event) {
+  $('#download_button_genotypes').on('click', function (event) {
     event.preventDefault();
     var accession_ids = get_selected_results('accessions');
     var trial_ids = get_selected_results('trials');
@@ -158,11 +158,11 @@ window.onload = function initialize() {
     window.location.href = '/breeders/download_gbs_action/?ids=' + accession_ids.join(",") + '&protocol_id=' + protocol_id + '&gbs_download_token=' + token + '&format=accession_ids&trial_ids=' + trial_ids.join(",");
   });
 
-  jQuery('#wizard_save_dataset_button').click(function () {
-    jQuery('#save_wizard_dataset_dialog').modal("show");
+  $('#wizard_save_dataset_button').click(function () {
+    $('#save_wizard_dataset_dialog').modal("show");
   });
 
-  jQuery('#wizard_save_dataset_submit_button').click(function () {
+  $('#wizard_save_dataset_submit_button').click(function () {
     var accessions = get_selected_results('accessions');
     var trials = get_selected_results('trials');
     var plots = get_selected_results('plots');
@@ -174,8 +174,8 @@ window.onload = function initialize() {
     var trial_types = get_selected_results('trial_types');
     var trial_designs = get_selected_results('trial_designs');
     var plants = get_selected_results('plants');
-    var name = jQuery('#save_wizard_dataset_name').val();
-    var description = jQuery('#save_wizard_dataset_description').val();
+    var name = $('#save_wizard_dataset_name').val();
+    var description = $('#save_wizard_dataset_description').val();
     var category_order = get_selected_categories(4);
     //alert(JSON.stringify(category_order));
     var params = "accessions=" + JSON.stringify(accessions) + "&trials=" + JSON.stringify(trials) + "&plots=" + JSON.stringify(plots) + "&years=" + JSON.stringify(years) + "&locations=" + JSON.stringify(locations) + "&traits=" + JSON.stringify(traits) + "&breeding_programs=" + JSON.stringify(breeding_programs) + "&genotyping_protocols=" + JSON.stringify(genotyping_protocols) + "&trial_types=" + JSON.stringify(trial_types) + "&trial_designs=" + JSON.stringify(trial_designs) + "&plants=" + JSON.stringify(plants) + "&name=" + name + "&description=" + description + "&category_order=" + JSON.stringify(category_order);
@@ -194,14 +194,14 @@ window.onload = function initialize() {
         }
         else {
           alert("Successfully stored the dataset!");
-          jQuery('#save_wizard_dataset_dialog').modal("hide");
+          $('#save_wizard_dataset_dialog').modal("hide");
           get_select_box('datasets', 'dataset_manage_select');
         }
 
       },
       'error': function (response) {
         alert("An error occurred.");
-        jQuery('#save_wizard_dataset_dialog').modal("hide");
+        $('#save_wizard_dataset_dialog').modal("hide");
       }
     });
 
@@ -210,7 +210,7 @@ window.onload = function initialize() {
 
 function addToggleIds() {
   for (i = 2; i <= 4; i++) {
-    var toggle_buttons = jQuery('#c' + i + '_querytype').next().children();
+    var toggle_buttons = $('#c' + i + '_querytype').next().children();
     toggle_buttons.first().attr('id', 'c' + i + '_querytype_and');
     toggle_buttons.first().next().attr('id', 'c' + i + '_querytype_or');
   }
@@ -236,15 +236,15 @@ function retrieve_and_display_set(categories, data, this_section, selected, data
     },
     success: function (response) {
       if (response.error) {
-        var error_html = '<div class="well well-sm" id="response_error"><font color="red">' + response.error + '</font></div>';
+        var error_html = '<div class="card bg-light" id="response_error"><font color="red">' + response.error + '</font></div>';
         var selectall_id = "c" + this_section + "_select_all";
-        jQuery('#' + selectall_id).before(error_html);
+        $('#' + selectall_id).before(error_html);
       }
       else {
         if (response.message) {
-          var message_html = '<div class="well well-sm" id="response_error"><center><font color="orange">' + response.message + '</font></center></div>';
+          var message_html = '<div class="card bg-light" id="response_error"><center><font color="orange">' + response.message + '</font></center></div>';
           var selectall_id = "c" + this_section + "_select_all";
-          jQuery('#' + selectall_id).before(message_html);
+          $('#' + selectall_id).before(message_html);
         }
         var list = response.list || [];
         data_html = format_options_list(list);
@@ -253,17 +253,17 @@ function retrieve_and_display_set(categories, data, this_section, selected, data
         var listmenu_id = "c" + this_section + "_to_list_menu";
         var select_id = "select" + this_section;
 
-        jQuery('#' + data_id).html(data_html);
+        $('#' + data_id).html(data_html);
         if (selected) {
           for (var n = 0; n < selected.length; n++) {
-            jQuery("#" + data_id + " option[value='" + selected[n] + "']").prop("selected", true);
+            $("#" + data_id + " option[value='" + selected[n] + "']").prop("selected", true);
           }
         }
-        var data = jQuery('#' + data_id).val() || [];;
+        var data = $('#' + data_id).val() || [];;
         show_list_counts(count_id, list.length, data.length);
         update_download_options(this_section, categories);
 
-        if (jQuery('#navbar_lists').length) {
+        if ($('#navbar_lists').length) {
           addToListMenu(listmenu_id, data_id, {
             selectText: true,
             typeSourceDiv: select_id
@@ -280,14 +280,14 @@ function retrieve_and_display_set(categories, data, this_section, selected, data
     error: function (request, status, err) {
       if (status == "timeout") {
         // report timeout
-        var error_html = '<div class="well well-sm" id="response_error"><font color="red">Timeout error. Request could not be completed within 60 second time limit.</font></div>';
+        var error_html = '<div class="card bg-light" id="response_error"><font color="red">Timeout error. Request could not be completed within 60 second time limit.</font></div>';
         var selectall_id = "c" + this_section + "_select_all";
-        jQuery('#' + selectall_id).before(error_html);
+        $('#' + selectall_id).before(error_html);
       } else {
         // report unspecified error occured
-        var error_html = '<div class="well well-sm" id="response_error"><font color="red">Error. If this problem persists, please <a href="../../contact/form">contact developers</a></font></div>';
+        var error_html = '<div class="card bg-light" id="response_error"><font color="red">Error. If this problem persists, please <a href="../../contact/form">contact developers</a></font></div>';
         var selectall_id = "c" + this_section + "_select_all";
-        jQuery('#' + selectall_id).before(error_html);
+        $('#' + selectall_id).before(error_html);
       }
     }
 
@@ -302,7 +302,7 @@ function get_selected_data(this_section) {
 
   for (i = 1; i <= this_section; i++) {
     var element_id = "c" + i + "_data";
-    var data = jQuery("#" + element_id).val();
+    var data = $("#" + element_id).val();
     if (data) selected_data.push(data);
   }
   //if (window.console) console.log("selected data= "+JSON.stringify(selected_data));
@@ -311,22 +311,22 @@ function get_selected_data(this_section) {
 
 function get_selected_categories(this_section) {
   var selected_categories = [];
-  var select1 = jQuery('#select1').val();
+  var select1 = $('#select1').val();
   if (select1 === '') { // if starting category is undefined
-    if (jQuery('#paste_list_list_select').val()) { // check to see if paste from list was used, if so get list type
-      select1 = jQuery('#paste_list_list_select').prop('title');
+    if ($('#paste_list_list_select').val()) { // check to see if paste from list was used, if so get list type
+      select1 = $('#paste_list_list_select').prop('title');
       //if (window.console) console.log("select1="+select1);
     }
   }
   selected_categories.push(select1);
   for (i = 2; i <= this_section; i++) {
     var element_id = "select" + i;
-    var category = jQuery("#" + element_id).val();
+    var category = $("#" + element_id).val();
     if (category != '') { selected_categories.push(category) };
   }
   var next_section = this_section + 1;
   var next_select_id = "select" + next_section;
-  jQuery("#" + next_select_id).val('please select');
+  $("#" + next_select_id).val('please select');
   //if (window.console) console.log("selected categories= "+JSON.stringify(selected_categories));
   return selected_categories;
 }
@@ -374,7 +374,7 @@ function update_select_categories(this_section, selected_categories) {
   var next_section = ++this_section;
   var next_select_id = "select" + next_section;
 
-  jQuery('#' + next_select_id).html(remaining_categories);
+  $('#' + next_select_id).html(remaining_categories);
 }
 
 function update_download_options(this_section, categories) {
@@ -384,10 +384,10 @@ function update_download_options(this_section, categories) {
   var selected_accessions = 0;
   var selected_genotyping_protocols = 0;
   if (isLoggedIn()) {
-    jQuery('#wizard_download_phenotypes_button').prop('title', 'Click to Download Trial Phenotypes');
-    jQuery('#wizard_download_phenotypes_button').removeAttr('disabled');
-    jQuery('#wizard_download_metadata_button').prop('title', 'Click to Download Trial Metadata');
-    jQuery('#wizard_download_metadata_button').removeAttr('disabled');
+    $('#wizard_download_phenotypes_button').prop('title', 'Click to Download Trial Phenotypes');
+    $('#wizard_download_phenotypes_button').removeAttr('disabled');
+    $('#wizard_download_metadata_button').prop('title', 'Click to Download Trial Metadata');
+    $('#wizard_download_metadata_button').removeAttr('disabled');
   }
 
   for (i = 0; i < categories.length; i++) {
@@ -396,13 +396,13 @@ function update_download_options(this_section, categories) {
     if (categories[i] === 'trials' && data[i]) {
       selected_trials = 1;
       var trial_html = '<font color="green">' + data[i].length + ' trials selected</font></div>';
-      jQuery('#selected_trials').html(trial_html);
-      jQuery('#selected_trials_metadata').html(trial_html);
+      $('#selected_trials').html(trial_html);
+      $('#selected_trials_metadata').html(trial_html);
     }
     if (categories[i] === 'accessions' && data[i]) {
       selected_accessions = 1;
       var accession_html = '<font color="green">' + data[i].length + ' accessions selected</font></div>';
-      jQuery('#selected_accessions').html(accession_html);
+      $('#selected_accessions').html(accession_html);
     }
     if (categories[i] === 'genotyping_protocols' && data[i]) {
       selected_genotyping_protocols = 1;
@@ -412,29 +412,29 @@ function update_download_options(this_section, categories) {
       else {
         var genotyping_protocols_html = '<font color="green">' + data[i].length + ' genotyping protocols selected</font></div>';
       }
-      jQuery('#selected_genotyping_protocols').html(genotyping_protocols_html);
+      $('#selected_genotyping_protocols').html(genotyping_protocols_html);
     }
   }
   if ((selected_trials == 1 || selected_accessions == 1) && isLoggedIn()) {
-    jQuery('#download_button_genotypes').prop('title', 'Click to Download Accession Genotypes');
-    jQuery('#download_button_genotypes').removeAttr('disabled');
+    $('#download_button_genotypes').prop('title', 'Click to Download Accession Genotypes');
+    $('#download_button_genotypes').removeAttr('disabled');
   }
   //console.log("trials-selected="+trials_selected);
   //console.log("accessions-selected="+accessions_selected);
   if (selected_trials !== 1) {
-    jQuery('#selected_trials').html('No trials selected');
-    jQuery('#selected_trials_metadata').html('No trials selected');
+    $('#selected_trials').html('No trials selected');
+    $('#selected_trials_metadata').html('No trials selected');
   }
   if (selected_accessions !== 1) {
-    jQuery('#selected_accessions').html('No accessions selected');
+    $('#selected_accessions').html('No accessions selected');
   }
   if (selected_genotyping_protocols !== 1) {
-    jQuery('#selected_genotyping_protocols').html('No genotyping protocols selected. Default will be used.');
+    $('#selected_genotyping_protocols').html('No genotyping protocols selected. Default will be used.');
   }
 }
 
 function reset_downstream_sections(this_section) {  // clear downstream selects, data_panels, data_counts
-  jQuery('#response_error').remove();
+  $('#response_error').remove();
   for (i = 4; i > this_section; i--) {
     var select_id = "select" + i;
     var data_id = "c" + i + "_data";
@@ -442,19 +442,19 @@ function reset_downstream_sections(this_section) {  // clear downstream selects,
     var querytype_id = "c" + i + "_querytype";
     var list_menu_id = "c" + i + "_to_list_menu";
     var replacement = '<div id="' + list_menu_id + '"></div>';
-    jQuery('#' + select_id).html('');
-    jQuery('#' + data_id).html('');
-    jQuery('#' + count_id).html('No Selection');
-    jQuery('#' + querytype_id).bootstrapToggle('off');
-    jQuery('#' + list_menu_id).replaceWith(replacement);
+    $('#' + select_id).html('');
+    $('#' + data_id).html('');
+    $('#' + count_id).html('No Selection');
+    $('#' + querytype_id).bootstrapToggle('off');
+    $('#' + list_menu_id).replaceWith(replacement);
   }
 }
 
 function create_list_start(message) {
   var lo = new CXGN.List();
   var listhtml = lo.listSelect('paste_list', '', message, 'refresh', undefined);
-  jQuery('#paste_list').html(listhtml);
-  jQuery('#paste_list_list_select').change(
+  $('#paste_list').html(listhtml);
+  $('#paste_list_list_select').change(
     function () {
       pasteList();
     });
@@ -463,11 +463,11 @@ function create_list_start(message) {
 function pasteDataset() {
   //if (window.console) console.log("pasting list . . .");
   disable_ui();
-  var dataset_id = jQuery('#paste_dataset_select').val();
-  //var value = jQuery('#list_start_list_select').val();
+  var dataset_id = $('#paste_dataset_select').val();
+  //var value = $('#list_start_list_select').val();
   //if (window.console) console.log("list_start_list_select_val ="+value);
   if (dataset_id === '') {
-    jQuery('#c1_data').html('');
+    $('#c1_data').html('');
     return;
   }
   else {
@@ -479,12 +479,12 @@ function pasteDataset() {
 function pasteList() {
   //if (window.console) console.log("pasting list . . .");
 
-  jQuery('#list_message').html('');
-  var list_id = jQuery('#paste_list_list_select').val();
-  //var value = jQuery('#list_start_list_select').val();
+  $('#list_message').html('');
+  var list_id = $('#paste_list_list_select').val();
+  //var value = $('#list_start_list_select').val();
   //if (window.console) console.log("list_start_list_select_val ="+value);
   if (list_id === '') {
-    jQuery('#c1_data').html('');
+    $('#c1_data').html('');
     return;
   }
   else {  // paste list by retrieving ids and combining them with list values in proper format
@@ -522,8 +522,8 @@ function pasteList() {
       }
     }
     c1_html = format_options_list(options);
-    jQuery('#c1_data').html(c1_html);
-    jQuery('#c1_data_text').html(retrieve_sublist(options, 1).join("\n"));
+    $('#c1_data').html(c1_html);
+    $('#c1_data_text').html(retrieve_sublist(options, 1).join("\n"));
 
     // clear and reset all other wizard parts
     var this_section = 1;
@@ -533,21 +533,21 @@ function pasteList() {
     update_select_categories(this_section, data.type_name);
     update_download_options(this_section, data.type_name);
 
-    if (jQuery('#navbar_lists').length) {
+    if ($('#navbar_lists').length) {
       addToListMenu('c1_to_list_menu', 'c1_data', {
         selectText: true,
         listType: data.type_name
       });
     }
-    jQuery('#paste_list_list_select').prop('title', data.type_name);  // so get_selected_categories method doesn't have to retrieve list data everytime
+    $('#paste_list_list_select').prop('title', data.type_name);  // so get_selected_categories method doesn't have to retrieve list data everytime
     enable_ui();
   }
 }
 
 function report_list_start_error(error_message) {
   enable_ui();
-  var error_html = '<div class="well well-sm"><font color="red">' + error_message + '</font></div>';
-  jQuery('#list_message').html(error_html);
+  var error_html = '<div class="card bg-light"><font color="red">' + error_message + '</font></div>';
+  $('#list_message').html(error_html);
 }
 
 function format_options(items) {
@@ -587,11 +587,11 @@ function copy_hash(hash) {
 }
 
 function disable_ui() {
-  jQuery('#working_modal').modal("show");
+  $('#working_modal').modal("show");
 }
 
 function enable_ui() {
-  jQuery('#working_modal').modal("hide");
+  $('#working_modal').modal("hide");
 }
 
 function show_list_counts(count_div, total_count, selected) {
@@ -599,7 +599,7 @@ function show_list_counts(count_div, total_count, selected) {
   if (selected) {
     html += 'Selected: ' + selected;
   }
-  jQuery('#' + count_div).html(html);
+  $('#' + count_div).html(html);
 }
 
 function selectAllOptions(obj) {
@@ -619,9 +619,9 @@ function clearAllOptions(obj) {
 function check_missing_criteria(categories, data, this_section) {
   var test = data.length + 1;
   if (categories.length > test) {
-    var error_html = '<div class="well well-sm" id="response_error"><font color="red">Error: Select at least one option from each preceding panel</font></div>';
+    var error_html = '<div class="card bg-light" id="response_error"><font color="red">Error: Select at least one option from each preceding panel</font></div>';
     var selectall_id = "c" + this_section + "_select_all";
-    jQuery('#' + selectall_id).before(error_html);
+    $('#' + selectall_id).before(error_html);
     return 1;
   } else {
     return 0;
@@ -633,7 +633,7 @@ function get_querytypes(this_section) {
 
   for (i = 2; i <= this_section; i++) {
     var element_id = "c" + i + "_querytype";
-    if (jQuery('#' + element_id).is(":checked")) {
+    if ($('#' + element_id).is(":checked")) {
       var type = 1;
     } else {
       var type = 0;
@@ -649,14 +649,14 @@ function get_querytypes(this_section) {
 function initialize_first_select() {
   var starting_categories = { '': 'Select a starting category', accessions: 'accessions', breeding_programs: 'breeding_programs', genotyping_protocols: 'genotyping_protocols', locations: 'locations', seedlots: 'seedlots', trait_components: 'trait_components', traits: 'traits', trials: 'trials', trial_designs: 'trial_designs', trial_types: 'trial_types', years: 'years' };
   var start = format_options(starting_categories);
-  jQuery('#select1').html(start);
+  $('#select1').html(start);
 }
 
 function add_data_refresh() {
   var roles = getUserRoles();
   //console.log("userroles="+roles);
   if (jQuery.inArray(roles, ['submitter', 'curator', 'sequencer']) >= 0) {
-    jQuery('#wizard_refresh').append('<p align="center" style="margin: 0px 0"><i>Don\'t see your data?</i></p><input class="btn btn-link center-block" id="open_update_dialog" type="button" value="Update wizard">');
+    $('#wizard_refresh').append('<p align="center" style="margin: 0px 0"><i>Don\'t see your data?</i></p><input class="btn btn-link center-block" id="open_update_dialog" type="button" value="Update wizard">');
   }
 }
 
@@ -669,28 +669,28 @@ function refresh_matviews(matview_select) {
     timeout: 60000,
     method: 'POST',
     beforeSend: function (xhr) {
-      jQuery('#update_wizard').button('loading');
+      $('#update_wizard').button('loading');
       xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
     },
     success: function (response) {
       if (response.error) {
-        var error_html = '<div class="well well-sm" id="update_wizard_error"><font color="red">' + response.error + '</font></div>';
-        jQuery('#update_wizard_error').replaceWith(error_html);
+        var error_html = '<div class="card bg-light" id="update_wizard_error"><font color="red">' + response.error + '</font></div>';
+        $('#update_wizard_error').replaceWith(error_html);
       } else {
-        var success_html = '<div class="well well-sm" id="update_wizard_error"><font color="green">' + response.message + '</font></div>';
-        jQuery('#update_wizard_error').replaceWith(success_html);
+        var success_html = '<div class="card bg-light" id="update_wizard_error"><font color="green">' + response.message + '</font></div>';
+        $('#update_wizard_error').replaceWith(success_html);
         matviews_update_options();
       }
     },
     error: function (request, status, err) {
       if (status == "timeout") {
         // report timeout
-        var error_html = '<div class="well well-sm" id="update_wizard_error"><font color="red">Timeout error. Request could not be completed within 60 second time limit.</font></div>';
-        jQuery('#update_wizard_error').replaceWith(error_html);
+        var error_html = '<div class="card bg-light" id="update_wizard_error"><font color="red">Timeout error. Request could not be completed within 60 second time limit.</font></div>';
+        $('#update_wizard_error').replaceWith(error_html);
       } else {
         // report unspecified error occured
-        var error_html = '<div class="well well-sm" id="update_wizard_error"><font color="red">Unspecified error. If this problem persists, please <a href="../../contact/form">contact developers</a></font></div>';
-        jQuery('#update_wizard_error').replaceWith(error_html);
+        var error_html = '<div class="card bg-light" id="update_wizard_error"><font color="red">Unspecified error. If this problem persists, please <a href="../../contact/form">contact developers</a></font></div>';
+        $('#update_wizard_error').replaceWith(error_html);
       }
     }
   });
@@ -705,26 +705,26 @@ function matviews_update_options() {
       if (response.refreshing) {
         // if already refreshing, display status in modal and create disabled button
         var update_status = response.refreshing;
-        jQuery('#wizard_status').replaceWith(update_status);
+        $('#wizard_status').replaceWith(update_status);
         var button_html = '<button type="button" class="btn btn-primary wiz-update" name="update_wizard" data-loading-text="Working..." id="update_wizard" title="A search wizard update is already in progress..." disabled>Update search wizard</button>';
-        jQuery('#update_wizard').replaceWith(button_html);
+        $('#update_wizard').replaceWith(button_html);
       } else if (response.timestamp) {
         // if exists display timestamp in modal and create button
         var update_status = response.timestamp;
-        jQuery('#wizard_status').replaceWith(update_status);
+        $('#wizard_status').replaceWith(update_status);
         var button_html = '<button type="button" class="btn btn-primary wiz-update" name="update_wizard" data-loading-text="Working..." id="update_wizard" title="Refresh the search wizard to include newly uploaded data">Update search wizard</button>';
-        jQuery('#update_wizard').replaceWith(button_html);
+        $('#update_wizard').replaceWith(button_html);
       }
     },
     error: function (request, status, err) {
       if (status == "timeout") {
         // report timeout
-        var error_html = '<div class="well well-sm" id="wizard_status"><font color="red">Timeout error. Request could not be completed within 60 second time limit.</font></div>';
-        jQuery('#wizard_status').replaceWith(error_html);
+        var error_html = '<div class="card bg-light" id="wizard_status"><font color="red">Timeout error. Request could not be completed within 60 second time limit.</font></div>';
+        $('#wizard_status').replaceWith(error_html);
       } else {
         // report unspecified error occured
-        var error_html = '<div class="well well-sm" id="wizard_status"><font color="red">Unspecified error. If this problem persists, please <a href="../../contact/form">contact developers</a></font></div>';
-        jQuery('#wizard_status').replaceWith(error_html);
+        var error_html = '<div class="card bg-light" id="wizard_status"><font color="red">Unspecified error. If this problem persists, please <a href="../../contact/form">contact developers</a></font></div>';
+        $('#wizard_status').replaceWith(error_html);
       }
     }
   });
@@ -756,7 +756,7 @@ function replay_dataset_info(dataset_id, section_number) {
   }
   var i = section_number - 1;
   var category = category_order[i];
-  jQuery('#select' + section_number).val(category);
+  $('#select' + section_number).val(category);
   reset_downstream_sections(section_number);
   update_select_categories(section_number);
 

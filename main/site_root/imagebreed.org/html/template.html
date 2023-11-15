@@ -4,10 +4,11 @@
 <html>
 
 <head>
-{% include 'header.html' %}
+  {% include 'header.html' %}
 
-{% block includes %} {% endblock %}
+  {% block includes %} {% endblock %}
 </head>
+
 <body>
 
   <div id="outercontainer">
@@ -32,16 +33,16 @@
           <div class="modal-body">
             <p>
               This site is optimized for modern web browsers<br>
-              <div style="text-align: center;">
-                <a href="http://browsehappy.com" target="_blank" class="footer">
-                  Please upgrade your browser<br>
-                  <img src="https://km.support.apple.com/kb/image.jsp?productid=PL165" width="25">
-                  <img src="/img/o-logo.jpg" width="25">
-                  <img
-                    src="https://c.s-microsoft.com/en-us/CMSImages/ie_symbol_clr_56x56.png?version=73aa5bf1-0743-11e7-8f71-718675c983bf"
-                    width="25">
-                </a>
-              </div>
+            <div style="text-align: center;">
+              <a href="http://browsehappy.com" target="_blank" class="footer">
+                Please upgrade your browser<br>
+                <img src="https://km.support.apple.com/kb/image.jsp?productid=PL165" width="25">
+                <img src="/img/o-logo.jpg" width="25">
+                <img
+                  src="https://c.s-microsoft.com/en-us/CMSImages/ie_symbol_clr_56x56.png?version=73aa5bf1-0743-11e7-8f71-718675c983bf"
+                  width="25">
+              </a>
+            </div>
             </p>
             Sorry!, some features may not work in outdated browsers
 
@@ -73,18 +74,6 @@
 
     {% include 'navbar.html' %}
 
-    <script defer="defer">
-
-      jQuery(document).ready(function () {
-
-        setUpLogin();
-        setUpLists();
-        setUpDatasets();
-
-      });
-
-    </script>
-
     <!-- END HEADER -->
 
 
@@ -92,72 +81,14 @@
     <br />
 
     <div id="wrapper" class="container-fluid">
-      <div id="main_row" class="row">
-        <div class="col-md-1 col-lg-1 col-xl-2">
-        </div>
+      <div id="main_row" class="row justify-content-center">
         <div class="col-sm-12 col-md-10 col-lg-10 col-xl-8">
-
-
-          <div id="cookie_popup" name="cookie_popup" style="display:none">
-            <div class="container-fluid">
-              <div id="cookie_popup_content_div">
-                <div class="panel panel-danger">
-                  <div class="panel-body bg-danger">
-                    <div class="row">
-                      <div class="col-sm-10">
-                        <p>This site uses cookies to provide logins and other features. Please accept the use of cookies
-                          by clicking Accept.</p>
-                      </div>
-                      <div class="col-sm-2">
-                        <button class="btn btn-primary btn-sm" id="cookie_agree_submit">Accept</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-
-          <script>
-
-            jQuery(document).ready(function () {
-
-              jQuery('#cookie_agree_submit').click(function () {
-                var expDate = new Date();
-                expDate.setTime(expDate.getTime() + (50000 * 60 * 1000)); //about 30 days
-                jQuery.cookie("cookies_approved", "1", { expires: expDate, path: '/' });
-                jQuery('#cookie_popup_content_div').html('<div class="panel panel-success"><div class="panel-body bg-success"><div style="text-align: center;"><h3>Thank you :-)</h3></div></div></div>');
-                setTimeout(function () {
-                  jQuery('#cookie_popup').hide('slow');
-                }, 1500);
-              });
-
-              if (jQuery.cookie("cookies_approved") == 1) {
-                jQuery('#cookie_popup').hide();
-              } else {
-                jQuery('#cookie_popup').show();
-              }
-            })
-
-          </script>
-
-
-
-
-
-
-
-
           <div id="pagetitle">
             {% block title required %}{% endblock %}
           </div>
 
           {% block content %} {% endblock %}
 
-        </div>
-        <div class="col-md-1 col-lg-1 col-xl-2">
         </div>
       </div>
     </div>

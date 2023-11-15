@@ -18,9 +18,9 @@ async def get_private_companies(request: Request, current_user: User = Depends(A
     return JSONResponse(content={"options": privateCompanies})
 
 @router.get("/html/select/trials")
-async def get_trials( request: Request, current_user: User = Depends(AuthUtils.getCurrentUser)):
+async def get_trials( request: Request, private_company_id: str = None, current_user: User = Depends(AuthUtils.getCurrentUser)):
     token = AuthUtils.getAccessToken(request=request)
-    trials = BrAPI.getStudySummaries(token=token)
+    trials = BrAPI.getStudySummaries(private_company_id, token=token)
 
     return JSONResponse(content={"options": trials})
 

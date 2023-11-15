@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <h4>Available Seedlots</h4>
             </div>
@@ -11,7 +11,7 @@
                 <div class="container-fluid">
 
                     <form id="available-seedlots">
-                        <table class="table table-hover table-bordered">
+                        <table class="display  ">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="text-align: div;">Accessions</th>
@@ -35,7 +35,7 @@
                             var d3 = global.d3v4;
                             var ex = {};
                             ex.build_table = function (accession_names, list_type) {
-                                jQuery('#working_modal').modal('show');
+                                $('#working_modal').modal('show');
                                 jQuery.ajax({
                                     type: 'POST',
                                     url: '/ajax/accessions/possible_seedlots',
@@ -43,17 +43,17 @@
                                     dataType: "json",
                                     success: function (response) {
                                         _build_table(accession_names, response.seedlots, response.synonyms);
-                                        jQuery('#working_modal').modal('hide');
+                                        $('#working_modal').modal('hide');
                                     },
                                     error: function (response) {
-                                        jQuery('#working_modal').modal('hide');
+                                        $('#working_modal').modal('hide');
                                         console.log(response);
                                         alert("Something went wrong in the available-seedlots AJAX call. See console for more information.")
                                     }
                                 });
                             };
                             ex.get_selected = function () {
-                                return jQuery(mainFormSelector).serializeArray();
+                                return $(mainFormSelector).serializeArray();
                             };
                             var empty_placeholder = new Object();
                             function _build_table(accession_list, seedlot_obj, synonyms) {
@@ -134,8 +134,8 @@
                 </form>
                 <form class="form-inline" style="float:right">
                     <a href="/breeders/seedlots/" class="btn btn-primary">Manage Seedlots</a>
-                    <button id="close_availible_seedlots_modal" type="button" class="btn btn-default"
-                        data-dismiss="modal">Close</button>
+                    <button id="close_availible_seedlots_modal" type="button" class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal">Close</button>
                 </form>
             </div>
         </div>
