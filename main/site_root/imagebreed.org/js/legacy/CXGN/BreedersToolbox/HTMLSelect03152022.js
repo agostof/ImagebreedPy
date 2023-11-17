@@ -19,9 +19,8 @@ function get_select_box(type, div_id, options) {
             }
             else if (response.options) {
                 var optionsHTML = ""
-                if (!options.multiple) {
-                    optionsHTML = optionsHTML + "<option disabled selected value> -- Select -- </option>";
-                }
+                optionsHTML = optionsHTML + "<option disabled selected value> -- Select -- </option>";
+               
                 for (const selectOption of response.options) {
                     optionsHTML = optionsHTML + "<option title='" + selectOption.name + "' value='" + selectOption.id + "' >" + selectOption.name + "</option>"
                 }

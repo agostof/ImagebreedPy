@@ -229,6 +229,8 @@
             $('#drone_rover_view_rover_vehicles_modal').modal('show');
         });
 
+        upload_drone_rover_field_trial_ids_string = "";
+        
         $(document).on('change', '#rover_run_field_trial_id', function () {
             var upload_drone_rover_field_trial_ids = $(this).val();
             upload_drone_rover_field_trial_ids_string = upload_drone_rover_field_trial_ids.join();

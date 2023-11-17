@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Request, UploadFile, File, Form, Depends
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from typing import Annotated
+import time
 
-from main.services.models import AnalyticsRequest, AnalyticsResponse, AnalysisQueryRequest
+from main.services.analytics import AnalyticsRequest, AnalyticsResponse, AnalysisQueryRequest
 from main.services.vehicles import VehicleRequest, VehicleService
+from main.services.imaging_events import ImagingEventService
 from main.services.settings import DIRECTORY
 from main.services.auth import User, AuthUtils
 from main.database.models import Vehicle, DRONE, ROVER
@@ -98,19 +100,13 @@ async def get_drone_rover_vehicles(current_user: User = Depends(AuthUtils.getCur
 
 @router.get("/drone_rover/drone_rover_top")
 async def get_drone_rover_top(current_user: User = Depends(AuthUtils.getCurrentUser)):
-    MOCK_droneRoverEvents = [
-        ["imaging event 1", "rover", "description", "2022-10-10", "", "EarthSense", "test_trial1", "test_trial1"],
-        ["imaging event 2", "rover", "description 2", "2023-10-10", "", "EarthSense", "test_trial1", "test_trial1"],
-    ]
-    return JSONResponse(content={"data": MOCK_droneRoverEvents})
+    imaging_events = ImagingEventService.getImagingEventTableRows(vehicleType=ROVER)
+    return JSONResponse(content={"data": imaging_events})
 
 @router.get("/drone_imagery/raw_drone_imagery_top")
 async def get_raw_drone_imagery_top(current_user: User = Depends(AuthUtils.getCurrentUser)):
-    MOCK_droneImageryEvents = [
-        ["imaging event 1", "drone", "description", "2022-10-10", "", "EarthSense", "test_trial1", "test_trial1"],
-        ["imaging event 2", "drone", "description 2", "2023-10-10", "", "EarthSense", "test_trial1", "test_trial1"],
-    ]
-    return JSONResponse(content={"data": MOCK_droneImageryEvents})
+    imaging_events = ImagingEventService.getImagingEventTableRows(vehicleType=DRONE)
+    return JSONResponse(content={"data": imaging_events})
 
 @router.get("/drone_rover/processed_plot_point_cloud_count")
 async def get_processed_plot_point_cloud_count(current_user: User = Depends(AuthUtils.getCurrentUser)):
@@ -166,11 +162,14 @@ async def get_vehicle(vehicle_id: str, current_user: User = Depends(AuthUtils.ge
 
 @router.get("/drone_imagery/drone_runs")
 async def get_drone_runs(select_checkbox_name: str, field_trial_ids: str, disable: int = 0, is_rover: int = 0, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    MOCK_droneRuns = [
-        ["", "imaging event 1", "rover", "description", "2022-10-10", "", "EarthSense", "test_trial1", "test_trial1"],
-        ["", "imaging event 2", "rover", "description 2", "2023-10-10", "", "EarthSense", "test_trial1", "test_trial1"],
-    ]
-    return JSONResponse(content={"data": MOCK_droneRuns})
+    imaging_events = []
+    if is_rover:
+        imaging_events = ImagingEventService.getImagingEventTableRows(vehicleType=ROVER)
+    else:
+        imaging_events = ImagingEventService.getImagingEventTableRows(vehicleType=DRONE)
+    for event_row in imaging_events:
+        event_row.insert(0, f"<input type='checkbox' name='{select_checkbox_name}'>")
+    return JSONResponse(content={"data": imaging_events})
 
 @router.get("/drone_imagery/imaging_vehicles")
 async def get_imaging_vehicles(current_user: User = Depends(AuthUtils.getCurrentUser)):
@@ -257,7 +256,9 @@ async def post_upload_drone_imagery(
     ):
     print(drone_run_band_stitched_ortho_report)
     print(private_company_id)
+    time.sleep(20)
     return templates.TemplateResponse("drone_imagery.html", {"request": request, "id": id})
+    # return RedirectResponse(url="/breeders/drone_imagery")
 
 @router.post("/drone_imagery/calculate_analytics")
 async def post_calculate_analytics(request: AnalyticsRequest, current_user: User = Depends(AuthUtils.getCurrentUser)) -> AnalyticsResponse:

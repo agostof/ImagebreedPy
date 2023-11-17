@@ -72,20 +72,11 @@
                                             </tr>
                                         </thead>
                                     </table>
+                                    
+                                    {% include 'drone-run-expanded-view.html' %}
 
                                     <script>
                                         $(document).ready(function () {
-
-                                            var raw_drone_imagery_table = $('#raw_drone_image_datatable').DataTable({
-                                                'ajax': {
-                                                    url: '/api/drone_imagery/raw_drone_imagery_top',
-                                                    beforeSend: function (xhr) {
-                                                        xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
-                                                    }
-                                                },
-                                                'paging': false
-                                            });
-
                                             raw_drone_imagery_table.on('draw', function () {
                                                 jQuery.ajax({
                                                     url: '/api/drone_imagery/raw_drone_imagery_plot_image_count',
@@ -247,8 +238,7 @@
                                         <div id="pagetitle">
                                             <h3 id="pagetitle_h3">Create a new drone run</h3>
                                         </div>
-                                        <table class="display"
-                                            id="drone_image_export_drone_runs_table">
+                                        <table class="display" id="drone_image_export_drone_runs_table">
                                             <thead>
                                                 <tr>
                                                     <th>Select</th>

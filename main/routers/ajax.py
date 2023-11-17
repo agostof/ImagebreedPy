@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from main.services.settings import DIRECTORY
 from main.services.auth import User, AuthUtils
 from main.services.vehicles import VehicleService
+from main.services.analytics import AnalyticsService
 from main.services.brapi import BrAPI
 
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
@@ -58,14 +59,8 @@ async def get_years(request: Request, current_user: User = Depends(AuthUtils.get
 
 @router.get("/html/select/models")
 async def get_models(current_user: User = Depends(AuthUtils.getCurrentUser)):
-    MOCK_years = [{
-        "name": "basic model",
-        "id": "m123"
-    },{
-        "name": "advanced model",
-        "id": "m456"
-    }]
-    return JSONResponse(content={"options": MOCK_years})
+    models = AnalyticsService.getAnalysisModelSummaries()
+    return JSONResponse(content={"options": models})
 
 @router.get("/html/select/traits")
 async def get_traits(request: Request, current_user: User = Depends(AuthUtils.getCurrentUser)):

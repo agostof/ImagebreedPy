@@ -1751,7 +1751,14 @@ $(document).ready(function () {
                 url: '/api/drone_imagery/drone_runs?select_checkbox_name=upload_drone_imagery_drone_run_select&field_trial_ids=' + upload_drone_imagery_field_trial_ids_string + '&disable=1',
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
-                }
+                },
+                // dataSrc: function(response) {
+                //     for (row of response.data){
+                //         // row.unshift("<input type='checkbox' name='upload_drone_imagery_drone_run_select'>")
+                //         row.unshift("hi")
+                //     }
+                //     return response;
+                // }
             }
         });
 
