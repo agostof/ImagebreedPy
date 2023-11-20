@@ -23,6 +23,7 @@ $> cp example.env .env
 $> vim .env
 
 # initialize the database
+# add the `--data` option to include test data
 $> python -m main.database.db --drop --init
 
 # run the server

@@ -4882,11 +4882,12 @@ $(document).ready(function () {
             type: 'POST',
             url: '/api/drone_imagery/save_plot_polygons_template_separated',
             dataType: "json",
-            data: {
+            contentType: "application/json",
+            data: JSON.stringify({
                 'drone_run_band_project_id': manage_drone_imagery_standard_process_interactive_drone_run_band_project_id,
-                'stock_polygons': JSON.stringify(drone_imagery_interactive_plot_polygons),
+                'stock_polygons': drone_imagery_interactive_plot_polygons,
                 'flight_pass_counter': manage_drone_imagery_standard_process_raw_images_interactive_current_pass
-            },
+            }),
             beforeSend: function (xhr) {
                 $("#working_modal").modal("show");
                 xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));

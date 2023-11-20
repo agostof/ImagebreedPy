@@ -1,13 +1,13 @@
-<div class="card-group" id="drone_runs_trial_accordion_table_wrapper_MOCK_TRIAL_NAME">
+<div class="card-group" id="drone_runs_trial_accordion_table_wrapper_{{trial_id}}">
     <div class="card card-default">
         <div class="card-heading">
             <div class="row">
                 <div class="col-sm-8">
                     <h4 class="card-title">
                         <a data-bs-toggle="collapse"
-                            data-bs-target="#drone_runs_trial_accordion_table_wrapper_one_MOCK_TRIAL_NAME"
-                            href="#drone_runs_trial_accordion_table_wrapper_one_MOCK_TRIAL_NAME">
-                            Field Trial: MOCK_TRIAL_NAME Imaging Events</a>
+                            data-bs-target="#drone_runs_trial_accordion_table_wrapper_one_{{trial_id}}"
+                            href="#drone_runs_trial_accordion_table_wrapper_one_{{trial_id}}">
+                            Field Trial: {{trial_name}} Imaging Events</a>
                         <small>(Processing: <b>True </b>
                             <span class="glyphicon glyphicon-hourglass"></span>)
                         </small>
@@ -21,19 +21,19 @@
                 </div>
                 <div class="col-sm-2">
                     <button class="btn btn-success btn-sm" name="drone_runs_trial_view_geo_layout"
-                        data-field_trial_id=MOCK_TRIAL_NAME>
+                        data-field_trial_id={{trial_id}}>
                         View Geo Layout
                     </button>
                 </div>
                 <div class="col-sm-2">
                     <button class="btn btn-sm btn-outline-secondary" name="drone_runs_trial_view_timeseries"
-                        data-field_trial_name='{$trial_name}' data-field_trial_id=MOCK_TRIAL_NAME>
+                        data-field_trial_name='{{trial_name}}' data-field_trial_id={{trial_id}}>
                         View TimeSeries
                     </button>
                 </div>
             </div>
         </div>
-        <div id="drone_runs_trial_accordion_table_wrapper_one_MOCK_TRIAL_NAME" class="card-collapse collapse">
+        <div id="drone_runs_trial_accordion_table_wrapper_one_{{trial_id}}" class="card-collapse collapse">
             <div class="card-body">
                 <!-- for each date -->
                 <div class="card-group" id="drone_run_band_accordion_drone_run_wrapper_MOCK_INDEX_VALUE">
@@ -42,7 +42,8 @@
                             <h4 class="card-title">
                                 <a data-bs-toggle="collapse"
                                     data-bs-target="#drone_run_band_accordion_drone_run_wrapper_one_MOCK_INDEX_VALUE"
-                                    href="#drone_run_band_accordion_drone_run_wrapper_one_MOCK_INDEX_VALUE">drone_run_project_name-drone_run_date
+                                    href="#drone_run_band_accordion_drone_run_wrapper_one_MOCK_INDEX_VALUE">{{drone_run_project_name}}
+                                    - {{drone_run_date}}
                                     <small>(Processing: <span class="glyphicon glyphicon-hourglass"></span>)</small>
                                     <small>(Saving Phenotypes: <span
                                             class="glyphicon glyphicon-hourglass"></span>)</small>
@@ -57,123 +58,161 @@
                                     <div class="row">
                                         <div class="col-sm-7">
                                             <div class="row">
-                                                <div class="col-sm-5"><b>Imaging Event Name</b>:</div>
-                                                <div class="col-sm-7"><a href="/breeders_toolbox/trial/MOCK_INDEX_VALUE"
-                                                        _target="blank">{drone_run_project_name}</a></div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-5"><b>Imaging Event Type</b>:</div>
-                                                <div class="col-sm-7">{drone_run_type}</div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-sm-5"><b>Description</b>:</div>
-                                                <div class="col-sm-7">{drone_run_project_description}</div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-5"><b>Date</b>:</div>
-                                                <div class="col-sm-7">{drone_run_date}</div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-sm-5"><b>Base Date</b>:</div>
-                                                <div class="col-sm-7">{drone_run_base_date}</div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-sm-5"><b>Camera Rig</b>:</div>
-                                                <div class="col-sm-7">{drone_run_camera_rig}</div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-sm-5"><b>Averaged Temperature Growing Degree Days</b>:
+                                                <div class="col-sm-5">
+                                                    <b>Imaging Event Name</b>:
                                                 </div>
                                                 <div class="col-sm-7">
-                                                    {drone_run_averaged_temperature_gdd}<button
-                                                        class="btn btn-outline-secondary btn-sm"
-                                                        name="drone_imagery_drone_run_calculate_gdd"
-                                                        data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                        data-field_trial_id="{trial_id}">Recalculate
-                                                        GDD</button></div>
+                                                    <a href="/breeders_toolbox/trial/MOCK_INDEX_VALUE"
+                                                        _target="blank">{{drone_run_project_name}}</a>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <b>Imaging Event Type</b>:
+                                                </div>
+                                                <div class="col-sm-7">{{drone_run_type}}</div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-5"><b>Growing Degree Days</b>:</div>
-                                                <div class="col-sm-7"><button class="btn btn-outline-secondary btn-sm"
+                                                <div class="col-sm-5">
+                                                    <b>Description</b>:
+                                                </div>
+                                                <div class="col-sm-7">{{drone_run_project_description}}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <b>Date</b>:
+                                                </div>
+                                                <div class="col-sm-7">{{drone_run_date}}</div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <b>Base Date</b>:
+                                                </div>
+                                                <div class="col-sm-7">{{drone_run_base_date}}</div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <b>Camera Rig</b>:
+                                                </div>
+                                                <div class="col-sm-7">{{drone_run_camera_rig}}</div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <b>Averaged Temperature Growing Degree Days</b>:
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    {{drone_run_averaged_temperature_gdd}}
+                                                    <button class="btn btn-outline-secondary btn-sm"
                                                         name="drone_imagery_drone_run_calculate_gdd"
                                                         data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                        data-field_trial_id="{trial_id}">Calculate GDD</button>
+                                                        data-field_trial_id="{{trial_id}}">Recalculate
+                                                        GDD</button>
                                                 </div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-5"><b>Averaged Precipitation Sum</b>:</div>
+                                                <div class="col-sm-5">
+                                                    <b>Growing Degree Days</b>:
+                                                </div>
                                                 <div class="col-sm-7">
-                                                    {drone_run_averaged_precipitation_sum}<button
-                                                        class="btn btn-outline-secondary btn-sm"
-                                                        name="drone_imagery_drone_run_calculate_precipitation_sum"
+                                                    <button class="btn btn-outline-secondary btn-sm"
+                                                        name="drone_imagery_drone_run_calculate_gdd"
                                                         data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                        data-field_trial_id="{trial_id}">Recalculate
-                                                        Precipitation Sum</button></div>
+                                                        data-field_trial_id="{{trial_id}}">Calculate GDD</button>
+                                                </div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-5"><b>Precipitation Sum</b>:</div>
-                                                <div class="col-sm-7"><button class="btn btn-outline-secondary btn-sm"
+                                                <div class="col-sm-5">
+                                                    <b>Averaged Precipitation Sum</b>:
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    {{drone_run_averaged_precipitation_sum}}
+                                                    <button class="btn btn-outline-secondary btn-sm"
                                                         name="drone_imagery_drone_run_calculate_precipitation_sum"
                                                         data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                        data-field_trial_id="{trial_id}">Calculate Precipitation
-                                                        Sum</button></div>
+                                                        data-field_trial_id="{{trial_id}}">Recalculate
+                                                        Precipitation Sum</button>
+                                                </div>
                                             </div>
 
-
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <b>Precipitation Sum</b>:
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <button class="btn btn-outline-secondary btn-sm"
+                                                        name="drone_imagery_drone_run_calculate_precipitation_sum"
+                                                        data-drone_run_project_id="MOCK_INDEX_VALUE"
+                                                        data-field_trial_id="{{trial_id}}">Calculate Precipitation
+                                                        Sum
+                                                    </button>
+                                                </div>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-sm-5"><b>Growing Season Days</b>:</div>
-                                                <div class="col-sm-7">{days_after_planting_string}</div>
+                                                <div class="col-sm-7">{{days_after_planting_string}}</div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-5"><b>Field Trial</b>:</div>
-                                                <div class="col-sm-7"><a href="/breeders_toolbox/trial/{trial_id}"
-                                                        _target="blank">{trial_name}</a></div>
+                                                <div class="col-sm-7"><a href="/breeders_toolbox/trial/{{trial_id}}"
+                                                        target="_blank">{{trial_name}}</a></div>
                                             </div>
-
                                         </div>
                                         <div class="col-sm-5">
-                                            <span class="label label-info"><span
-                                                    class="glyphicon glyphicon-hourglass"></span>Processing
-                                                Images in Progress</span><br /><br />
-                                            <span class="label label-info"><span
-                                                    class="glyphicon glyphicon-hourglass"></span>Processing
-                                                Phenotypes in Progress</span><br /><br />
-
+                                            <span class="label label-info">
+                                                <span class="glyphicon glyphicon-hourglass">
+                                                </span>Processing
+                                                Images in Progress</span>
+                                            <br>
+                                            <br>
+                                            <span class="label label-info">
+                                                <span class="glyphicon glyphicon-hourglass"></span>Processing
+                                                Phenotypes in Progress</span>
+                                            <br>
+                                            <br>
 
                                             <button class="btn btn-primary btn-sm"
                                                 name="project_drone_imagery_standard_process"
                                                 data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                data-drone_run_project_name="{drone_run_project_name}"
-                                                data-field_trial_id="{trial_id}" data-field_trial_name="{trial_name}"
-                                                data-private_company_id="{private_company_id}"
-                                                data-private_company_is_private="{private_company_is_private}">Run
-                                                Standard Process
-                                                For<br />{drone_run_project_name}</button><br /><br />
+                                                data-drone_run_project_name="{{drone_run_project_name}}"
+                                                data-field_trial_id="{{trial_id}}"
+                                                data-field_trial_name="{{trial_name}}"
+                                                data-private_company_id="{{private_company_id}}"
+                                                data-private_company_is_private="{{private_company_is_private}}">
+                                                Run Standard Process For
+                                                <br>
+                                                {{drone_run_project_name}}
+                                            </button>
+                                            <br>
+                                            <br>
                                             <button class="btn btn-outline-secondary btn-sm"
                                                 name="project_drone_imagery_standard_process_minimal_vi"
                                                 data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                data-drone_run_project_name="{drone_run_project_name}"
-                                                data-field_trial_id="{trial_id}"
-                                                data-field_trial_name="{trial_name}">Run Minimal Vegetitative
-                                                Index Standard Process
-                                                For<br />{drone_run_project_name}</button><br /><br />
-
+                                                data-drone_run_project_name="{{drone_run_project_name}}"
+                                                data-field_trial_id="{{trial_id}}"
+                                                data-field_trial_name="{{trial_name}}">
+                                                Run Minimal Vegetitative Index Standard Process For
+                                                <br>
+                                                {{drone_run_project_name}}
+                                            </button>
+                                            <br>
+                                            <br>
 
                                             <div class="card-group"
                                                 id="project_drone_imagery_buttons_sections_MOCK_INDEX_VALUE">
                                                 <div class="card card-default">
                                                     <div class="card-heading">
-                                                        <h4 class="card-title"><a data-bs-toggle="collapse"
-                                                                data-bs-target=""="#project_drone_imagery_buttons_sections_accordian_MOCK_INDEX_VALUE"
+                                                        <h4 class="card-title">
+                                                            <a data-bs-toggle="collapse"
+                                                                data-bs-target="#project_drone_imagery_buttons_sections_accordian_MOCK_INDEX_VALUE"
                                                                 href="#project_drone_imagery_buttons_sections_accordian_MOCK_INDEX_VALUE">Additional
-                                                                Options</a></h4>
+                                                                Options</a>
+                                                        </h4>
                                                     </div>
                                                     <div id="project_drone_imagery_buttons_sections_accordian_MOCK_INDEX_VALUE"
                                                         class="card-collapse collapse">
@@ -182,80 +221,80 @@
                                                             <button class="btn btn-outline-secondary btn-sm"
                                                                 name="project_drone_imagery_stadard_process_raw_images_add_images"
                                                                 data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                                data-field_trial_id="{trial_id}"
-                                                                data-field_trial_name="{trial_name}"
-                                                                data-private_company_id="{private_company_id}"
-                                                                data-private_company_is_private="{private_company_is_private}">Save/Download
+                                                                data-field_trial_id="{{trial_id}}"
+                                                                data-field_trial_name="{{trial_name}}"
+                                                                data-private_company_id="{{private_company_id}}"
+                                                                data-private_company_is_private="{{private_company_is_private}}">Save/Download
                                                                 Raw Images Captures</button><br /><br />
 
                                                             <button class="btn btn-outline-secondary btn-sm"
                                                                 name="project_drone_imagery_phenotype_run"
                                                                 data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                                data-field_trial_id="{trial_id}"
-                                                                data-field_trial_name="{trial_name}"
-                                                                data-private_company_id="{private_company_id}"
-                                                                data-private_company_is_private="{private_company_is_private}">Calculate
+                                                                data-field_trial_id="{{trial_id}}"
+                                                                data-field_trial_name="{{trial_name}}"
+                                                                data-private_company_id="{{private_company_id}}"
+                                                                data-private_company_is_private="{{private_company_is_private}}">Calculate
                                                                 Phenotypes Again</button><br /><br />
 
                                                             <button class="btn btn-outline-secondary btn-sm"
                                                                 name="project_drone_imagery_apply_other_vi"
                                                                 data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                                data-drone_run_project_name="{drone_run_project_name}"
-                                                                data-field_trial_id="{trial_id}"
-                                                                data-field_trial_name="{trial_name}"
-                                                                data-private_company_id="{private_company_id}"
-                                                                data-private_company_is_private="{private_company_is_private}">Apply
+                                                                data-drone_run_project_name="{{drone_run_project_name}}"
+                                                                data-field_trial_id="{{trial_id}}"
+                                                                data-field_trial_name="{{trial_name}}"
+                                                                data-private_company_id="{{private_company_id}}"
+                                                                data-private_company_is_private="{{private_company_is_private}}">Apply
                                                                 Additional Vegetation Indices</button><br /><br />
 
                                                             <button class="btn btn-outline-secondary btn-sm"
                                                                 name="project_drone_imagery_ground_control_points"
                                                                 data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                                data-drone_run_project_name="{drone_run_project_name}"
-                                                                data-field_trial_id="{trial_id}"
-                                                                data-field_trial_name="{trial_name}"
-                                                                data-private_company_id="{private_company_id}"
-                                                                data-private_company_is_private="{private_company_is_private}">Save
+                                                                data-drone_run_project_name="{{drone_run_project_name}}"
+                                                                data-field_trial_id="{{trial_id}}"
+                                                                data-field_trial_name="{{trial_name}}"
+                                                                data-private_company_id="{{private_company_id}}"
+                                                                data-private_company_is_private="{{private_company_is_private}}">Save
                                                                 Ground Control Points</button><br /><br />
 
                                                             <button class="btn btn-outline-secondary btn-sm"
                                                                 name="drone_imagery_drone_run_band_add_geocoordinate_params"
                                                                 data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                                data-drone_run_project_name="{drone_run_project_name}"
-                                                                data-field_trial_id="{trial_id}"
-                                                                data-field_trial_name="{trial_name}"
-                                                                data-private_company_id="{private_company_id}"
-                                                                data-private_company_is_private="{private_company_is_private}">Add
+                                                                data-drone_run_project_name="{{drone_run_project_name}}"
+                                                                data-field_trial_id="{{trial_id}}"
+                                                                data-field_trial_name="{{trial_name}}"
+                                                                data-private_company_id="{{private_company_id}}"
+                                                                data-private_company_is_private="{{private_company_is_private}}">Add
                                                                 GeoCoordinate Params</button><br /><br />
 
                                                             <button class="btn btn-outline-secondary btn-sm"
                                                                 name="project_drone_imagery_quality_control_check"
                                                                 data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                                data-drone_run_project_name="{drone_run_project_name}"
-                                                                data-field_trial_id="{trial_id}"
-                                                                data-field_trial_name="{trial_name}">Quality
+                                                                data-drone_run_project_name="{{drone_run_project_name}}"
+                                                                data-field_trial_id="{{trial_id}}"
+                                                                data-field_trial_name="{{trial_name}}">Quality
                                                                 Control Plot Images</button><br /><br />
 
                                                             <button class="btn btn-outline-secondary btn-sm"
                                                                 name="project_drone_imagery_multiple_field_trial_check"
                                                                 data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                                data-drone_run_project_name="{drone_run_project_name}"
-                                                                data-field_trial_id="{trial_id}"
-                                                                data-field_trial_name="{trial_name}">Associated
+                                                                data-drone_run_project_name="{{drone_run_project_name}}"
+                                                                data-field_trial_id="{{trial_id}}"
+                                                                data-field_trial_name="{{trial_name}}">Associated
                                                                 Field Trials</button><br /><br />
 
 
                                                             <button class="btn btn-outline-secondary btn-sm"
                                                                 name="project_drone_imagery_change_date_drone_run"
                                                                 data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                                data-drone_run_project_name="{drone_run_project_name}"
-                                                                data-field_trial_id="{trial_id}"
-                                                                data-field_trial_name="{trial_name}">Change
+                                                                data-drone_run_project_name="{{drone_run_project_name}}"
+                                                                data-field_trial_id="{{trial_id}}"
+                                                                data-field_trial_name="{{trial_name}}">Change
                                                                 Date</button><br /><br />
 
                                                             <button class="btn btn-danger btn-sm"
                                                                 name="project_drone_imagery_delete_drone_run"
                                                                 data-drone_run_project_id="MOCK_INDEX_VALUE"
-                                                                data-drone_run_project_name="{drone_run_project_name}">Delete
+                                                                data-drone_run_project_name="{{drone_run_project_name}}">Delete
                                                                 Imaging Event</button>
 
                                                         </div>
@@ -283,29 +322,37 @@
                                     </div>
                                 </div>
 
-
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Image Band(s)</th>
                                             <th>Images/Actions</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><b>Name</b>:
-                                                {drone_run_band_project_name}<br /><b>Description</b>:
-                                                {drone_run_band_project_description}<br /><b>Type</b>:
-                                                {drone_run_band_project_type}</td>
+                                            <td>
+                                                <b>Name</b>:
+                                                {{drone_run_band_project_name}}
+                                                <br>
+                                                <b>Description</b>:
+                                                {{drone_run_band_project_description}}
+                                                <br>
+                                                <b>Type</b>:
+                                                {{drone_run_band_project_type}}
+                                            </td>
                                             <td>
                                                 <div class="card-group"
                                                     id="drone_run_band_accordion_MOCK_DRONE_RUN_PROJECT">
                                                     <div class="card card-default">
                                                         <div class="card-heading">
-                                                            <h4 class="card-title"><a data-bs-toggle="collapse"
+                                                            <h4 class="card-title">
+                                                                <a data-bs-toggle="collapse"
                                                                     data-bs-target="#drone_run_band_accordion_one_MOCK_DRONE_RUN_PROJECT"
                                                                     href="#drone_run_band_accordion_one_MOCK_DRONE_RUN_PROJECT"
-                                                                    onclick="manageDroneImageryDroneRunBandDisplay('{$drone_run_band_project_id}')">View
-                                                                    Images</a></h4>
+                                                                    onclick="manageDroneImageryDroneRunBandDisplay('{{drone_run_band_project_id}}')">View
+                                                                    Images</a>
+                                                            </h4>
                                                         </div>
                                                         <div id="drone_run_band_accordion_one_MOCK_DRONE_RUN_PROJECT"
                                                             class="card-collapse collapse">
@@ -325,7 +372,6 @@
                         </div>
                     </div>
                 </div>
-                <br />
             </div>
         </div>
     </div>

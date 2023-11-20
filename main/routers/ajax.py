@@ -6,6 +6,7 @@ from main.services.settings import DIRECTORY
 from main.services.auth import User, AuthUtils
 from main.services.vehicles import VehicleService
 from main.services.analytics import AnalyticsService
+from main.services.imaging_events import ImagingEventService
 from main.services.brapi import BrAPI
 
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
@@ -90,3 +91,31 @@ async def get_genotyping_protocol(current_user: User = Depends(AuthUtils.getCurr
         "id": "gp456"
     }]
     return JSONResponse(content={"options": MOCK_genotypingProtocol})
+
+@router.get("/html/select/drone_runs_with_gcps")
+async def get_drone_runs_with_gcps(current_user: User = Depends(AuthUtils.getCurrentUser)):
+    MOCK_drone_runs_with_gcps = [{
+        "name": "Drone Run A w/ GCP",
+        "id": "gcp123"
+    },{
+        "name": "Drone Run B w/ GCP",
+        "id": "gcp456"
+    }]
+    return JSONResponse(content={"options": MOCK_drone_runs_with_gcps})
+
+@router.get("/html/select/drone_runs")
+async def get_drone_runs(request: Request, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    events = ImagingEventService.getImagingEventSummaries()
+    return JSONResponse(content={"options": events})
+
+
+@router.get("/html/select/drone_imagery_parameter_select")
+async def get_drone_imagery_parameter(current_user: User = Depends(AuthUtils.getCurrentUser)):
+    MOCK_drone_imagery_parameter = [{
+        "name": "drone imagery parameter 1",
+        "id": "dip123"
+    },{
+        "name": "drone imagery parameter 2",
+        "id": "dip456"
+    }]
+    return JSONResponse(content={"options": MOCK_drone_imagery_parameter})

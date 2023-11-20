@@ -6,7 +6,7 @@ import time
 
 from main.services.analytics import AnalyticsRequest, AnalyticsResponse, AnalysisQueryRequest
 from main.services.vehicles import VehicleRequest, VehicleService
-from main.services.imaging_events import ImagingEventService
+from main.services.imaging_events import ImagingEventService, ImageRequest, RotateImageRequest, CropImageRequest, ThresholdImageRequest, PlotPolygonTemplateRequest, PlotPolygonPreviewRequest, StandardProcessRequest
 from main.services.settings import DIRECTORY
 from main.services.auth import User, AuthUtils
 from main.database.models import Vehicle, DRONE, ROVER
@@ -44,9 +44,9 @@ async def get_field_trial_drone_run_projects_in_same_orthophoto(current_user: Us
     return JSONResponse(content= MOCK_drone_run_projects)
 
 @router.get("/drone_imagery/get_image")
-async def get_image(current_user: User = Depends(AuthUtils.getCurrentUser), image_id:str = None):
+async def get_image( image_id:str = None, current_user: User = Depends(AuthUtils.getCurrentUser)):
     MOCK_image = {
-        "image_url": f"https://brapi.org/{image_id}",
+        "image_url": f"/img/USDANIFAlogo.png?id={image_id}",
         "image_width": 200,
         "image_height": 200
     }
@@ -171,6 +171,18 @@ async def get_drone_runs(select_checkbox_name: str, field_trial_ids: str, disabl
         event_row.insert(0, f"<input type='checkbox' name='{select_checkbox_name}'>")
     return JSONResponse(content={"data": imaging_events})
 
+
+@router.get("/drone_imagery/drone_run_bands")
+async def get_drone_runs(select_checkbox_name: str, drone_run_project_id: str, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    MOCK_imagery_bands = [
+        ["Imaging Event Band Name", "Band Description", "Band Type", "Imaging Event Name", "Imaging Event Description", "Imaging Event Date", "Field Trial Name", "Field Trial Description"],
+        ["Imaging Event Band Name", "Band Description", "Band Type", "Imaging Event Name", "Imaging Event Description", "Imaging Event Date", "Field Trial Name", "Field Trial Description"]
+    ]
+
+    for band in MOCK_imagery_bands:
+        band.insert(0, f"<input type='checkbox' name='{select_checkbox_name}'>")
+    return JSONResponse(content={"data": MOCK_imagery_bands})
+
 @router.get("/drone_imagery/imaging_vehicles")
 async def get_imaging_vehicles(current_user: User = Depends(AuthUtils.getCurrentUser)):
     drones = VehicleService.getVehicles(includeDrones=True, includeRovers=False)
@@ -211,6 +223,44 @@ async def get_export_drone_runs(drone_run_project_ids: str, field_trial_id: str,
         "error": ""
     }
     return JSONResponse(content=MOCK_exportRuns)
+
+@router.get("/drone_imagery/get_image_for_saving_gcp")
+async def get_image_for_saving_gcp(drone_run_project_id: str, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    MOCK_exportRuns = {
+        "saved_gcps_full": "https://brapi.org",
+        "gcps_array": "https://brapi.org",
+        "error": ""
+    }
+    return JSONResponse(content=MOCK_exportRuns)
+
+@router.get("/drone_imagery/get_project_md_image")
+async def get_project_md_image(drone_run_band_project_id: str, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    MOCK_md_image = {
+        "data": [
+            {
+                "image_id": "1234"
+            }
+        ]
+    }
+    return JSONResponse(content=MOCK_md_image)
+
+@router.get("/drone_imagery/brighten_image")
+async def get_brighten_image(image_id: str, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    MOCK_bright_image = {
+        "brightened_image_id": "1234"
+    }
+    return JSONResponse(content=MOCK_bright_image)
+
+@router.get("/drone_imagery/retrieve_parameter_template")
+async def get_parameter_template(plot_polygons_template_projectprop_id: str, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    MOCK_parameter_template = {
+        "parameter": {"thingy":"1234"}
+    }
+    return JSONResponse(content=MOCK_parameter_template)
+
+
+
+# POST ENDPOINTS
 
 @router.post("/drone_rover/upload_drone_rover")
 async def post_upload_drone_rover(
@@ -259,6 +309,58 @@ async def post_upload_drone_imagery(
     time.sleep(20)
     return templates.TemplateResponse("drone_imagery.html", {"request": request, "id": id})
     # return RedirectResponse(url="/breeders/drone_imagery")
+
+@router.post("/drone_imagery/rotate_image")
+async def post_rotate_image(request: RotateImageRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    print(request)
+    time.sleep(1)
+    return JSONResponse(content={"error": "", "rotated_image_id": "rotated1234"})
+
+@router.post("/drone_imagery/crop_image")
+async def post_crop_image(request: CropImageRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    print(request)
+    time.sleep(1)
+    return JSONResponse(content={"error": "", "cropped_image_id": "cropped1234"})
+
+@router.post("/drone_imagery/denoise")
+async def post_denoise(request: ImageRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    print(request)
+    time.sleep(1)
+    return JSONResponse(content={"error": "", "denoised_image_id": "denoised1234"})
+
+
+@router.post("/drone_imagery/remove_background_percentage_save")
+async def post_remove_background_percentage_save(request: ThresholdImageRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    print(request)
+    time.sleep(1)
+    return JSONResponse(content=[{"removed_background_image_id": "removed1234"}])
+
+
+@router.post("/drone_imagery/save_plot_polygons_template")
+async def post_save_plot_polygons_template(request: PlotPolygonTemplateRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    print(request)
+    time.sleep(1)
+    return JSONResponse(content={"error": "", "success": "true"})
+
+
+@router.post("/drone_imagery/preview_plot_polygons")
+async def post_preview_plot_polygons(request: PlotPolygonPreviewRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    print(request)
+    time.sleep(1)
+    return JSONResponse(content={"error": "", "plot_polygon_preview_urls": ["/img/USDANIFAlogo.png"], "plot_polygon_preview_image_sizes": [[200, 200]]})
+
+
+@router.post("/drone_imagery/check_maximum_standard_processes")
+async def post_check_maximum_standard_processes(current_user: User = Depends(AuthUtils.getCurrentUser)):
+    time.sleep(1)
+    return JSONResponse(content={"error": "", "success": "true"})
+
+
+@router.post("/drone_imagery/standard_process_apply")
+async def post_standard_process_apply(request: StandardProcessRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    print(request)
+    time.sleep(1)
+    return JSONResponse(content={"error": "", "success": "true"})
 
 @router.post("/drone_imagery/calculate_analytics")
 async def post_calculate_analytics(request: AnalyticsRequest, current_user: User = Depends(AuthUtils.getCurrentUser)) -> AnalyticsResponse:
