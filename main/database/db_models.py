@@ -1,5 +1,5 @@
 from typing import List
-from sqlalchemy import String, ForeignKey, DateTime
+from sqlalchemy import String, ForeignKey, DateTime, Integer
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from datetime import datetime
 
@@ -67,18 +67,26 @@ class ImagingEvent(Base):
     __tablename__ = 'imaging_event'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(50))
-    description: Mapped[str] = mapped_column(String(150))
-    event_type: Mapped[str] = mapped_column(String(50))
+    description: Mapped[str] = mapped_column(String(150), nullable=True)
+    event_type: Mapped[str] = mapped_column(String(50), nullable=True)
     timestamp: Mapped[datetime] = mapped_column(DateTime())
-    trial_name: Mapped[str] = mapped_column(String(50))
-    trial_description: Mapped[str] = mapped_column(String(150))
-    vehicle_id: Mapped[int] = mapped_column(ForeignKey("vehicle.id"))
+    trial_name: Mapped[str] = mapped_column(String(50), nullable=True)
+    trial_description: Mapped[str] = mapped_column(String(150), nullable=True)
+    vehicle_id: Mapped[int] = mapped_column(ForeignKey("vehicle.id"), nullable=True)
     vehicle: Mapped["Vehicle"] = relationship()
-    sensor_id: Mapped[int] = mapped_column(ForeignKey("sensor.id"))
+    sensor_id: Mapped[int] = mapped_column(ForeignKey("sensor.id"), nullable=True)
     sensor: Mapped["Sensor"] = relationship()
     image_collections: Mapped[List["ImageCollection"]] = relationship(back_populates="imaging_event")
 
-    def __init__(self, name:str=None, description:str=None, event_type:str = None, timestamp:datetime = None, vehicle_id:int = None, sensor_id:int = None, trial_name:str = None, trial_description:str = None):
+    def __init__(self, 
+                 name:str=None, 
+                 description:str=None, 
+                 event_type:str = None, 
+                 timestamp:datetime = None, 
+                 vehicle_id:int = None, 
+                 sensor_id:int = None, 
+                 trial_name:str = None, 
+                 trial_description:str = None):
         self.name = name
         self.description = description
         self.event_type = event_type
@@ -118,11 +126,15 @@ class Image(Base):
     local_path: Mapped[str] = mapped_column(String(150), default="/")
     image_collection_id: Mapped[int] = mapped_column(ForeignKey("image_collection.id"))
     image_collection: Mapped["ImageCollection"] = relationship(back_populates="images")
+    width: Mapped[int] = mapped_column(Integer())
+    height: Mapped[int] = mapped_column(Integer())
 
-    def __init__(self, name:str=None, description:str=None, image_collection_id:int = None):
+    def __init__(self, name:str=None, description:str=None, image_collection_id:int = None, width:int = 0, height:int = 0):
         self.name = name
         self.description = description
         self.image_collection_id = image_collection_id
+        self.width = width
+        self.height = height
 
     def __repr__(self):
         return f'Image {self.id=}\n     {self.name=}\n     {self.description=}'

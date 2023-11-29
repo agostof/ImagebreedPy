@@ -4,7 +4,7 @@ from requests.models import PreparedRequest
 from fastapi_resource_server import JwtDecodeOptions, OidcResourceServer
 import secrets
 
-from main.services.settings import settings
+from main.services.app_settings import settings
 
 class User(BaseModel):
     username: str

@@ -7,8 +7,8 @@ from fastapi.templating import Jinja2Templates
 import mimetypes
 mimetypes.add_type('text/javascript', '.js')
 
-from main.services.settings import DIRECTORY
-from main.services.auth import AuthUtils
+from main.services.app_settings import DIRECTORY
+from main.services.auth_utils import AuthUtils
 
 app = FastAPI()
 

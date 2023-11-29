@@ -2,12 +2,12 @@ from fastapi import APIRouter, Depends, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse
 
-from main.services.settings import DIRECTORY
-from main.services.auth import User, AuthUtils
-from main.services.vehicles import VehicleService
-from main.services.analytics import AnalyticsService
-from main.services.imaging_events import ImagingEventService
-from main.services.brapi import BrAPI
+from main.services.app_settings import DIRECTORY
+from main.services.auth_utils import User, AuthUtils
+from main.services.vehicles_service import VehicleService
+from main.services.analytics_service import AnalyticsService
+from main.services.imaging_events_service import ImagingEventService
+from main.services.brapi_service import BrAPI
 
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
 router = APIRouter(prefix="/ajax")

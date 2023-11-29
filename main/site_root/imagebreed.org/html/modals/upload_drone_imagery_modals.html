@@ -270,23 +270,10 @@
                                                     <div class="col-sm-9">
                                                         <select class="form-control" id="drone_image_upload_camera_info"
                                                             name="drone_image_upload_camera_info">
-                                                            <option value="">Select One</option>
-                                                            <option value="micasense_5">Micasense 5-Channel Camera
-                                                            </option>
-                                                            <option value="micasense_10">Micasense 10-Channel Camera
-                                                            </option>
-                                                            <option value="ccd_color">RGB Color Camera</option>
-                                                            <!--option value="cmos_color">CMOS Sensor Color Image</option-->
-                                                            <option value="interpolated_elevation">Interpolated
-                                                                Elevation Image</option>
-                                                            <option value="em38_interpolated_ch1.0m">EM38 Interpolated
-                                                                CH1.0m Image</option>
-                                                            <option value="em38_interpolated_ch0.5m">EM38 Interpolated
-                                                                CH0.5m Image</option>
-                                                            <option value="em38_interpolated_ih1.0m">EM38 Interpolated
-                                                                IH1.0m Image</option>
-                                                            <option value="em38_interpolated_ih0.5m">EM38 Interpolated
-                                                                IH0.5m Image</option>
+                                                            <option value="" disabled selected>-- Select One --</option>
+                                                            {% for sensor in sensor_options %}
+                                                                <option value="{{ sensor.name }}">{{ sensor.description }}</option>
+                                                            {% endfor %}
                                                         </select>
                                                     </div>
                                                 </div>

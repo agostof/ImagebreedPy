@@ -14,7 +14,7 @@ from typing import Dict, List, Optional, Union
 from pydantic import AnyUrl, BaseModel, Field, constr, RootModel
 
 # from brapi_v2.core.models import (
-from main.services.brapi_core_models import (
+from main.models.brapi_core_models import (
     Context,
     ExternalReferences,
     GeoJSON,

@@ -1,22 +1,20 @@
 from fastapi import APIRouter, Request, UploadFile, File, Form, Depends
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.responses import JSONResponse
 from typing import Annotated
 import time
 
-from main.services.analytics import AnalyticsRequest, AnalyticsResponse, AnalysisQueryRequest
-from main.services.vehicles import VehicleRequest, VehicleService
-from main.services.imaging_events import ImagingEventService, ImageRequest, RotateImageRequest, CropImageRequest, ThresholdImageRequest, PlotPolygonTemplateRequest, PlotPolygonPreviewRequest, StandardProcessRequest
-from main.services.settings import DIRECTORY
-from main.services.auth import User, AuthUtils
-from main.database.models import Vehicle, DRONE, ROVER
+from main.database.db_models import Vehicle, DRONE, ROVER, ImagingEvent
+from main.models.analytics_models import AnalyticsRequest, AnalyticsResponse, AnalysisQueryRequest
+from main.models.imaging_event_models import ImageRequest, RotateImageRequest, CropImageRequest, ThresholdImageRequest, PlotPolygonTemplateRequest, PlotPolygonPreviewRequest, StandardProcessRequest
+from main.services.vehicles_service import VehicleRequest, VehicleService
+from main.services.imaging_events_service import ImagingEventService, ImagingEventRequest
+from main.services.images_service import ImageService
+from main.services.app_settings import DIRECTORY
+from main.services.auth_utils import User, AuthUtils
 
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
 router = APIRouter(prefix="/api")
-
-
-
-
 
 @router.get("/verifytoken")
 async def get_verifytoken(current_user: User = Depends(AuthUtils.getCurrentUser)):
@@ -45,12 +43,13 @@ async def get_field_trial_drone_run_projects_in_same_orthophoto(current_user: Us
 
 @router.get("/drone_imagery/get_image")
 async def get_image( image_id:str = None, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    MOCK_image = {
-        "image_url": f"/img/USDANIFAlogo.png?id={image_id}",
-        "image_width": 200,
-        "image_height": 200
+    image_data = ImageService.getImageMetadata(image_id=image_id)
+    image_response = {
+        "image_url": image_data.local_path,
+        "image_width": image_data.width,
+        "image_height": image_data.height
     }
-    return JSONResponse(content=MOCK_image)
+    return JSONResponse(content=image_response)
 
 @router.get("/drone_imagery/get_weeks_after_planting_date")
 async def get_weeks_after_planting_date(current_user: User = Depends(AuthUtils.getCurrentUser), drone_run_project_id:str = None):
@@ -238,7 +237,7 @@ async def get_project_md_image(drone_run_band_project_id: str, current_user: Use
     MOCK_md_image = {
         "data": [
             {
-                "image_id": "1234"
+                "image_id": "1"
             }
         ]
     }
@@ -247,14 +246,14 @@ async def get_project_md_image(drone_run_band_project_id: str, current_user: Use
 @router.get("/drone_imagery/brighten_image")
 async def get_brighten_image(image_id: str, current_user: User = Depends(AuthUtils.getCurrentUser)):
     MOCK_bright_image = {
-        "brightened_image_id": "1234"
+        "brightened_image_id": "1"
     }
     return JSONResponse(content=MOCK_bright_image)
 
 @router.get("/drone_imagery/retrieve_parameter_template")
 async def get_parameter_template(plot_polygons_template_projectprop_id: str, current_user: User = Depends(AuthUtils.getCurrentUser)):
     MOCK_parameter_template = {
-        "parameter": {"thingy":"1234"}
+        "parameter": {"thingy":"1"}
     }
     return JSONResponse(content=MOCK_parameter_template)
 
@@ -283,30 +282,27 @@ async def post_new_imaging_vehicle_rover(request: VehicleRequest, current_user: 
     return JSONResponse(content={"error": "", "success": "true", "new_vehicle_id": vehicle.id})
 
 @router.post("/drone_imagery/upload_drone_imagery")
-async def post_upload_drone_imagery(
-    request: Request,
-    upload_drone_images_zipfile: Annotated[UploadFile, File()] = None,
-    upload_drone_images_panel_zipfile: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_report: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_1: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_2: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_3: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_4: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_5: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_6: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_7: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_8: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_9: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_10: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_11: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_odm: Annotated[UploadFile, File()] = None,
-    drone_run_band_stitched_ortho_image_agisoft: Annotated[UploadFile, File()] = None,
-    private_company_id: Annotated[str, Form()] = "",
-    drone_run_name: Annotated[str, Form()] = "",
-    ):
-    print(drone_run_band_stitched_ortho_report)
-    print(private_company_id)
-    time.sleep(20)
+async def post_upload_drone_imagery(request: Request):
+
+    await request._get_form()
+    imaging_event_request = ImagingEventRequest(http_form_request=request)
+
+    available_uploads = ImagingEventService.archiveUploads(request=imaging_event_request)
+
+    sensor = VehicleService.getSensorFromName(imaging_event_request.camera_info)
+
+    new_imaging_event = ImagingEvent(name=imaging_event_request.drone_run_name, 
+                                     description=imaging_event_request.drone_run_description,
+                                     vehicle_id=imaging_event_request.vehicle_id,
+                                     event_type=imaging_event_request.drone_run_type,
+                                     timestamp=imaging_event_request.drone_run_date,
+                                     sensor_id=sensor.id, 
+                                     trial_name=imaging_event_request.drone_run_field_trial_id,
+                                     trial_description=imaging_event_request.drone_run_field_trial_id,
+                                     )
+    ImagingEventService.saveImagingEvent(event=new_imaging_event)
+
+    time.sleep(1)
     return templates.TemplateResponse("drone_imagery.html", {"request": request, "id": id})
     # return RedirectResponse(url="/breeders/drone_imagery")
 
@@ -314,26 +310,26 @@ async def post_upload_drone_imagery(
 async def post_rotate_image(request: RotateImageRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
     print(request)
     time.sleep(1)
-    return JSONResponse(content={"error": "", "rotated_image_id": "rotated1234"})
+    return JSONResponse(content={"error": "", "rotated_image_id": "1"})
 
 @router.post("/drone_imagery/crop_image")
 async def post_crop_image(request: CropImageRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
     print(request)
     time.sleep(1)
-    return JSONResponse(content={"error": "", "cropped_image_id": "cropped1234"})
+    return JSONResponse(content={"error": "", "cropped_image_id": "1"})
 
 @router.post("/drone_imagery/denoise")
 async def post_denoise(request: ImageRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
     print(request)
     time.sleep(1)
-    return JSONResponse(content={"error": "", "denoised_image_id": "denoised1234"})
+    return JSONResponse(content={"error": "", "denoised_image_id": "1"})
 
 
 @router.post("/drone_imagery/remove_background_percentage_save")
 async def post_remove_background_percentage_save(request: ThresholdImageRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
     print(request)
     time.sleep(1)
-    return JSONResponse(content=[{"removed_background_image_id": "removed1234"}])
+    return JSONResponse(content=[{"removed_background_image_id": "1"}])
 
 
 @router.post("/drone_imagery/save_plot_polygons_template")

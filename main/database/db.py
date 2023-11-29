@@ -3,8 +3,8 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 import click
 from datetime import datetime
 
-from main.database.models import *
-from main.services.settings import settings
+from main.database.db_models import *
+from main.services.app_settings import settings
 
 
 engine = create_engine(settings.db_uri)
@@ -55,8 +55,14 @@ def insert_initial_values_Sensor(target, connection, **kwargs):
         print(f"  Initialize data for {Sensor.__table__}")
         Session = sessionmaker(engine)
         with Session(bind=connection) as session:
-            session.add(Sensor(name='Camera RGB', description= "A standard rgb camera"))
-            session.add(Sensor(name='IR camera', description= "Advanced infrared camera"))
+            session.add(Sensor(name='micasense_5', description= "Micasense 5-Channel Camera"))
+            session.add(Sensor(name='micasense_10', description= "Micasense 10-Channel Camera"))
+            session.add(Sensor(name='ccd_color', description= "RGB Color Camera"))
+            session.add(Sensor(name='interpolated_elevation', description= "Interpolated Elevation Image"))
+            session.add(Sensor(name='em38_interpolated_ch1.0m', description= "EM38 Interpolated CH1.0m Image"))
+            session.add(Sensor(name='em38_interpolated_ch0.5m', description= "EM38 Interpolated CH0.5m Image"))
+            session.add(Sensor(name='em38_interpolated_ih1.0m', description= "EM38 Interpolated IH1.0m Image"))
+            session.add(Sensor(name='em38_interpolated_ih0.5m', description= "EM38 Interpolated IH0.5m Image"))
             session.commit()
             session.close()
 
@@ -88,8 +94,18 @@ def insert_initial_values_ImageCollection(target, connection, **kwargs):
         print(f"  Initialize data for {Image.__table__}")
         Session = sessionmaker(engine)
         with Session(bind=connection) as session:
-            session.add(Image(name='First image', description= "the first image", image_collection_id=1))
-            session.add(Image(name='second image', description= "the second image", image_collection_id=2))
+            image1 = Image(name='First image', description= "the first image", image_collection_id=1)
+            image1.height = 200
+            image1.width = 200
+            image1.local_path = "/img/USDANIFAlogo.png"
+            session.add(image1)
+
+            image2 = Image(name='second image', description= "the second image", image_collection_id=2)
+            image2.height = 200
+            image2.width = 200
+            image2.local_path = "/img/imagebreed/imagebreedlogo_noBackground.png"
+            session.add(image2)
+            
             session.commit()
             session.close()
 

@@ -1,15 +1,9 @@
-from pydantic import BaseModel
+
 from sqlalchemy import select, or_
 
 from main.database.db import db_session
-from main.database.models import Vehicle, DRONE, ROVER
-
-class VehicleRequest(BaseModel):
-    vehicle_name: str | None = None
-    vehicle_description: str | None = None
-    battery_names: str | None = None
-    private_company_id: str | None = None
-
+from main.database.db_models import Vehicle, DRONE, ROVER, Sensor
+from main.models.vehicle_models import VehicleRequest
 
 class VehicleServiceClass():
     def getVehicles(self, includeDrones: bool = True, includeRovers: bool = True):
@@ -60,6 +54,27 @@ class VehicleServiceClass():
                 "name":vehicle.vehicle_name,
                 "vehicle_id": vehicle.id
                 }
+    
+    def getSensors(self):
+        sqlStatement = select(Sensor)
+        sensors = db_session.scalars(sqlStatement)
+
+        sensor_summaries = []
+
+        for sensor in sensors:
+            sensor_summaries.append({
+                "id": str(sensor.id),
+                "name": sensor.name,
+                "description": sensor.description,
+            })
+
+        return sensor_summaries
+
+    def getSensorFromName(self, sensor_name:str):
+        sqlStatement = select(Sensor).where(Sensor.name == sensor_name)
+        sensor = db_session.scalars(sqlStatement).first()
+        return sensor
+
 
 VehicleService = VehicleServiceClass()
         

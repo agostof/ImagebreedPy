@@ -1,13 +1,13 @@
 import requests
 from requests.models import PreparedRequest
 
-from main.services.settings import settings
-from main.services.brapi_core_models import StudyListResponse, ProgramListResponse, SeasonListResponse
-from main.services.brapi_pheno_models import ObservationVariableListResponse
+from main.services.app_settings import settings
+from main.models.brapi_core_models import StudyListResponse, ProgramListResponse, SeasonListResponse
+from main.models.brapi_pheno_models import ObservationVariableListResponse
 
 BASE_URL = settings.brapi_base_url
 
-class BrAPI_class():
+class BrAPIServiceClass():
     def getStudies(self, programDbId: str, token:str= "") -> StudyListResponse:
         req = PreparedRequest()
         url = BASE_URL + "/studies"
@@ -114,4 +114,4 @@ class BrAPI_class():
         return traitSummaries
     
 
-BrAPI = BrAPI_class()
+BrAPI = BrAPIServiceClass()

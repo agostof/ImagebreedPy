@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     oidc_client_id: str
     db_uri: str
     brapi_base_url: str
+    image_storage_dir: str
+    image_archive_dir: str
     
     model_config = SettingsConfigDict(env_file='.env', env_file_encoding='utf-8')
 
