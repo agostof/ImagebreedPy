@@ -66,6 +66,52 @@ def insert_initial_values_Sensor(target, connection, **kwargs):
             session.commit()
             session.close()
 
+@event.listens_for(SensorBand.__table__, 'after_create')
+def insert_initial_values_Sensor(target, connection, **kwargs):
+    if insert_dummy_data:
+        print(f"  Initialize data for {Sensor.__table__}")
+        Session = sessionmaker(engine)
+        with Session(bind=connection) as session:
+
+            session.add(SensorBand(name='Black and White Image', description= "Micasense 5-Channel Camera - Black and White Image", image_suffix="_bw", sensor_id="1"))
+            session.add(SensorBand(name='RGB Color Image', description= "Micasense 5-Channel Camera - RGB Color Image", image_suffix="_rgb", sensor_id="1"))
+            session.add(SensorBand(name='Coastal Blue (410-480nm)', description= "Micasense 5-Channel Camera - Coastal Blue (410-480nm)", image_suffix="_b1", sensor_id="1"))
+            session.add(SensorBand(name='Blue (450-520nm)', description= "Micasense 5-Channel Camera - Blue (450-520nm)", image_suffix="_b2", sensor_id="1"))
+            session.add(SensorBand(name='Green (510-550nm)', description= "Micasense 5-Channel Camera - Green (510-550nm)", image_suffix="_g1", sensor_id="1"))
+            session.add(SensorBand(name='Green (515-600nm)', description= "Micasense 5-Channel Camera - Green (515-600nm)", image_suffix="_g2", sensor_id="1"))
+            session.add(SensorBand(name='Red (590-670nm)', description= "Micasense 5-Channel Camera - Red (590-670nm)", image_suffix="_r1", sensor_id="1"))
+            session.add(SensorBand(name='Red (600-690nm)', description= "Micasense 5-Channel Camera - Red (600-690nm)", image_suffix="_r2", sensor_id="1"))
+            session.add(SensorBand(name='Red Edge (680-720nm)', description= "Micasense 5-Channel Camera - Red Edge (680-720nm)", image_suffix="_re1", sensor_id="1"))
+            session.add(SensorBand(name='Red Edge (690-750nm)', description= "Micasense 5-Channel Camera - Red Edge (690-750nm)", image_suffix="_re2", sensor_id="1"))
+            session.add(SensorBand(name='Red Edge (720-760nm)', description= "Micasense 5-Channel Camera - Red Edge (720-760nm)", image_suffix="_re3", sensor_id="1"))
+            session.add(SensorBand(name='NIR (780-3000nm)', description= "Micasense 5-Channel Camera - NIR (780-3000nm)", image_suffix="_nir", sensor_id="1"))
+            session.add(SensorBand(name='MIR (3000-50000nm)', description= "Micasense 5-Channel Camera - MIR (3000-50000nm)", image_suffix="_mir", sensor_id="1"))
+            session.add(SensorBand(name='FIR (50000-1000000nm)', description= "Micasense 5-Channel Camera - FIR (50000-1000000nm)", image_suffix="_fir", sensor_id="1"))
+            session.add(SensorBand(name='Thermal IR (9000-14000nm)', description= "Micasense 5-Channel Camera - Thermal IR (9000-14000nm)", image_suffix="_tir", sensor_id="1"))
+
+            session.add(SensorBand(name='Red Band 1', description= "Micasense 10-Channel Camera - Red Band", image_suffix="_1_1", sensor_id="2"))
+            session.add(SensorBand(name='Red Band 2', description= "Micasense 10-Channel Camera - Red Band", image_suffix="_1_2", sensor_id="2"))
+            session.add(SensorBand(name='Orange Band 1', description= "Micasense 10-Channel Camera - Orange Band", image_suffix="_2_1", sensor_id="2"))
+            session.add(SensorBand(name='Orange Band 2', description= "Micasense 10-Channel Camera - Orange Band", image_suffix="_2_2", sensor_id="2"))
+            session.add(SensorBand(name='Yellow Band 1', description= "Micasense 10-Channel Camera - Yellow Band", image_suffix="_3_1", sensor_id="2"))
+            session.add(SensorBand(name='Yellow Band 2', description= "Micasense 10-Channel Camera - Yellow Band", image_suffix="_3_2", sensor_id="2"))
+            session.add(SensorBand(name='Green Band 1', description= "Micasense 10-Channel Camera - Green Band", image_suffix="_4_1", sensor_id="2"))
+            session.add(SensorBand(name='Green Band 2', description= "Micasense 10-Channel Camera - Green Band", image_suffix="_4_2", sensor_id="2"))
+            session.add(SensorBand(name='Blue Band 1', description= "Micasense 10-Channel Camera - Blue Band", image_suffix="_5_1", sensor_id="2"))
+            session.add(SensorBand(name='Blue Band 2', description= "Micasense 10-Channel Camera - Blue Band", image_suffix="_5_2", sensor_id="2"))
+
+            session.add(SensorBand(name='Red Band', description= "RGB Color Camera - Red Band", image_suffix="_R", sensor_id="3"))
+            session.add(SensorBand(name='Green Band', description= "RGB Color Camera - Green Band", image_suffix="_G", sensor_id="3"))
+            session.add(SensorBand(name='Blue Band', description= "RGB Color Camera - Blue Band", image_suffix="_B", sensor_id="3"))
+
+            session.add(SensorBand(name='interpolated_elevation', description= "Interpolated Elevation Image", image_suffix="_123", sensor_id="4"))
+            session.add(SensorBand(name='em38_interpolated_ch1.0m', description= "EM38 Interpolated CH1.0m Image", image_suffix="_123", sensor_id="5"))
+            session.add(SensorBand(name='em38_interpolated_ch0.5m', description= "EM38 Interpolated CH0.5m Image", image_suffix="_123", sensor_id="6"))
+            session.add(SensorBand(name='em38_interpolated_ih1.0m', description= "EM38 Interpolated IH1.0m Image", image_suffix="_123", sensor_id="7"))
+            session.add(SensorBand(name='em38_interpolated_ih0.5m', description= "EM38 Interpolated IH0.5m Image", image_suffix="_123", sensor_id="8"))
+            session.commit()
+            session.close()
+
 @event.listens_for(ImagingEvent.__table__, 'after_create')
 def insert_initial_values_ImagingEvent(target, connection, **kwargs):
     if insert_dummy_data:
@@ -94,13 +140,13 @@ def insert_initial_values_ImageCollection(target, connection, **kwargs):
         print(f"  Initialize data for {Image.__table__}")
         Session = sessionmaker(engine)
         with Session(bind=connection) as session:
-            image1 = Image(name='First image', description= "the first image", image_collection_id=1)
+            image1 = Image(name='First image', description= "the first image", image_collection_id=1, sensor_id=1, sensor_band_id=1)
             image1.height = 200
             image1.width = 200
             image1.local_path = "/img/USDANIFAlogo.png"
             session.add(image1)
 
-            image2 = Image(name='second image', description= "the second image", image_collection_id=2)
+            image2 = Image(name='second image', description= "the second image", image_collection_id=2, sensor_id=2, sensor_band_id=2)
             image2.height = 200
             image2.width = 200
             image2.local_path = "/img/imagebreed/imagebreedlogo_noBackground.png"

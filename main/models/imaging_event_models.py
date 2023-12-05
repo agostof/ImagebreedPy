@@ -4,7 +4,7 @@ from typing import Annotated
 from fastapi import UploadFile, File, Form, Request
 
 class ImageRequest(BaseModel):
-    image_id: str | None = None
+    image_id: int | None = None
     drone_run_band_project_id: str | None = None
     company_id: str | None = None
     is_private: str | None = None
@@ -28,7 +28,7 @@ class PlotPolygonTemplateRequest(BaseModel):
 class PlotPolygonPreviewRequest(BaseModel):
     drone_run_band_project_id: str | None = None
     stock_polygons: dict | None = None
-    image_id: str | None = None
+    image_id: int | None = None
 
 class StandardProcessRequest(BaseModel):
     drone_run_project_id: str | None = None
@@ -51,33 +51,33 @@ class StandardProcessRequest(BaseModel):
     company_id: str | None = None
     is_private: str | None = None
 
+class ImagingEventRequestOrthoImage(BaseModel):
+    ortho_image_file: UploadFile = None
+    band_coordinate_system:str = None
+    band_description:str = None
+    band_type:str = None
+
 class ImagingEventRequest(BaseModel):
-    images_zipfile: Annotated[UploadFile, File()] = None,
-    images_panel_zipfile: Annotated[UploadFile, File()] = None,
-    ortho_report: Annotated[UploadFile, File()] = None,
-    ortho_image_1: Annotated[UploadFile, File()] = None,
-    ortho_image_2: Annotated[UploadFile, File()] = None,
-    ortho_image_3: Annotated[UploadFile, File()] = None,
-    ortho_image_4: Annotated[UploadFile, File()] = None,
-    ortho_image_5: Annotated[UploadFile, File()] = None,
-    ortho_image_6: Annotated[UploadFile, File()] = None,
-    ortho_image_7: Annotated[UploadFile, File()] = None,
-    ortho_image_8: Annotated[UploadFile, File()] = None,
-    ortho_image_9: Annotated[UploadFile, File()] = None,
-    ortho_image_10: Annotated[UploadFile, File()] = None,
-    ortho_image_11: Annotated[UploadFile, File()] = None,
-    ortho_image_odm: Annotated[UploadFile, File()] = None,
-    ortho_image_agisoft: Annotated[UploadFile, File()] = None,
-    drone_run_id: Annotated[str, Form()] = "",
-    odm_image_count: Annotated[str, Form()] = "",
-    private_company_id: Annotated[str, Form()] = "",
-    drone_run_field_trial_id: Annotated[str, Form()] = "",
-    drone_run_name: Annotated[str, Form()] = "",
-    drone_run_type: Annotated[str, Form()] = "",
-    drone_run_description: Annotated[str, Form()] = "",
-    drone_run_date: Annotated[str, Form()] = "",
-    camera_info: Annotated[str, Form()] = "",
-    vehicle_id: Annotated[str, Form()] = "",
+    images_zipfile: UploadFile = None
+    images_panel_zipfile: UploadFile = None
+    ortho_report: UploadFile = None
+
+    ortho_images: list[ImagingEventRequestOrthoImage] = None
+
+    ortho_image_odm: UploadFile = None
+    ortho_image_agisoft: UploadFile = None
+    drone_run_id: str = None
+    odm_image_count: str = None
+    private_company_id: str = None
+    drone_run_field_trial_id: str = None
+    drone_run_name: str = None
+    drone_run_type: str = None
+    drone_run_description: str = None
+    drone_run_date: str = None
+    camera_info: str = None
+    vehicle_id: str = None
+    image_stitching: bool = None
+    
 
     def __init__(self, http_form_request: Request):
         super().__init__()
@@ -92,6 +92,9 @@ class ImagingEventRequest(BaseModel):
         self.camera_info = http_form_request._form._dict["drone_image_upload_camera_info"]
         self.vehicle_id = http_form_request._form._dict["drone_run_imaging_vehicle_id"]
 
+        if "drone_image_upload_drone_run_band_stitching" in http_form_request._form._dict:
+            self.image_stitching = http_form_request._form._dict["drone_image_upload_drone_run_band_stitching"] == "yes_open_data_map_stitch"
+
         if "upload_drone_images_zipfile" in http_form_request._form._dict:
             self.images_zipfile = http_form_request._form._dict["upload_drone_images_zipfile"]
         if "upload_drone_images_panel_zipfile" in http_form_request._form._dict:
@@ -99,28 +102,18 @@ class ImagingEventRequest(BaseModel):
 
         if "drone_run_band_stitched_ortho_report" in http_form_request._form._dict:
             self.ortho_report = http_form_request._form._dict["drone_run_band_stitched_ortho_report"]
-        if "drone_run_band_stitched_ortho_image_1" in http_form_request._form._dict:
-            self.ortho_image_1 = http_form_request._form._dict["drone_run_band_stitched_ortho_image_1"]
-        if "drone_run_band_stitched_ortho_image_2" in http_form_request._form._dict:
-            self.ortho_image_2 = http_form_request._form._dict["drone_run_band_stitched_ortho_image_2"]
-        if "drone_run_band_stitched_ortho_image_3" in http_form_request._form._dict:
-            self.ortho_image_3 = http_form_request._form._dict["drone_run_band_stitched_ortho_image_3"]
-        if "drone_run_band_stitched_ortho_image_4" in http_form_request._form._dict:
-            self.ortho_image_4 = http_form_request._form._dict["drone_run_band_stitched_ortho_image_4"]
-        if "drone_run_band_stitched_ortho_image_5" in http_form_request._form._dict:
-            self.ortho_image_5 = http_form_request._form._dict["drone_run_band_stitched_ortho_image_5"]
-        if "drone_run_band_stitched_ortho_image_6" in http_form_request._form._dict:
-            self.ortho_image_6 = http_form_request._form._dict["drone_run_band_stitched_ortho_image_6"]
-        if "drone_run_band_stitched_ortho_image_7" in http_form_request._form._dict:
-            self.ortho_image_7 = http_form_request._form._dict["drone_run_band_stitched_ortho_image_7"]
-        if "drone_run_band_stitched_ortho_image_8" in http_form_request._form._dict:
-            self.ortho_image_8 = http_form_request._form._dict["drone_run_band_stitched_ortho_image_8"]
-        if "drone_run_band_stitched_ortho_image_9" in http_form_request._form._dict:
-            self.ortho_image_9 = http_form_request._form._dict["drone_run_band_stitched_ortho_image_9"]
-        if "drone_run_band_stitched_ortho_image_10" in http_form_request._form._dict:
-            self.ortho_image_10 = http_form_request._form._dict["drone_run_band_stitched_ortho_image_10"]
-        if "drone_run_band_stitched_ortho_image_11" in http_form_request._form._dict:
-            self.ortho_image_11 = http_form_request._form._dict["drone_run_band_stitched_ortho_image_11"]
+
+        self.ortho_images = []
+        for n in range(0, 11):
+            key = f"drone_run_band_stitched_ortho_image_{n}"
+            if key in http_form_request._form._dict and http_form_request._form._dict[key]:
+                image_data = ImagingEventRequestOrthoImage(ortho_image_file=http_form_request._form._dict[key],
+                                                           band_coordinate_system=http_form_request._form._dict[f"drone_run_band_coordinate_system_{n}"],
+                                                           band_description=http_form_request._form._dict[f"drone_run_band_description_{n}"],
+                                                           band_type=http_form_request._form._dict[f"drone_run_band_type_{n}"]
+                                                           )
+                self.ortho_images.append(image_data)
+
         if "drone_run_band_stitched_ortho_image_odm" in http_form_request._form._dict:
             self.ortho_image_odm = http_form_request._form._dict["drone_run_band_stitched_ortho_image_odm"]
         if "drone_run_band_stitched_ortho_image_agisoft" in http_form_request._form._dict:

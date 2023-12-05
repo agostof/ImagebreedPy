@@ -7,15 +7,16 @@ from fastapi.templating import Jinja2Templates
 import mimetypes
 mimetypes.add_type('text/javascript', '.js')
 
-from main.services.app_settings import DIRECTORY
+from main.services.app_settings import DIRECTORY, settings
 from main.services.auth_utils import AuthUtils
 
 app = FastAPI()
 
-from main.routers import breeders, ajax, api
+from main.routers import breeders, ajax, api, images
 app.include_router(breeders.router)
 app.include_router(ajax.router)
 app.include_router(api.router)
+app.include_router(images.router)
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
 
 @app.get("/", response_class=HTMLResponse)
@@ -41,5 +42,7 @@ app.mount("/js", StaticFiles(directory=DIRECTORY + 'js/'), name="static-js")
 app.mount("/css", StaticFiles(directory=DIRECTORY + 'css/'), name="static-css")
 app.mount("/img", StaticFiles(directory=DIRECTORY + 'img/'), name="static-img")
 app.mount("/fonts", StaticFiles(directory=DIRECTORY + 'fonts/'), name="static-fonts")
+
+app.mount("/images", StaticFiles(directory=settings.image_storage_dir), name="imagebreed-images")
 
 print("app loaded")

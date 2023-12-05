@@ -2,6 +2,10 @@ from typing import List
 from sqlalchemy import String, ForeignKey, DateTime, Integer
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from datetime import datetime
+from pathlib import Path
+import re
+
+from main.services.app_settings import settings
 
 DRONE:str = "drone"
 ROVER:str = "rover"
@@ -55,10 +59,29 @@ class Sensor(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(50))
     description: Mapped[str] = mapped_column(String(50))
+    bands: Mapped[List["SensorBand"]] = relationship(back_populates="sensor")
 
     def __init__(self, name:str=None, description:str=None):
         self.name = name
         self.description = description
+
+    def __repr__(self):
+        return f'Sensor {self.id=}\n     {self.name=}\n     {self.description=}'
+    
+class SensorBand(Base):
+    __tablename__ = 'sensor_band'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(50))
+    description: Mapped[str] = mapped_column(String(150))
+    image_suffix: Mapped[str] = mapped_column(String(50))
+    sensor_id: Mapped[int] = mapped_column(ForeignKey("sensor.id"))
+    sensor: Mapped["Sensor"] = relationship(back_populates="bands")
+
+    def __init__(self, name:str=None, description:str=None, image_suffix:str=None, sensor_id:str=None):
+        self.name = name
+        self.description = description
+        self.image_suffix = image_suffix
+        self.sensor_id = sensor_id
 
     def __repr__(self):
         return f'Sensor {self.id=}\n     {self.name=}\n     {self.description=}'
@@ -99,6 +122,13 @@ class ImagingEvent(Base):
     def __repr__(self):
         return f'ImagingEvent {self.id=}\n     {self.name=}\n     {self.description=}'
     
+    def getEventFilePath(self):
+        regex = re.compile(r"[^\w\d]")
+        trial_name = regex.sub("", self.trial_name)
+        event_name = regex.sub("", self.name)
+        timestamp = regex.sub("", str(self.timestamp))
+        return f"{trial_name}/{str(self.id)}_{event_name}"
+    
     
     
 class ImageCollection(Base):
@@ -124,17 +154,42 @@ class Image(Base):
     name: Mapped[str] = mapped_column(String(50))
     description: Mapped[str] = mapped_column(String(150))
     local_path: Mapped[str] = mapped_column(String(150), default="/")
+    is_ortho: Mapped[bool] = mapped_column(default=False)
     image_collection_id: Mapped[int] = mapped_column(ForeignKey("image_collection.id"))
     image_collection: Mapped["ImageCollection"] = relationship(back_populates="images")
     width: Mapped[int] = mapped_column(Integer())
     height: Mapped[int] = mapped_column(Integer())
+    sensor_id: Mapped[int] = mapped_column(ForeignKey("sensor.id"))
+    sensor: Mapped["Sensor"] = relationship()
+    sensor_band_id: Mapped[int] = mapped_column(ForeignKey("sensor_band.id"))
+    sensor_band: Mapped["SensorBand"] = relationship()
 
-    def __init__(self, name:str=None, description:str=None, image_collection_id:int = None, width:int = 0, height:int = 0):
+    def __init__(self, name:str=None, 
+                 description:str=None, 
+                 image_collection_id:int = None, 
+                 local_path:Path = None, 
+                 is_ortho:bool = False, 
+                 width:int = 0, 
+                 height:int = 0,
+                 sensor_id:int = None,
+                 sensor_band_id:int = None):
         self.name = name
         self.description = description
         self.image_collection_id = image_collection_id
+        self.local_path = local_path
         self.width = width
         self.height = height
+        self.is_ortho = is_ortho
+        self.sensor_id = sensor_id
+        self.sensor_band_id = sensor_band_id
+        
+
+    def getWebPath(self):
+        local_path = Path(self.local_path)
+        web_path = local_path.relative_to(settings.image_storage_dir)
+        web_path = 'images' / web_path
+        return web_path.as_posix()
+
 
     def __repr__(self):
         return f'Image {self.id=}\n     {self.name=}\n     {self.description=}'

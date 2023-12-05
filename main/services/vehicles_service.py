@@ -1,8 +1,8 @@
 
-from sqlalchemy import select, or_
+from sqlalchemy import select, or_, and_
 
 from main.database.db import db_session
-from main.database.db_models import Vehicle, DRONE, ROVER, Sensor
+from main.database.db_models import Vehicle, DRONE, ROVER, Sensor, SensorBand
 from main.models.vehicle_models import VehicleRequest
 
 class VehicleServiceClass():
@@ -74,6 +74,13 @@ class VehicleServiceClass():
         sqlStatement = select(Sensor).where(Sensor.name == sensor_name)
         sensor = db_session.scalars(sqlStatement).first()
         return sensor
+
+    def getSensorBandFromName(self, sensor_band_name:str, sensor_id:str):
+        sqlStatement = select(SensorBand).where(and_(
+                        SensorBand.name == sensor_band_name,
+                        SensorBand.sensor_id == sensor_id))
+        sensor_band = db_session.scalars(sqlStatement).first()
+        return sensor_band
 
 
 VehicleService = VehicleServiceClass()

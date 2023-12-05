@@ -142,7 +142,8 @@
                                                 },
                                                 success: function (response) {
                                                     console.log(response);
-                                                    $('#drone_run_band_accordian_drone_run_band_div_' + project_drone_run_band_id).html(response.data[0]);
+                                                    $('#drone_run_band_accordian_drone_run_band_div_' + project_drone_run_band_id).html(
+                                                        "<img src='" + response.image_collection_thumbnail_url +"' style='width:300px' />");
                                                     $("#working_modal").modal("hide");
                                                 },
                                                 error: function (response) {

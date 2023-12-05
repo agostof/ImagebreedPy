@@ -23,11 +23,13 @@ $(document).ready(function () {
     // Standard Process for Imaging Events
     //
 
+    const urlParams = new URLSearchParams(window.location.search);
+
     var manage_drone_imagery_standard_process_private_company_id;
     var manage_drone_imagery_standard_process_private_company_is_private;
     var manage_drone_imagery_standard_process_field_trial_id;
     var manage_drone_imagery_standard_process_field_trial_name;
-    var manage_drone_imagery_standard_process_drone_run_project_id;
+    var manage_drone_imagery_standard_process_drone_run_project_id = urlParams.get('drone_run_project_id');
     var manage_drone_imagery_standard_process_drone_run_project_ids_in_same_orthophoto = [];
     var manage_drone_imagery_standard_process_drone_run_project_names_in_same_orthophoto = [];
     var manage_drone_imagery_standard_process_field_trial_ids_in_same_orthophoto = [];
@@ -1262,16 +1264,18 @@ $(document).ready(function () {
     });
 
     function drone_imagery_standard_process_preview_plot_polygons(drone_run_band_project_id, image_id, drone_imagery_plot_polygons, plot_margin_left_right, plot_margin_top_bottom) {
+        data = JSON.stringify({
+            'drone_run_band_project_id': drone_run_band_project_id,
+            'stock_polygons': drone_imagery_plot_polygons,
+            'image_id': image_id
+        })
+        
         jQuery.ajax({
             type: 'POST',
             url: '/api/drone_imagery/preview_plot_polygons',
             dataType: "json",
             contentType: "application/json",
-            data: JSON.stringify({
-                'drone_run_band_project_id': drone_run_band_project_id,
-                'stock_polygons': drone_imagery_plot_polygons,
-                'image_id': image_id
-            }),
+            data: data,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
             },
