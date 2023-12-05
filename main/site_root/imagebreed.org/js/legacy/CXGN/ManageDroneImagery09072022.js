@@ -3957,12 +3957,16 @@ $(document).ready(function () {
                 ctx = canvas.getContext('2d');
                 var image = new Image();
                 image.onload = function () {
-                    canvas.width = this.naturalWidth;
-                    canvas.height = this.naturalHeight;
+                    // canvas.width = this.naturalWidth;
+                    // canvas.height = this.naturalHeight;
+                    canvas.width = 1000;
+                    canvas.height = 1000;
                     ctx.drawImage(this, 0, 0);
                     $('#' + load_div_id).hide();
                 };
                 image.src = response.image_url;
+                image.width = 1000;
+                image.height = 1000;
                 dronecroppingImg = canvas;
                 dronecroppingImg.onmousedown = GetCoordinatesCroppedImage;
             },

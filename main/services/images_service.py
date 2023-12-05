@@ -67,14 +67,14 @@ class ImageServiceClass():
 
         return collection
     
-    def saveOrthoImage(self, collection: ImageCollection, ortho_image_path: str, sensor_id: int, sensor_band_id: int):
-        # image_entity = {}
+    def saveOrthoImage(self, collection: ImageCollection, ortho_image_path: str, ortho_thumbnail_path: str, sensor_id: int, sensor_band_id: int):
         image_path = Path(ortho_image_path)
-        # if image_path.is_file():
+        thumbnail_path = Path(ortho_thumbnail_path)
         image_entity = Image(name=image_path.name,
                             description=image_path.name,
                             image_collection_id=collection.id,
                             local_path=str(image_path),
+                            thumbnail_path=str(thumbnail_path),
                             is_ortho=True,
                             sensor_id=sensor_id,
                             sensor_band_id=sensor_band_id)

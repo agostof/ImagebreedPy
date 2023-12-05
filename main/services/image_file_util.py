@@ -12,6 +12,7 @@ from main.services.images_service import ImageService
 from main.services.vehicles_service import VehicleService
 from main.models.imaging_event_models import ImagingEventRequest, ImagingEventRequestOrthoImage
 from main.database.db_models import ImageCollection, Image, ImagingEvent, Sensor
+import main.image_processing.resize as ResizeImageService
 
     
 def archiveUploads(request: ImagingEventRequest):
@@ -99,6 +100,7 @@ def sortAndStitchImages(imaging_event: ImagingEvent, sensor: Sensor, zip_path: s
             ImageService.saveImages(collection=new_image_collection, images=band_image_paths, sensor_id=sensor.id, sensor_band_id=band.id)
 
             ortho_dir = Path(settings.image_storage_dir) / imaging_event.getEventFilePath() / f"ortho{band.image_suffix}.png"
+            thumbnail_dir = Path(settings.image_storage_dir) / imaging_event.getEventFilePath() / f"ortho{band.image_suffix}_thumb.png"
             ImagingEventService.triggerImageStitching(images=band_image_paths, out_path=ortho_dir)
 
             ImageService.saveOrthoImage(collection=new_image_collection, ortho_image_path=ortho_dir, sensor_id=sensor.id, sensor_band_id=band.id)
@@ -119,5 +121,13 @@ def sortOrthos(imaging_event: ImagingEvent, sensor: Sensor, ortho_paths: list[st
         ortho_new_path = ortho_dir / f"ortho{band.image_suffix}.png"
         ortho_new_path.touch()
         shutil.copy(local_path, ortho_new_path)
-        ImageService.saveOrthoImage(collection=new_image_collection, ortho_image_path=ortho_new_path, sensor_id=sensor.id, sensor_band_id=band.id)
+
+        ortho_thumbnail_path = ortho_dir / f"ortho{band.image_suffix}_thumb.png"
+        ResizeImageService.resizeImage(input_image=ortho_new_path, outfile_path=ortho_thumbnail_path, width=1000)
+
+        ImageService.saveOrthoImage(collection=new_image_collection, 
+                                    ortho_image_path=ortho_new_path, 
+                                    ortho_thumbnail_path=ortho_thumbnail_path, 
+                                    sensor_id=sensor.id, 
+                                    sensor_band_id=band.id)
 

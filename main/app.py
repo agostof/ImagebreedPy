@@ -12,11 +12,11 @@ from main.services.auth_utils import AuthUtils
 
 app = FastAPI()
 
-from main.routers import breeders, ajax, api, images
+from main.routers import breeders, ajax, api, api_standard_process
 app.include_router(breeders.router)
 app.include_router(ajax.router)
 app.include_router(api.router)
-app.include_router(images.router)
+app.include_router(api_standard_process.router)
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
 
 @app.get("/", response_class=HTMLResponse)

@@ -7,7 +7,7 @@ import re
 from main.database.db import db_session
 from main.database.db_models import ImagingEvent, Sensor
 from main.models.imaging_event_models import ImagingEventRequest
-import main.image_processing.image_stitching as ImageStitching
+import main.image_processing.stitching as ImageStitching
 
 
 class ImagingEventServiceClass():

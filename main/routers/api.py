@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from typing import Annotated
 import time
 from pathlib import Path
+from random import randint
 
 from main.database.db_models import Vehicle, DRONE, ROVER, ImagingEvent, ImageCollection, Image
 from main.models.analytics_models import AnalyticsRequest, AnalyticsResponse, AnalysisQueryRequest
@@ -15,6 +16,9 @@ from main.services.app_settings import DIRECTORY, settings
 from main.services.auth_utils import User, AuthUtils
 import main.routers.breeders as web_router 
 import main.services.image_file_util as ImageFileUtil
+import main.image_processing.rotate as ImageRotateService
+import main.image_processing.crop as ImageCropService
+import main.image_processing.denoise as ImageDenoiseService
 
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
 router = APIRouter(prefix="/api")
@@ -48,9 +52,9 @@ async def get_field_trial_drone_run_projects_in_same_orthophoto(current_user: Us
 async def get_image( image_id:int = None, current_user: User = Depends(AuthUtils.getCurrentUser)):
     image_data = ImageService.getImageMetadata(image_id=image_id)
     image_response = {
-        "image_url": '/' + image_data.getWebPath(),
-        "image_width": image_data.width if image_data.width > 0 else 200,
-        "image_height": image_data.height if image_data.height > 0 else 200
+        "image_url": f'/{image_data.getWebPath()}?r={randint(1000, 9999)}',
+        "image_width": image_data.width if image_data.width > 0 else 1000,
+        "image_height": image_data.height if image_data.height > 0 else 1000
     }
     return JSONResponse(content=image_response)
 
@@ -258,20 +262,6 @@ async def get_project_md_image(drone_run_band_project_id: int, current_user: Use
     }
     return JSONResponse(content=image_id)
 
-@router.get("/drone_imagery/brighten_image")
-async def get_brighten_image(image_id: int, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    MOCK_bright_image = {
-        "brightened_image_id": image_id
-    }
-    return JSONResponse(content=MOCK_bright_image)
-
-@router.get("/drone_imagery/retrieve_parameter_template")
-async def get_parameter_template(plot_polygons_template_projectprop_id: str, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    MOCK_parameter_template = {
-        "parameter": {"thingy":"1"}
-    }
-    return JSONResponse(content=MOCK_parameter_template)
-
 @router.get("/drone_imagery/raw_drone_imagery_drone_run_band")
 async def get_parameter_template(drone_run_band_project_id: int, current_user: User = Depends(AuthUtils.getCurrentUser)):
     ortho_image = ImageService.getOrthoImage(drone_run_band_project_id)
@@ -328,55 +318,6 @@ async def post_upload_drone_imagery(request: Request):
 
 
     return await web_router.breeders_toolbox_drone_imagery(request=request)
-
-@router.post("/drone_imagery/rotate_image")
-async def post_rotate_image(request: RotateImageRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    print(request)
-    return JSONResponse(content={"error": "", "rotated_image_id": request.image_id})
-
-@router.post("/drone_imagery/crop_image")
-async def post_crop_image(request: CropImageRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    print(request)
-    return JSONResponse(content={"error": "", "cropped_image_id": request.image_id})
-
-@router.post("/drone_imagery/denoise")
-async def post_denoise(request: ImageRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    print(request)
-    return JSONResponse(content={"error": "", "denoised_image_id": request.image_id})
-
-
-@router.post("/drone_imagery/remove_background_percentage_save")
-async def post_remove_background_percentage_save(request: ThresholdImageRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    print(request)
-    return JSONResponse(content=[{"removed_background_image_id": request.image_id}])
-
-
-@router.post("/drone_imagery/save_plot_polygons_template")
-async def post_save_plot_polygons_template(request: PlotPolygonTemplateRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    print(request)
-    return JSONResponse(content={"error": "", "success": "true"})
-
-
-@router.post("/drone_imagery/preview_plot_polygons")
-async def post_preview_plot_polygons(request: PlotPolygonPreviewRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    print(request)
-    image = ImageService.getImageMetadata(image_id=request.image_id)
-    return JSONResponse(content={"error": "", 
-                                 "plot_polygon_preview_urls": [image.getWebPath()], 
-                                 "plot_polygon_preview_image_sizes": [[200, 200]]})
-
-
-@router.post("/drone_imagery/check_maximum_standard_processes")
-async def post_check_maximum_standard_processes(current_user: User = Depends(AuthUtils.getCurrentUser)):
-    time.sleep(1)
-    return JSONResponse(content={"error": "", "success": "true"})
-
-
-@router.post("/drone_imagery/standard_process_apply")
-async def post_standard_process_apply(request: StandardProcessRequest, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    print(request)
-    time.sleep(1)
-    return JSONResponse(content={"error": "", "success": "true"})
 
 @router.post("/drone_imagery/calculate_analytics")
 async def post_calculate_analytics(request: AnalyticsRequest, current_user: User = Depends(AuthUtils.getCurrentUser)) -> AnalyticsResponse:

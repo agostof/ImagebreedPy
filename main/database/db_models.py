@@ -3,6 +3,7 @@ from sqlalchemy import String, ForeignKey, DateTime, Integer
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from datetime import datetime
 from pathlib import Path
+from random import randint
 import re
 
 from main.services.app_settings import settings
@@ -154,6 +155,7 @@ class Image(Base):
     name: Mapped[str] = mapped_column(String(50))
     description: Mapped[str] = mapped_column(String(150))
     local_path: Mapped[str] = mapped_column(String(150), default="/")
+    thumbnail_path: Mapped[str] = mapped_column(String(150), default="/")
     is_ortho: Mapped[bool] = mapped_column(default=False)
     image_collection_id: Mapped[int] = mapped_column(ForeignKey("image_collection.id"))
     image_collection: Mapped["ImageCollection"] = relationship(back_populates="images")
@@ -168,6 +170,7 @@ class Image(Base):
                  description:str=None, 
                  image_collection_id:int = None, 
                  local_path:Path = None, 
+                 thumbnail_path:Path = None, 
                  is_ortho:bool = False, 
                  width:int = 0, 
                  height:int = 0,
@@ -177,6 +180,7 @@ class Image(Base):
         self.description = description
         self.image_collection_id = image_collection_id
         self.local_path = local_path
+        self.thumbnail_path = thumbnail_path
         self.width = width
         self.height = height
         self.is_ortho = is_ortho
@@ -184,11 +188,11 @@ class Image(Base):
         self.sensor_band_id = sensor_band_id
         
 
-    def getWebPath(self):
-        local_path = Path(self.local_path)
-        web_path = local_path.relative_to(settings.image_storage_dir)
+    def getWebPath(self) -> str:
+        thumbnail_path = Path(self.thumbnail_path)
+        web_path = thumbnail_path.relative_to(settings.image_storage_dir)
         web_path = 'images' / web_path
-        return web_path.as_posix()
+        return f'/{web_path.as_posix()}?r={randint(1000, 9999)}'
 
 
     def __repr__(self):
