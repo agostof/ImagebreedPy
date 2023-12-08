@@ -1,6 +1,6 @@
 
 from pydantic import BaseModel
-from typing import Annotated
+from typing import Annotated, List
 from fastapi import UploadFile, File, Form, Request
 
 class ImageRequest(BaseModel):
@@ -20,8 +20,7 @@ class ThresholdImageRequest(ImageRequest):
     lower_threshold_percentage: float | None = None
     upper_threshold_percentage: float | None = None
 
-class PlotPolygonTemplateRequest(BaseModel):
-    drone_run_band_project_id: str | None = None
+class PlotPolygonTemplateRequest(ImageRequest):
     stock_polygons: dict | None = None
     flight_pass_counter: int | None = None
 
@@ -29,6 +28,31 @@ class PlotPolygonPreviewRequest(BaseModel):
     drone_run_band_project_id: str | None = None
     stock_polygons: dict | None = None
     image_id: int | None = None
+
+class PolygonTemplateMetadata(BaseModel):
+    template_number: int | None = None
+    num_rows: int | None = None
+    num_cols: int | None = None
+    num_rows_val: str | None = None
+    num_cols_val: str | None = None
+    section_top_row_left_offset_val: str | None = None
+    section_bottom_row_left_offset_val: str | None = None
+    section_left_column_top_offset_val: str | None = None
+    section_left_column_bottom_offset_val: str | None = None
+    section_top_row_right_offset_val: str | None = None
+    section_right_column_bottom_offset_val: str | None = None
+    total_plot_polygons: int | None = None
+    drone_imagery_plot_generated_polygons: list[list[dict]]
+    drone_imagery_plot_polygons_display: list[list[dict]]
+    plot_polygons_generated_polygons_svg: list[list[dict]]
+    plot_polygons_generated_polygons_rows_svg: list[list[list[float]]] 
+    plot_polygons_generated_polygons_circles_svg: list[list]
+    polygon_margin_top_bottom_val: str | None = None
+    polygon_margin_left_right_val: str | None = None
+    col_width: float | None = None
+    row_height: float | None = None
+    col_width_margin: int | None = None
+    row_height_margin: int | None = None
 
 class StandardProcessRequest(BaseModel):
     drone_run_project_id: str | None = None
@@ -39,12 +63,14 @@ class StandardProcessRequest(BaseModel):
     time_cvterm_id: str | None = None
     standard_process_type: str | None = None
     field_trial_id: str | None = None
+    rotate_angle: float | None = None
+    field_crop_polygon: list[dict]  | None = None
     apply_to_all_drone_runs_from_same_camera_rig: str | None = None
     phenotypes_plot_margin_top_bottom: str | None = None
     phenotypes_plot_margin_right_left: str | None = None
     drone_imagery_remove_background_lower_percentage: int | None = None
     drone_imagery_remove_background_upper_percentage: int | None = None
-    polygon_template_metadata: list[dict] | None = None
+    polygon_template_metadata: List[PolygonTemplateMetadata] | None = None
     polygon_templates_deleted: list[dict] | None = None
     polygon_removed_numbers: list[int] | None = None
     polygons_to_plot_names: dict | None = None

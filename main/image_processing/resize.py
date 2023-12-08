@@ -1,5 +1,6 @@
 import os
 import cv2
+import math
 
 def resizeImage(input_image: str | os.PathLike, outfile_path: str | os.PathLike,  width = None, height = None, ):
     inter = cv2.INTER_AREA
@@ -30,3 +31,19 @@ def resizeImage(input_image: str | os.PathLike, outfile_path: str | os.PathLike,
     resized = cv2.resize(image, dim, interpolation = inter)
 
     cv2.imwrite(str(outfile_path), resized)
+
+    return resized.shape[:2]
+
+def calculateThumbnailWidthAndMultiplier(input_image: str | os.PathLike):
+    image = cv2.imread(str(input_image))
+    width = image.shape[1]
+    multiplier = math.floor(float(width)/1000) + 1
+    return width/multiplier, multiplier
+    
+def multiplyPolygon(polygon:list[dict], multiplier:int = 1):
+    new_polygon = []
+    for point in polygon:
+        new_polygon.append({'x': (point['x'] * multiplier)+(multiplier/2), 'y': (point['y'] * multiplier)+(multiplier/2)})
+
+    return new_polygon
+

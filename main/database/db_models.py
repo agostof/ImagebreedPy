@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Self
 from sqlalchemy import String, ForeignKey, DateTime, Integer
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from datetime import datetime
@@ -136,7 +136,7 @@ class ImageCollection(Base):
     __tablename__ = 'image_collection'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(50))
-    description: Mapped[str] = mapped_column(String(50))
+    description: Mapped[str] = mapped_column(String(150))
     images: Mapped[List["Image"]] = relationship(back_populates="image_collection")
     imaging_event_id: Mapped[int] = mapped_column(ForeignKey("imaging_event.id"))
     imaging_event: Mapped["ImagingEvent"] = relationship(back_populates="image_collections")
@@ -155,45 +155,65 @@ class Image(Base):
     name: Mapped[str] = mapped_column(String(50))
     description: Mapped[str] = mapped_column(String(150))
     local_path: Mapped[str] = mapped_column(String(150), default="/")
-    thumbnail_path: Mapped[str] = mapped_column(String(150), default="/")
     is_ortho: Mapped[bool] = mapped_column(default=False)
     image_collection_id: Mapped[int] = mapped_column(ForeignKey("image_collection.id"))
     image_collection: Mapped["ImageCollection"] = relationship(back_populates="images")
-    width: Mapped[int] = mapped_column(Integer())
-    height: Mapped[int] = mapped_column(Integer())
+    process_step: Mapped[str] = mapped_column(String(50), default="input")
+    width: Mapped[int] = mapped_column(Integer(), nullable=True)
+    height: Mapped[int] = mapped_column(Integer(), nullable=True)
     sensor_id: Mapped[int] = mapped_column(ForeignKey("sensor.id"))
     sensor: Mapped["Sensor"] = relationship()
     sensor_band_id: Mapped[int] = mapped_column(ForeignKey("sensor_band.id"))
     sensor_band: Mapped["SensorBand"] = relationship()
+    thumbnail_id: Mapped[int] = mapped_column(ForeignKey("image.id"), nullable=True)
+    thumbnail: Mapped["Image"] = relationship("Image", remote_side=[id])
+    image_scale_factor: Mapped[int] = mapped_column(default=1)
 
-    def __init__(self, name:str=None, 
+    def __init__(self, image:Self = None,
+                 name:str=None, 
                  description:str=None, 
                  image_collection_id:int = None, 
                  local_path:Path = None, 
-                 thumbnail_path:Path = None, 
+                 thumbnail_id:int = None, 
                  is_ortho:bool = False, 
+                 process_step:str = "input",
+                 image_scale_factor:int = 1,
                  width:int = 0, 
                  height:int = 0,
                  sensor_id:int = None,
                  sensor_band_id:int = None):
-        self.name = name
-        self.description = description
-        self.image_collection_id = image_collection_id
-        self.local_path = local_path
-        self.thumbnail_path = thumbnail_path
-        self.width = width
-        self.height = height
-        self.is_ortho = is_ortho
-        self.sensor_id = sensor_id
-        self.sensor_band_id = sensor_band_id
-        
+        if image:
+            self.name = image.name
+            self.description = image.description
+            self.image_collection_id = image.image_collection_id
+            self.local_path = image.local_path
+            self.thumbnail_id = image.thumbnail_id
+            self.process_step = image.process_step
+            self.width = image.width
+            self.height = image.height
+            self.is_ortho = image.is_ortho
+            self.sensor_id = image.sensor_id
+            self.sensor_band_id = image.sensor_band_id  
+            self.image_scale_factor = image.image_scale_factor 
+        else:
+            self.name = name
+            self.description = description
+            self.image_collection_id = image_collection_id
+            self.local_path = local_path
+            self.thumbnail_id = thumbnail_id
+            self.process_step = process_step
+            self.width = width
+            self.height = height
+            self.is_ortho = is_ortho
+            self.sensor_id = sensor_id
+            self.sensor_band_id = sensor_band_id  
+            self.image_scale_factor = image_scale_factor        
 
     def getWebPath(self) -> str:
-        thumbnail_path = Path(self.thumbnail_path)
+        thumbnail_path = Path(self.local_path)
         web_path = thumbnail_path.relative_to(settings.image_storage_dir)
         web_path = 'images' / web_path
         return f'/{web_path.as_posix()}?r={randint(1000, 9999)}'
-
 
     def __repr__(self):
         return f'Image {self.id=}\n     {self.name=}\n     {self.description=}'

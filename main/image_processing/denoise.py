@@ -7,4 +7,4 @@ def denoiseImage(input_image: str | os.PathLike, outfile_path: str | os.PathLike
     # Denoising
     dst = cv2.fastNlMeansDenoising(img,None,1,7,21)
 
-    cv2.imwrite(outfile_path, dst)
+    cv2.imwrite(str(outfile_path), dst)

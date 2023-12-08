@@ -2,7 +2,7 @@ import cv2
 import os
 import numpy as np
 
-async def rotateImage(input_image: str | os.PathLike, outfile_path: str | os.PathLike, angle: float, centered: bool = False, original_size: bool = False):
+def rotateImage(input_image: str | os.PathLike, outfile_path: str | os.PathLike, angle: float, centered: bool = False, original_size: bool = False):
     img = cv2.imread(input_image)
     height, width = img.shape[:2]
 
@@ -55,4 +55,4 @@ async def rotateImage(input_image: str | os.PathLike, outfile_path: str | os.Pat
         x,y,w,h = rect
         src = src[y:y+h, x:x+w]
 
-    cv2.imwrite(outfile_path, src)
+    cv2.imwrite(str(outfile_path), src)

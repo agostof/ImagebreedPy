@@ -13,7 +13,9 @@ def cropToPolygon(input_image: str | os.PathLike, outfile_path: str | os.PathLik
     elif polygon_type == 'rectangular_polygon':
         finalImage = cropPolygonsToSingleImage(img, polygons)
 
-    cv2.imwrite(outfile_path, finalImage)
+    cv2.imwrite(str(outfile_path), finalImage)
+    
+    return finalImage.shape[:2]
 
 
 def cropPolygonsToSingleImage(input_image, polygons):
@@ -44,7 +46,7 @@ def cropPolygonsToSingleImage(input_image, polygons):
             if y > maxY:
                 maxY = y
 
-    cropedImage = np.zeros_like(input_image)
+    croppedImage = np.zeros_like(input_image)
     for y in range(0,original_y):
         for x in range(0, original_x):
 
@@ -59,12 +61,12 @@ def cropPolygonsToSingleImage(input_image, polygons):
                 if cv2.pointPolygonTest(np.asarray([polygon_mat]),(x,y),False) >= 0:
                     if len(input_image_size) == 3:
                         for j in range(input_image_size[2]):
-                            cropedImage[y, x, j] = input_image[y, x, j]
+                            croppedImage[y, x, j] = input_image[y, x, j]
                     else:
-                        cropedImage[y, x] = input_image[y, x]
+                        croppedImage[y, x] = input_image[y, x]
 
     # Now we can crop again just the envloping rectangle
-    finalImage = cropedImage[minY:maxY,minX:maxX]
+    finalImage = croppedImage[minY:maxY,minX:maxX]
 
     return finalImage
 

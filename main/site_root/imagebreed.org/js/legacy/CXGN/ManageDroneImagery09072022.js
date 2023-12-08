@@ -1216,6 +1216,7 @@ $(document).ready(function () {
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify({
+                'image_id': manage_drone_imagery_standard_process_denoised_image_id,
                 'drone_run_band_project_id': manage_drone_imagery_standard_process_drone_run_band_project_id,
                 'stock_polygons': drone_imagery_plot_polygons
             }),
@@ -1528,6 +1529,8 @@ $(document).ready(function () {
                                 'time_cvterm_id': manage_drone_imagery_standard_process_phenotype_time,
                                 'standard_process_type': 'minimal',
                                 'field_trial_id': manage_drone_imagery_standard_process_field_trial_id,
+                                'rotate_angle': manage_drone_imagery_standard_process_rotate_stitched_image_degrees,
+                                'field_crop_polygon': crop_points,
                                 'apply_to_all_drone_runs_from_same_camera_rig': $('#drone_imagery_standard_process_camera_rig_apply_select').val(),
                                 'phenotypes_plot_margin_top_bottom': plot_margin_top_bottom,
                                 'phenotypes_plot_margin_right_left': plot_margin_left_right,
@@ -3957,16 +3960,16 @@ $(document).ready(function () {
                 ctx = canvas.getContext('2d');
                 var image = new Image();
                 image.onload = function () {
-                    // canvas.width = this.naturalWidth;
-                    // canvas.height = this.naturalHeight;
-                    canvas.width = 1000;
-                    canvas.height = 1000;
+                    canvas.width = this.naturalWidth;
+                    canvas.height = this.naturalHeight;
+                    // canvas.width = 1000;
+                    // canvas.height = 1000;
                     ctx.drawImage(this, 0, 0);
                     $('#' + load_div_id).hide();
                 };
                 image.src = response.image_url;
-                image.width = 1000;
-                image.height = 1000;
+                // image.width = 1000;
+                // image.height = 1000;
                 dronecroppingImg = canvas;
                 dronecroppingImg.onmousedown = GetCoordinatesCroppedImage;
             },
@@ -4170,8 +4173,10 @@ $(document).ready(function () {
     var plot_polygons_generated_polygons = [];
     var drone_imagery_plot_polygons_removed_numbers = [];
     var field_trial_layout_response = {};
-    var field_trial_layout_responses = {};
-    var field_trial_layout_response_names = [];
+    var field_trial_layout_responses = {'MOCK_field_trial_layout_response_names': {'output':[
+        ['MOCK_0', '', 0],['MOCK_1', '', 1],['MOCK_2', '', 2],['MOCK_3', '', 3]
+    ]}};
+    var field_trial_layout_response_names = ['MOCK_field_trial_layout_response_names'];
     var plot_polygon_name;
     var plotpolygonsImg;
     var drone_imagery_plot_polygons_available_stock_names = [];

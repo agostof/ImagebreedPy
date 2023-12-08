@@ -4,7 +4,8 @@
 <script src="/js/drone_imagery_standard_process.js" type="text/javascript"></script>
 <script src="https://docs.opencv.org/4.8.0/opencv.js" type="text/javascript"></script>
 {% endblock %}
-{% block title %} <h3 id="pagetitle_h3">Manage Aerial Imagery: Run A Standard Process On Orthophotomosaics</h3> {% endblock %}
+{% block title %} <h3 id="pagetitle_h3">Manage Aerial Imagery: Run A Standard Process On Orthophotomosaics</h3> {%
+endblock %}
 
 
 {% block content %}
@@ -55,18 +56,24 @@
                                 <ol class="workflow-content">
                                     <li>
                                         <div id="pagetitle">
-                                            <h3 id="pagetitle_h3">This workflow will guide you through applying a standard process to
+                                            <h3 id="pagetitle_h3">This workflow will guide you through applying a
+                                                standard process to
                                                 your aerial imaging bands</h3>
                                         </div>
-                
-                                        <p>Here you can take one of the imaging event bands you uploaded all the way through the process
-                                            to plot image saving. This will require manual steps such as image rotation, cropping, and
-                                            plot polygon templating. After you have completed this process for one imaging event band,
-                                            you can apply it to all other imaging event bands and other calculated vegetative indices.
+
+                                        <p>Here you can take one of the imaging event bands you uploaded all the way
+                                            through the process
+                                            to plot image saving. This will require manual steps such as image rotation,
+                                            cropping, and
+                                            plot polygon templating. After you have completed this process for one
+                                            imaging event band,
+                                            you can apply it to all other imaging event bands and other calculated
+                                            vegetative indices.
                                         </p>
                                         <br /><br />
                                         <div style="text-align: center;">
-                                            <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next
+                                            <button class="btn btn-primary"
+                                                onclick="Workflow.complete(this); return false;">Go to Next
                                                 Step</button>
                                         </div>
                                     </li>
@@ -75,9 +82,12 @@
                                             <h3 id="pagetitle_h3">Select a imaging event band</h3>
                                         </div>
                                         <div class="card bg-light">
-                                            <p>Please select one imaging event band to take through the process. It is recommended to
-                                                select a band that has high contrast, such as a NIR band. You can choose to brighten the
-                                                image, only for purposes of the standard process, by selecting below.</p>
+                                            <p>Please select one imaging event band to take through the process. It is
+                                                recommended to
+                                                select a band that has high contrast, such as a NIR band. You can choose
+                                                to brighten the
+                                                image, only for purposes of the standard process, by selecting below.
+                                            </p>
                                         </div>
                                         <div class="card bg-light">
                                             <div class="card card-default">
@@ -101,8 +111,10 @@
                                                     <hr>
                                                     <div class="form-horizontal">
                                                         <div class="form-group form-group-sm">
-                                                            <label class="col-sm-6 control-label">Brighten the image? This is only to
-                                                                help complete the standard process when the image is very dark: </label>
+                                                            <label class="col-sm-6 control-label">Brighten the image?
+                                                                This is only to
+                                                                help complete the standard process when the image is
+                                                                very dark: </label>
                                                             <div class="col-sm-6">
                                                                 <select class="form-control"
                                                                     id="manage_drone_imagery_standard_process_brighten_image_option">
@@ -116,7 +128,8 @@
                                                     <br />
                                                     <div style="text-align: center;">
                                                         <button class="btn btn-primary"
-                                                            id="manage_drone_imagery_standard_process_drone_run_band_step">Go to Next
+                                                            id="manage_drone_imagery_standard_process_drone_run_band_step">Go
+                                                            to Next
                                                             Step</button>
                                                     </div>
                                                 </div>
@@ -125,40 +138,48 @@
                                     </li>
                                     <li>
                                         <div id="pagetitle">
-                                            <h3 id="pagetitle_h3">Use ground control points (GCPs) to automate the entire standard
+                                            <h3 id="pagetitle_h3">Use ground control points (GCPs) to automate the
+                                                entire standard
                                                 process</h3>
                                         </div>
                                         <div class="card bg-light">
-                                            <p>If a previous imaging event on this field experiment has already completed the standard
-                                                process, then that imaging event can be used to automate the rest of the standard
+                                            <p>If a previous imaging event on this field experiment has already
+                                                completed the standard
+                                                process, then that imaging event can be used to automate the rest of the
+                                                standard
                                                 process on this new imaging event.</p>
-                                            <p>If ground control points (GCPs) were defined for a previous imaging event, then GCPs can
+                                            <p>If ground control points (GCPs) were defined for a previous imaging
+                                                event, then GCPs can
                                                 automate the standard process for this new imaging event.</p>
                                         </div>
                                         <div class="form-horizontal">
                                             <div class="form-group form-group-sm">
-                                                <label class="col-sm-6 control-label">Has a previous imaging event on this field trial
+                                                <label class="col-sm-6 control-label">Has a previous imaging event on
+                                                    this field trial
                                                     completed the standard process already?: </label>
                                                 <div class="col-sm-6">
                                                     <select class="form-control"
                                                         id="manage_drone_imagery_standard_process_ground_control_points_option">
                                                         <option value="No">No</option>
-                                                        <option value="Yes">Yes, and it has Ground Control Points (GCPs) defined.
+                                                        <option value="Yes">Yes, and it has Ground Control Points (GCPs)
+                                                            defined.
                                                         </option>
-                                                        <option value="Yes_camera_rig">Yes, and the same fixed camera rig was used.
+                                                        <option value="Yes_camera_rig">Yes, and the same fixed camera
+                                                            rig was used.
                                                         </option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                
+
                                         <div id="manage_drone_imagery_standard_process_ground_control_points_select_div"
                                             style="display:none">
                                             <div class="card bg-light">
                                                 <div class="card card-default">
                                                     <div class="card-body">
                                                         <div class="form-group form-group-sm">
-                                                            <label class="col-sm-6 control-label">Select the aerial imaging event to use
+                                                            <label class="col-sm-6 control-label">Select the aerial
+                                                                imaging event to use
                                                                 as a template: </label>
                                                             <div class="col-sm-6">
                                                                 <div
@@ -168,16 +189,20 @@
                                                         </div>
                                                         <br /><br />
                                                         <hr>
-                
+
                                                         <div class="card bg-light">
                                                             <ul>
-                                                                <li>Click on the ground control points (GCPs) in the image below and
+                                                                <li>Click on the ground control points (GCPs) in the
+                                                                    image below and
                                                                     save them.</li>
-                                                                <li>Please click and save at least three points. The names of the GCPs
+                                                                <li>Please click and save at least three points. The
+                                                                    names of the GCPs
                                                                     MUST be consistent across imaging events!</li>
-                                                                <li>For best results, use ground control points at the far four corners
+                                                                <li>For best results, use ground control points at the
+                                                                    far four corners
                                                                     of the field.</li>
-                                                                <li>Once the computed polygon template is drawn, you can drag the
+                                                                <li>Once the computed polygon template is drawn, you can
+                                                                    drag the
                                                                     <b>black dot</b> to reposition the template.
                                                                 </li>
                                                                 <li>You can zoom out on your browser (Cntrl + -).</li>
@@ -197,13 +222,15 @@
                                                                     and Save</button>
                                                             </div>
                                                         </div>
-                                                        <div id="project_drone_imagery_standard_process_ground_control_points_info_div">
+                                                        <div
+                                                            id="project_drone_imagery_standard_process_ground_control_points_info_div">
                                                         </div>
                                                         <div
                                                             id="project_drone_imagery_standard_process_ground_control_points_loading_div">
                                                             <img src="/img/wheel.gif" />
                                                         </div>
-                                                        <div id="project_drone_imagery_standard_process_ground_control_points_svg_div">
+                                                        <div
+                                                            id="project_drone_imagery_standard_process_ground_control_points_svg_div">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -215,10 +242,14 @@
                                                 <div class="card card-default">
                                                     <div class="card-body">
                                                         <div class="form-group form-group-sm">
-                                                            <label class="col-sm-6 control-label">Note: This is only for greenhouses or
-                                                                setups with fixed camera rigs that capture large sections of an
-                                                                experiment. Select the aerial imaging event to use as a template. The
-                                                                same rotation, cropping, and plot-polygon template will be applied:
+                                                            <label class="col-sm-6 control-label">Note: This is only for
+                                                                greenhouses or
+                                                                setups with fixed camera rigs that capture large
+                                                                sections of an
+                                                                experiment. Select the aerial imaging event to use as a
+                                                                template. The
+                                                                same rotation, cropping, and plot-polygon template will
+                                                                be applied:
                                                             </label>
                                                             <div class="col-sm-6">
                                                                 <div
@@ -242,8 +273,10 @@
                                                     <div class="card-body">
                                                         <div class="form-horizontal">
                                                             <div class="form-group">
-                                                                <label class="col-sm-6 control-label">Select the aerial imaging event to
-                                                                    use as a template. The same rotation and plot-polygon template will
+                                                                <label class="col-sm-6 control-label">Select the aerial
+                                                                    imaging event to
+                                                                    use as a template. The same rotation and
+                                                                    plot-polygon template will
                                                                     be applied: </label>
                                                                 <div class="col-sm-6">
                                                                     <div
@@ -252,15 +285,17 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                
+
                                                         <form class="form-horizontal" role="form" method="post"
                                                             enctype="multipart/form-data" encoding="multipart/form-data"
                                                             id="manage_drone_imagery_standard_process_previous_geotiff_params_form"
                                                             name="manage_drone_imagery_standard_process_previous_geotiff_params_form"
                                                             action="/drone_imagery/standard_process_previous_geotiff">
                                                             <div class="form-group">
-                                                                <label class="col-sm-6 control-label">WGS84/UTM GeoTIFF (.tif): (should
-                                                                    be same dimensions as uploaded reflectance maps)</label>
+                                                                <label class="col-sm-6 control-label">WGS84/UTM GeoTIFF
+                                                                    (.tif): (should
+                                                                    be same dimensions as uploaded reflectance
+                                                                    maps)</label>
                                                                 <div class="col-sm-6">
                                                                     <input type="file"
                                                                         id="manage_drone_imagery_standard_process_geotiff_params_geotiff"
@@ -269,12 +304,14 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="col-sm-6 control-label">GeoTIFF Type:</label>
+                                                                <label class="col-sm-6 control-label">GeoTIFF
+                                                                    Type:</label>
                                                                 <div class="col-sm-6">
                                                                     <select class="form-control"
                                                                         id="manage_drone_imagery_standard_process_geotiff_params_type"
                                                                         name="manage_drone_imagery_standard_process_geotiff_params_type">
-                                                                        <option value="single">Single Channel GeoTIFF</option>
+                                                                        <option value="single">Single Channel GeoTIFF
+                                                                        </option>
                                                                         <option value="rgb">RGB GeoTIFF</option>
                                                                     </select>
                                                                 </div>
@@ -296,7 +333,7 @@
                                                                 id="manage_drone_imagery_standard_process_geotiff_params_time_cvterm_id"
                                                                 value="" />
                                                         </form>
-                
+
                                                         <div style="text-align: center;">
                                                             <button class="btn btn-primary"
                                                                 id="manage_drone_imagery_standard_process_geotiff_params_confirm">Confirm
@@ -310,7 +347,8 @@
                                             style="display:none">
                                             <div style="text-align: center;">
                                                 <button class="btn btn-primary"
-                                                    id="manage_drone_imagery_standard_process_ground_control_points_skip_step">Skip and
+                                                    id="manage_drone_imagery_standard_process_ground_control_points_skip_step">Skip
+                                                    and
                                                     Go to Next Step</button>
                                             </div>
                                         </div>
@@ -324,40 +362,50 @@
                                                 <li>Here you can do a rotation of your imaging event image.</li>
                                                 <li>You can zoom out on your browser (Cntrl + -).</li>
                                                 <li>Your image should have precise row-to-row parallel alignment.</li>
-                                                <li>Depending on your field experiment, it may be important that the first plot (e.g.
-                                                    plot number 1) is in the top left or top right corner of the image.</li>
+                                                <li>Depending on your field experiment, it may be important that the
+                                                    first plot (e.g.
+                                                    plot number 1) is in the top left or top right corner of the image.
+                                                </li>
                                             </ul>
                                         </div>
                                         <div class="card bg-light">
                                             <form class="form-horizontal">
                                                 <div class="form-group form-group-sm">
-                                                    <label class="col-sm-6 control-label">Rotate Counter-Clockwise Degrees (Use Left and
+                                                    <label class="col-sm-6 control-label">Rotate Counter-Clockwise
+                                                        Degrees (Use Left and
                                                         Right Arrows For Fine Tuning): </label>
                                                     <div class="col-sm-6">
                                                         <input type="range" min="-180" max="180" step="0.01"
                                                             id="drone_imagery_standard_process_rotate_degrees_input"
-                                                            name="drone_imagery_standard_process_rotate_degrees_input" value="0.00">
-                                                        <div id="drone_imagery_standard_process_rotate_degrees_input_text"></div>
+                                                            name="drone_imagery_standard_process_rotate_degrees_input"
+                                                            value="0.00">
+                                                        <div
+                                                            id="drone_imagery_standard_process_rotate_degrees_input_text">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </form>
                                             <button class="btn btn-outline-secondary"
-                                                id="drone_imagery_standard_process_rotate_stitched_crosshairs">Draw Crosshairs
+                                                id="drone_imagery_standard_process_rotate_stitched_crosshairs">Draw
+                                                Crosshairs
                                                 Assist</button>
                                             <hr>
                                             <div id="manage_drone_imagery_standard_process_rotate_step_confirm_div"
                                                 style="display:none">
                                                 <button class="btn btn-primary"
-                                                    id="manage_drone_imagery_standard_process_rotate_step">Save Rotated Image And Go To
+                                                    id="manage_drone_imagery_standard_process_rotate_step">Save Rotated
+                                                    Image And Go To
                                                     Next Step</button>
                                             </div>
-                                            <div id="manage_drone_imagery_standard_process_rotate_step_finish_div" style="display:none">
+                                            <div id="manage_drone_imagery_standard_process_rotate_step_finish_div"
+                                                style="display:none">
                                                 <button class="btn btn-primary"
-                                                    id="manage_drone_imagery_standard_process_rotate_step_finish">Save Rotated Image And
+                                                    id="manage_drone_imagery_standard_process_rotate_step_finish">Save
+                                                    Rotated Image And
                                                     Go Complete Standard Process</button>
                                             </div>
                                         </div>
-                
+
                                         <div id="manage_drone_imagery_standard_process_rotate_load_div">
                                             <img src="/img/wheel.gif" />
                                         </div>
@@ -365,36 +413,41 @@
                                     </li>
                                     <li>
                                         <div id="pagetitle">
-                                            <h3 id="pagetitle_h3">Crop your imaging event band to specific area of interest</h3>
+                                            <h3 id="pagetitle_h3">Crop your imaging event band to specific area of
+                                                interest</h3>
                                         </div>
-                
+
                                         <div class="card bg-light">
                                             <ul>
-                                                <li>Here you can do a rough cropping of the stitched ortho image to focus only on the
+                                                <li>Here you can do a rough cropping of the stitched ortho image to
+                                                    focus only on the
                                                     actual field experiment.</li>
                                                 <li>You can zoom out on your browser (Cntrl + -).</li>
                                                 <li>Click on four points in the image to make a four-sided polygon.</li>
-                                                <li>Only the last polygon that you draw will be used for the cropping.</li>
+                                                <li>Only the last polygon that you draw will be used for the cropping.
+                                                </li>
                                             </ul>
                                             <br />
                                             <button class="btn btn-primary"
-                                                id="manage_drone_imagery_standard_process_cropping_step">Save and Go to Next
+                                                id="manage_drone_imagery_standard_process_cropping_step">Save and Go to
+                                                Next
                                                 Step</button>
                                         </div>
-                
+
                                         <div id="manage_drone_imagery_standard_process_crop_load_div">
                                             <img src="/img/wheel.gif" />
                                         </div>
-                
+
                                         <canvas id="drone_imagery_standard_process_crop_original_stitched_div"></canvas>
-                
+
                                         <hr>
                                         <div class="card bg-light">
                                             <form class="form-horizontal">
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="form-group form-group-sm">
-                                                            <label class="col-sm-6 control-label">Previously Used Image Cropping For
+                                                            <label class="col-sm-6 control-label">Previously Used Image
+                                                                Cropping For
                                                                 This Field Trial: </label>
                                                             <div class="col-sm-6">
                                                                 <div
@@ -406,39 +459,45 @@
                                                 </div>
                                             </form>
                                             <button class="btn btn-primary"
-                                                id="drone_imagery_standard_process_cropping_use_previous_cropping">Use Image
+                                                id="drone_imagery_standard_process_cropping_use_previous_cropping">Use
+                                                Image
                                                 Cropping</button>
                                         </div>
                                     </li>
                                     <li>
                                         <div id="pagetitle">
-                                            <h3 id="pagetitle_h3">Threshold your imaging event band to remove background</h3>
+                                            <h3 id="pagetitle_h3">Threshold your imaging event band to remove background
+                                            </h3>
                                         </div>
                                         <div class="well">
-                                            <a class="info_section_anchor" name="remove_background_using_percentage_threshold"></a>
-                
+                                            <a class="info_section_anchor"
+                                                name="remove_background_using_percentage_threshold"></a>
+
                                             <table cellspacing="0" cellpadding="0" class="infosectionhead" summary="">
                                                 <tr>
-                                                    <td class="infosectiontitle"> <a class="collapser collapser_show" target="" href=""
-                                                            onclick="
+                                                    <td class="infosectiontitle"> <a class="collapser collapser_show"
+                                                            target="" href="" onclick="
                         Effects.swapElements('sgnc4561_offswitch', 'sgnc4561_onswitch');
                         Effects.hideElement('sgnc4561_content');
                         
-                        return false;" id="sgnc4561_offswitch"><img class="collapser_img" src="/img/collapser_minus.png" />Remove
+                        return false;" id="sgnc4561_offswitch"><img class="collapser_img"
+                                                                src="/img/collapser_minus.png" />Remove
                                                             Background Using Percentage Threshold</a>
-                                                        <a class="collapser collapser_show" target="" href="" style="display:none;"
-                                                            onclick="
+                                                        <a class="collapser collapser_show" target="" href=""
+                                                            style="display:none;" onclick="
                         Effects.swapElements('sgnc4561_onswitch', 'sgnc4561_offswitch');
                         Effects.showElement('sgnc4561_content');
                         
-                        return false;" id="sgnc4561_onswitch"><img class="collapser_img" src="/img/collapser_plus.png" />Remove
+                        return false;" id="sgnc4561_onswitch"><img class="collapser_img"
+                                                                src="/img/collapser_plus.png" />Remove
                                                             Background Using Percentage Threshold</a>
                                                     </td>
-                                                    <td class="infosectionsubtitle" role="button" tabindex="0">Remove the background by
+                                                    <td class="infosectionsubtitle" role="button" tabindex="0">Remove
+                                                        the background by
                                                         specifying percentage threshold value&nbsp;</td>
                                                 </tr>
                                             </table>
-                
+
                                             <span id="sgnc4561_content">
                                                 <div class="infosectioncontent">
                                                     <div class="card card-default">
@@ -446,7 +505,8 @@
                                                             <div class="row">
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group form-group-sm">
-                                                                        <label class="col-sm-6 control-label">Discard Lowest Percent of
+                                                                        <label class="col-sm-6 control-label">Discard
+                                                                            Lowest Percent of
                                                                             Pixel Values: </label>
                                                                         <div class="col-sm-6">
                                                                             <input class="form-control"
@@ -460,7 +520,8 @@
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group form-group-sm">
-                                                                        <label class="col-sm-6 control-label">Discard Highest Percent of
+                                                                        <label class="col-sm-6 control-label">Discard
+                                                                            Highest Percent of
                                                                             Pixel Values: </label>
                                                                         <div class="col-sm-6">
                                                                             <input class="form-control"
@@ -474,7 +535,7 @@
                                                                 </div>
                                                             </div>
                                                             <hr>
-                
+
                                                             <input type="checkbox"
                                                                 id="drone_imagery_standard_process_remove_background_upper_threshold_percentage_change_button">&nbsp;&nbsp;&nbsp;&nbsp;
                                                             Change Threshold Values
@@ -483,45 +544,49 @@
                                                 </div>
                                             </span>
                                         </div>
-                
+
                                         <div style="text-align: center;">
-                                            <button id="drone_imagery_standard_process_remove_background_defined_percentage_submit"
+                                            <button
+                                                id="drone_imagery_standard_process_remove_background_defined_percentage_submit"
                                                 class="btn btn-primary">Apply Threshold</button>
                                         </div>
-                
+
                                         <hr>
-                
+
                                         <div id="manage_drone_imagery_standard_process_remove_background_load_div">
                                             <img src="/img/wheel.gif" />
                                         </div>
-                
+
                                         <div class="card bg-light">
                                             <a class="info_section_anchor" name="histogram_of_pixel_values"></a>
                                             <table cellspacing="0" cellpadding="0" class="infosectionhead" summary="">
                                                 <tr>
-                                                    <td class="infosectiontitle"> <a class="collapser collapser_show" target="" href=""
-                                                            onclick="
+                                                    <td class="infosectiontitle"> <a class="collapser collapser_show"
+                                                            target="" href="" onclick="
                         Effects.swapElements('sgnc5837_offswitch', 'sgnc5837_onswitch');
                         Effects.hideElement('sgnc5837_content');
                         
                         return false;" id="sgnc5837_offswitch"><img class="collapser_img"
-                                                                src="/img/collapser_minus.png" />Histogram of pixel values</a>
-                                                        <a class="collapser collapser_show" target="" href="" style="display:none;"
-                                                            onclick="
+                                                                src="/img/collapser_minus.png" />Histogram of pixel
+                                                            values</a>
+                                                        <a class="collapser collapser_show" target="" href=""
+                                                            style="display:none;" onclick="
                         Effects.swapElements('sgnc5837_onswitch', 'sgnc5837_offswitch');
                         Effects.showElement('sgnc5837_content');
                         
-                        return false;" id="sgnc5837_onswitch"><img class="collapser_img" src="/img/collapser_plus.png" />Histogram
+                        return false;" id="sgnc5837_onswitch"><img class="collapser_img"
+                                                                src="/img/collapser_plus.png" />Histogram
                                                             of pixel values</a>
                                                     </td>
-                                                    <td class="infosectionsubtitle" role="button" tabindex="0">Histogram of Pixel
+                                                    <td class="infosectionsubtitle" role="button" tabindex="0">Histogram
+                                                        of Pixel
                                                         Values&nbsp;</td>
                                                 </tr>
                                             </table>
-                
+
                                             <span id="sgnc5837_content">
                                                 <div class="infosectioncontent">
-                
+
                                                     <div style="text-align: center;">
                                                         <canvas
                                                             id="drone_imagery_standard_process_remove_background_histogram_div"></canvas>
@@ -531,33 +596,37 @@
                                         </div>
                                         <div class="card bg-light">
                                             <a class="info_section_anchor" name="denoised_original_image"></a>
-                
+
                                             <table cellspacing="0" cellpadding="0" class="infosectionhead" summary="">
                                                 <tr>
-                                                    <td class="infosectiontitle"> <a class="collapser collapser_show" target="" href=""
-                                                            onclick="
+                                                    <td class="infosectiontitle"> <a class="collapser collapser_show"
+                                                            target="" href="" onclick="
                         Effects.swapElements('sgnc1182_offswitch', 'sgnc1182_onswitch');
                         Effects.hideElement('sgnc1182_content');
                         
-                        return false;" id="sgnc1182_offswitch"><img class="collapser_img" src="/img/collapser_minus.png" />Denoised
+                        return false;" id="sgnc1182_offswitch"><img class="collapser_img"
+                                                                src="/img/collapser_minus.png" />Denoised
                                                             Original Image</a>
-                                                        <a class="collapser collapser_show" target="" href="" style="display:none;"
-                                                            onclick="
+                                                        <a class="collapser collapser_show" target="" href=""
+                                                            style="display:none;" onclick="
                         Effects.swapElements('sgnc1182_onswitch', 'sgnc1182_offswitch');
                         Effects.showElement('sgnc1182_content');
                         
-                        return false;" id="sgnc1182_onswitch"><img class="collapser_img" src="/img/collapser_plus.png" />Denoised
+                        return false;" id="sgnc1182_onswitch"><img class="collapser_img"
+                                                                src="/img/collapser_plus.png" />Denoised
                                                             Original Image</a>
                                                     </td>
-                                                    <td class="infosectionsubtitle" role="button" tabindex="0">Denoised Original
+                                                    <td class="infosectionsubtitle" role="button" tabindex="0">Denoised
+                                                        Original
                                                         Image&nbsp;</td>
                                                 </tr>
                                             </table>
-                
+
                                             <span id="sgnc1182_content">
                                                 <div class="infosectioncontent">
                                                     <div style="text-align: center;">
-                                                        <canvas id="drone_imagery_standard_process_remove_background_original"></canvas>
+                                                        <canvas
+                                                            id="drone_imagery_standard_process_remove_background_original"></canvas>
                                                     </div>
                                                 </div>
                                             </span>
@@ -572,41 +641,48 @@
                                                 <div class="well">
                                                     <div class="row">
                                                         <div class="col-sm-1">
-                                                            <span style="font-size:3.5em;" class="glyphicon glyphicon-th-large"></span>
+                                                            <span style="font-size:3.5em;"
+                                                                class="glyphicon glyphicon-th-large"></span>
                                                         </div>
                                                         <div class="col-sm-11">
-                                                            <a class="info_section_anchor" name="generate_polygon_template_tool"></a>
-                
-                                                            <table cellspacing="0" cellpadding="0" class="infosectionhead" summary="">
+                                                            <a class="info_section_anchor"
+                                                                name="generate_polygon_template_tool"></a>
+
+                                                            <table cellspacing="0" cellpadding="0"
+                                                                class="infosectionhead" summary="">
                                                                 <tr>
-                                                                    <td class="infosectiontitle"> <a class="collapser collapser_show"
-                                                                            target="" href="" onclick="
+                                                                    <td class="infosectiontitle"> <a
+                                                                            class="collapser collapser_show" target=""
+                                                                            href="" onclick="
                         Effects.swapElements('manage_drone_imagery_standard_process_generate_plot_polygons_section_offswitch', 'manage_drone_imagery_standard_process_generate_plot_polygons_section_onswitch');
                         Effects.hideElement('manage_drone_imagery_standard_process_generate_plot_polygons_section_content');
                         
                         return false;" id="manage_drone_imagery_standard_process_generate_plot_polygons_section_offswitch"><img
                                                                                 class="collapser_img"
                                                                                 src="/img/collapser_minus.png" />
-                                                                            <h4 style='display:inline'>Generate Polygon Template Tool
+                                                                            <h4 style='display:inline'>Generate Polygon
+                                                                                Template Tool
                                                                             </h4>
                                                                         </a>
-                                                                        <a class="collapser collapser_show" target="" href=""
-                                                                            style="display:none;" onclick="
+                                                                        <a class="collapser collapser_show" target=""
+                                                                            href="" style="display:none;" onclick="
                         Effects.swapElements('manage_drone_imagery_standard_process_generate_plot_polygons_section_onswitch', 'manage_drone_imagery_standard_process_generate_plot_polygons_section_offswitch');
                         Effects.showElement('manage_drone_imagery_standard_process_generate_plot_polygons_section_content');
                         
                         return false;" id="manage_drone_imagery_standard_process_generate_plot_polygons_section_onswitch"><img
                                                                                 class="collapser_img"
                                                                                 src="/img/collapser_plus.png" />
-                                                                            <h4 style='display:inline'>Generate Polygon Template Tool
+                                                                            <h4 style='display:inline'>Generate Polygon
+                                                                                Template Tool
                                                                             </h4>
                                                                         </a>
                                                                     </td>
-                                                                    <td class="infosectionsubtitle" role="button" tabindex="0">Overlay a
+                                                                    <td class="infosectionsubtitle" role="button"
+                                                                        tabindex="0">Overlay a
                                                                         uniform grid over the image.&nbsp;</td>
                                                                 </tr>
                                                             </table>
-                
+
                                                             <span
                                                                 id="manage_drone_imagery_standard_process_generate_plot_polygons_section_content">
                                                                 <div class="infosectioncontent">
@@ -616,12 +692,14 @@
                                                                                 <form class="form-horizontal">
                                                                                     <div class="row">
                                                                                         <div class="col-sm-6">
-                                                                                            <div class="form-group form-group-sm">
+                                                                                            <div
+                                                                                                class="form-group form-group-sm">
                                                                                                 <label
                                                                                                     class="col-sm-6 control-label">Number
                                                                                                     of Rows: </label>
                                                                                                 <div class="col-sm-6">
-                                                                                                    <input class="form-control"
+                                                                                                    <input
+                                                                                                        class="form-control"
                                                                                                         id="drone_imagery_standard_process_plot_polygons_num_rows"
                                                                                                         name="drone_imagery_standard_process_plot_polygons_num_rows"
                                                                                                         type="number"
@@ -630,12 +708,14 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="col-sm-6">
-                                                                                            <div class="form-group form-group-sm">
+                                                                                            <div
+                                                                                                class="form-group form-group-sm">
                                                                                                 <label
                                                                                                     class="col-sm-6 control-label">Number
                                                                                                     of Columns: </label>
                                                                                                 <div class="col-sm-6">
-                                                                                                    <input class="form-control"
+                                                                                                    <input
+                                                                                                        class="form-control"
                                                                                                         id="drone_imagery_standard_process_plot_polygons_num_cols"
                                                                                                         name="drone_imagery_standard_process_plot_polygons_num_cols"
                                                                                                         type="number"
@@ -646,28 +726,36 @@
                                                                                     </div>
                                                                                     <div class="row">
                                                                                         <div class="col-sm-6">
-                                                                                            <div class="form-group form-group-sm">
+                                                                                            <div
+                                                                                                class="form-group form-group-sm">
                                                                                                 <label
                                                                                                     class="col-sm-6 control-label">Plot-polygon
-                                                                                                    Margins Top/Bottom (%): </label>
+                                                                                                    Margins Top/Bottom
+                                                                                                    (%): </label>
                                                                                                 <div class="col-sm-6">
-                                                                                                    <input class="form-control"
+                                                                                                    <input
+                                                                                                        class="form-control"
                                                                                                         id="drone_imagery_standard_process_plot_polygons_margin_top_bottom"
                                                                                                         name="drone_imagery_standard_process_plot_polygons_margin_top_bottom"
-                                                                                                        type="number" value=0 />
+                                                                                                        type="number"
+                                                                                                        value=0 />
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="col-sm-6">
-                                                                                            <div class="form-group form-group-sm">
+                                                                                            <div
+                                                                                                class="form-group form-group-sm">
                                                                                                 <label
                                                                                                     class="col-sm-6 control-label">Plot-polygon
-                                                                                                    Margins Left/Right (%): </label>
+                                                                                                    Margins Left/Right
+                                                                                                    (%): </label>
                                                                                                 <div class="col-sm-6">
-                                                                                                    <input class="form-control"
+                                                                                                    <input
+                                                                                                        class="form-control"
                                                                                                         id="drone_imagery_standard_process_plot_polygons_margin_left_right"
                                                                                                         name="drone_imagery_standard_process_plot_polygons_margin_left_right"
-                                                                                                        type="number" value=0 />
+                                                                                                        type="number"
+                                                                                                        value=0 />
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -675,33 +763,40 @@
                                                                                 </form>
                                                                                 <button class="btn btn btn-primary"
                                                                                     id="drone_imagery_standard_process_plot_polygons_rectangles_start">Click
-                                                                                    Here To Start Templating. Create As Many Templates
+                                                                                    Here To Start Templating. Create As
+                                                                                    Many Templates
                                                                                     As Needed.</button>
                                                                             </div>
                                                                             <input class="form-control"
                                                                                 id="drone_imagery_standard_process_plot_polygons_left_column_top_offset"
                                                                                 name="drone_imagery_standard_process_plot_polygons_left_column_top_offset"
-                                                                                type="hidden" value="0" placeholder="0" />
+                                                                                type="hidden" value="0"
+                                                                                placeholder="0" />
                                                                             <input class="form-control"
                                                                                 id="drone_imagery_standard_process_plot_polygons_left_column_bottom_offset"
                                                                                 name="drone_imagery_standard_process_plot_polygons_left_column_bottom_offset"
-                                                                                type="hidden" value="0" placeholder="0" />
+                                                                                type="hidden" value="0"
+                                                                                placeholder="0" />
                                                                             <input class="form-control"
                                                                                 id="drone_imagery_standard_process_plot_polygons_top_row_left_offset"
                                                                                 name="drone_imagery_standard_process_plot_polygons_top_row_left_offset"
-                                                                                type="hidden" placeholder="0" value="0" />
+                                                                                type="hidden" placeholder="0"
+                                                                                value="0" />
                                                                             <input class="form-control"
                                                                                 id="drone_imagery_standard_process_plot_polygons_top_row_right_offset"
                                                                                 name="drone_imagery_standard_process_plot_polygons_top_row_right_offset"
-                                                                                type="hidden" placeholder="0" value="0" />
+                                                                                type="hidden" placeholder="0"
+                                                                                value="0" />
                                                                             <input class="form-control"
                                                                                 id="drone_imagery_standard_process_plot_polygons_bottom_row_left_offset"
                                                                                 name="drone_imagery_standard_process_plot_polygons_bottom_row_left_offset"
-                                                                                type="hidden" placeholder="0" value="0" />
+                                                                                type="hidden" placeholder="0"
+                                                                                value="0" />
                                                                             <input class="form-control"
                                                                                 id="drone_imagery_standard_process_plot_polygons_right_col_bottom_offset"
                                                                                 name="drone_imagery_standard_process_plot_polygons_right_col_bottom_offset"
-                                                                                type="hidden" placeholder="0" value="0" />
+                                                                                type="hidden" placeholder="0"
+                                                                                value="0" />
                                                                             <div
                                                                                 id="drone_imagery_standard_process_plot_polygons_active_templates">
                                                                             </div>
@@ -714,96 +809,120 @@
                                                 </div>
                                             </div>
                                         </div>
-                
+
                                         <div class="card bg-light">
                                             <div id="drone_imagery_standard_process_plot_polygons_top_section"></div>
-                
-                                            <button id="drone_imagery_standard_process_plot_polygons_clear" class="btn btn-danger">Clear
+
+                                            <button id="drone_imagery_standard_process_plot_polygons_clear"
+                                                class="btn btn-danger">Clear
                                                 All Polygons and Start Over Templating</button>
                                             <br /><br />
                                             <button id="drone_imagery_standard_process_plot_polygons_get_distance"
                                                 class="btn btn-outline-secondary">Find Distance Between Points</button>
                                             <button id="drone_imagery_standard_process_plot_polygons_switch_image_url"
-                                                class="btn btn-outline-secondary">Switch Between Original and Background Removed Image</button>
+                                                class="btn btn-outline-secondary">Switch Between Original and Background
+                                                Removed Image</button>
                                         </div>
-                
+
                                         <div id="manage_drone_imagery_standard_process_plot_polygons_load_div">
                                             <img src="/img/wheel.gif" />
                                         </div>
-                
-                                        <div id="drone_imagery_standard_process_plot_polygons_original_stitched_div_svg"></div>
-                
+
+                                        <div
+                                            id="drone_imagery_standard_process_plot_polygons_original_stitched_div_svg">
+                                        </div>
+
                                         <hr>
                                         <div class="card bg-light">
-                                            <div id="drone_imagery_standard_process_generated_polygons_table_header_div"></div>
+                                            <div
+                                                id="drone_imagery_standard_process_generated_polygons_table_header_div">
+                                            </div>
                                             <div class="card card-default">
                                                 <div class="card-body">
                                                     <h3>(Option 1)</h3>
-                
+
                                                     <a class="info_section_anchor"
                                                         name="auto_assign_plot_numbers_to_polygon_numbers"></a>
-                
-                                                    <table cellspacing="0" cellpadding="0" class="infosectionhead" summary="">
+
+                                                    <table cellspacing="0" cellpadding="0" class="infosectionhead"
+                                                        summary="">
                                                         <tr>
-                                                            <td class="infosectiontitle"> <a class="collapser collapser_show" target=""
-                                                                    href="" style="display:none;" onclick="
+                                                            <td class="infosectiontitle"> <a
+                                                                    class="collapser collapser_show" target="" href=""
+                                                                    style="display:none;" onclick="
                         Effects.swapElements('sgnc865_offswitch', 'sgnc865_onswitch');
                         Effects.hideElement('sgnc865_content');
                         
-                        return false;" id="sgnc865_offswitch"><img class="collapser_img" src="/img/collapser_minus.png" />Auto
+                        return false;" id="sgnc865_offswitch"><img class="collapser_img"
+                                                                        src="/img/collapser_minus.png" />Auto
                                                                     Assign Plot Numbers to Polygon Numbers</a>
-                                                                <a class="collapser collapser_show" target="" href="" onclick="
+                                                                <a class="collapser collapser_show" target="" href=""
+                                                                    onclick="
                         Effects.swapElements('sgnc865_onswitch', 'sgnc865_offswitch');
                         Effects.showElement('sgnc865_content');
                         
-                        return false;" id="sgnc865_onswitch"><img class="collapser_img" src="/img/collapser_plus.png" />Auto Assign
+                        return false;" id="sgnc865_onswitch"><img class="collapser_img"
+                                                                        src="/img/collapser_plus.png" />Auto Assign
                                                                     Plot Numbers to Polygon Numbers</a>
                                                             </td>
-                                                            <td class="infosectionsubtitle" role="button" tabindex="0">Interface for
-                                                                automatically assigning plot numbers to polygon numbers.&nbsp;</td>
+                                                            <td class="infosectionsubtitle" role="button" tabindex="0">
+                                                                Interface for
+                                                                automatically assigning plot numbers to polygon
+                                                                numbers.&nbsp;</td>
                                                         </tr>
                                                     </table>
-                
+
                                                     <span id="sgnc865_content" style="display:none;">
                                                         <div class="infosectioncontent">
-                
+
                                                             <div class="card bg-light">
-                                                                <div id="drone_imagery_standard_process_generated_polygons_div">First
+                                                                <div
+                                                                    id="drone_imagery_standard_process_generated_polygons_div">
+                                                                    First
                                                                     Complete the Templating Above</div>
                                                             </div>
                                                         </div>
                                                     </span>
                                                 </div>
                                             </div>
-                
+
                                             <div class="card card-default">
                                                 <div class="card-body">
                                                     <h3>(Option 2)</h3>
-                
+
                                                     <a class="info_section_anchor"
                                                         name="upload_spreadsheet_file_to_assign_plot_numbers_to_polygon_numbers"></a>
-                
-                                                    <table cellspacing="0" cellpadding="0" class="infosectionhead" summary="">
+
+                                                    <table cellspacing="0" cellpadding="0" class="infosectionhead"
+                                                        summary="">
                                                         <tr>
-                                                            <td class="infosectiontitle"> <a class="collapser collapser_show" target=""
-                                                                    href="" style="display:none;" onclick="
+                                                            <td class="infosectiontitle"> <a
+                                                                    class="collapser collapser_show" target="" href=""
+                                                                    style="display:none;" onclick="
                         Effects.swapElements('sgnc3501_offswitch', 'sgnc3501_onswitch');
                         Effects.hideElement('sgnc3501_content');
                         
-                        return false;" id="sgnc3501_offswitch"><img class="collapser_img" src="/img/collapser_minus.png" />Upload
-                                                                    Spreadsheet File to Assign Plot Numbers to Polygon Numbers</a>
-                                                                <a class="collapser collapser_show" target="" href="" onclick="
+                        return false;" id="sgnc3501_offswitch"><img class="collapser_img"
+                                                                        src="/img/collapser_minus.png" />Upload
+                                                                    Spreadsheet File to Assign Plot Numbers to Polygon
+                                                                    Numbers</a>
+                                                                <a class="collapser collapser_show" target="" href=""
+                                                                    onclick="
                         Effects.swapElements('sgnc3501_onswitch', 'sgnc3501_offswitch');
                         Effects.showElement('sgnc3501_content');
                         
-                        return false;" id="sgnc3501_onswitch"><img class="collapser_img" src="/img/collapser_plus.png" />Upload
-                                                                    Spreadsheet File to Assign Plot Numbers to Polygon Numbers</a>
+                        return false;" id="sgnc3501_onswitch"><img class="collapser_img"
+                                                                        src="/img/collapser_plus.png" />Upload
+                                                                    Spreadsheet File to Assign Plot Numbers to Polygon
+                                                                    Numbers</a>
                                                             </td>
-                                                            <td class="infosectionsubtitle" role="button" tabindex="0">Upload a
-                                                                spreadsheet file assigning plot numbers to polygon numbers.&nbsp;</td>
+                                                            <td class="infosectionsubtitle" role="button" tabindex="0">
+                                                                Upload a
+                                                                spreadsheet file assigning plot numbers to polygon
+                                                                numbers.&nbsp;</td>
                                                         </tr>
                                                     </table>
-                
+
                                                     <span id="sgnc3501_content" style="display:none;">
                                                         <div class="infosectioncontent">
                                                             <div class="card bg-light">
@@ -812,43 +931,63 @@
                                                                     <div class="card card-default">
                                                                         <div class="card-body">
                                                                             <ul>
-                                                                                <li>If Option 1 is unable to fit your field experiments,
-                                                                                    Option 2 and 3 enable greater flexibility.</li>
-                                                                                <li>Upload an <b>XLS</b> file with the following three
-                                                                                    columns: <b>polygon_number, plot_number,
+                                                                                <li>If Option 1 is unable to fit your
+                                                                                    field experiments,
+                                                                                    Option 2 and 3 enable greater
+                                                                                    flexibility.</li>
+                                                                                <li>Upload an <b>XLS</b> file with the
+                                                                                    following three
+                                                                                    columns: <b>polygon_number,
+                                                                                        plot_number,
                                                                                         field_trial</b>
                                                                                     <ul>
-                                                                                        <li><b>polygon_number</b>: The polygon number
-                                                                                            generated in the templating process. The
-                                                                                            polygon numbers are visible in the templated
+                                                                                        <li><b>polygon_number</b>: The
+                                                                                            polygon number
+                                                                                            generated in the templating
+                                                                                            process. The
+                                                                                            polygon numbers are visible
+                                                                                            in the templated
                                                                                             image.</li>
-                                                                                        <li><b>plot_number</b>: The plot number to
-                                                                                            assign to the polygon number. Field layouts
-                                                                                            are visible at the bottom of this page,
-                                                                                            where available plot numbers can be
+                                                                                        <li><b>plot_number</b>: The plot
+                                                                                            number to
+                                                                                            assign to the polygon
+                                                                                            number. Field layouts
+                                                                                            are visible at the bottom of
+                                                                                            this page,
+                                                                                            where available plot numbers
+                                                                                            can be
                                                                                             determined.</li>
-                                                                                        <li><b>field_trial</b>: The field trial for the
-                                                                                            plot number being assigned. The same plot
-                                                                                            number (e.g. 101) can exist in different
-                                                                                            field trials, so this column differentiates
-                                                                                            plot numbers among field trials.</li>
+                                                                                        <li><b>field_trial</b>: The
+                                                                                            field trial for the
+                                                                                            plot number being assigned.
+                                                                                            The same plot
+                                                                                            number (e.g. 101) can exist
+                                                                                            in different
+                                                                                            field trials, so this column
+                                                                                            differentiates
+                                                                                            plot numbers among field
+                                                                                            trials.</li>
                                                                                     </ul>
                                                                                 </li>
-                                                                                <li>If you want to skip a generated polygon number,
-                                                                                    simply do not include it in the uploaded
+                                                                                <li>If you want to skip a generated
+                                                                                    polygon number,
+                                                                                    simply do not include it in the
+                                                                                    uploaded
                                                                                     spreadsheet.</li>
                                                                             </ul>
                                                                         </div>
                                                                     </div>
                                                                     <div class="card card-default">
                                                                         <div class="card-body">
-                                                                            <form class="form-horizontal" role="form" method="post"
+                                                                            <form class="form-horizontal" role="form"
+                                                                                method="post"
                                                                                 enctype="multipart/form-data"
                                                                                 encoding="multipart/form-data"
                                                                                 id="drone_imagery_plot_polygons_spreadsheet_upload_form"
                                                                                 name="drone_imagery_plot_polygons_spreadsheet_upload_form">
                                                                                 <div class="form-group form-group-sm">
-                                                                                    <label class="col-sm-3 control-label">Spreadsheet
+                                                                                    <label
+                                                                                        class="col-sm-3 control-label">Spreadsheet
                                                                                         Upload (.xls): </label>
                                                                                     <div class="col-sm-9">
                                                                                         <input class="form-control"
@@ -863,11 +1002,11 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </form>
-                
+
                                                                             <div
                                                                                 id="drone_imagery_plot_polygons_spreadsheet_upload_form_response_div">
                                                                             </div>
-                
+
                                                                             <button class="btn btn-primary"
                                                                                 id="drone_imagery_plot_polygons_spreadsheet_upload_button"
                                                                                 name="drone_imagery_plot_polygons_spreadsheet_upload_button">Generate
@@ -884,49 +1023,59 @@
                                                     </span>
                                                 </div>
                                             </div>
-                
+
                                             <div class="card card-default">
                                                 <div class="card-body">
                                                     <h3>(Option 3)</h3>
-                
+
                                                     <a class="info_section_anchor"
                                                         name="manually_assign_plot_numbers_to_polygon_numbers"></a>
-                
-                                                    <table cellspacing="0" cellpadding="0" class="infosectionhead" summary="">
+
+                                                    <table cellspacing="0" cellpadding="0" class="infosectionhead"
+                                                        summary="">
                                                         <tr>
-                                                            <td class="infosectiontitle"> <a class="collapser collapser_show" target=""
-                                                                    href="" style="display:none;" onclick="
-                        Effects.swapElements('sgnc6001_offswitch', 'sgnc6001_onswitch');
-                        Effects.hideElement('sgnc6001_content');
-                        
-                        return false;" id="sgnc6001_offswitch"><img class="collapser_img" src="/img/collapser_minus.png" />Manually
+                                                            <td class="infosectiontitle"> <a
+                                                                    class="collapser collapser_show" target="" href=""
+                                                                    style="display:none;" onclick="
+                                                                            Effects.swapElements('sgnc6001_offswitch', 'sgnc6001_onswitch');
+                                                                            Effects.hideElement('sgnc6001_content');
+                                                                            
+                                                                            return false;" id="sgnc6001_offswitch"><img
+                                                                        class="collapser_img"
+                                                                        src="/img/collapser_minus.png" />Manually
                                                                     Assign Plot Numbers to Polygon Numbers</a>
-                                                                <a class="collapser collapser_show" target="" href="" onclick="
-                        Effects.swapElements('sgnc6001_onswitch', 'sgnc6001_offswitch');
-                        Effects.showElement('sgnc6001_content');
-                        
-                        return false;" id="sgnc6001_onswitch"><img class="collapser_img" src="/img/collapser_plus.png" />Manually
+                                                                <a class="collapser collapser_show" target="" href=""
+                                                                    onclick="
+                                                                            Effects.swapElements('sgnc6001_onswitch', 'sgnc6001_offswitch');
+                                                                            Effects.showElement('sgnc6001_content');
+                                                                            
+                                                                            return false;" id="sgnc6001_onswitch"><img class="collapser_img"
+                                                                        src="/img/collapser_plus.png" />Manually
                                                                     Assign Plot Numbers to Polygon Numbers</a>
                                                             </td>
-                                                            <td class="infosectionsubtitle" role="button" tabindex="0">Table input for
-                                                                manually assigning plot numbers to polygon numbers.&nbsp;</td>
+                                                            <td class="infosectionsubtitle" role="button" tabindex="0">
+                                                                Table input for
+                                                                manually assigning plot numbers to polygon
+                                                                numbers.&nbsp;</td>
                                                         </tr>
                                                     </table>
-                
+
                                                     <span id="sgnc6001_content" style="display:none;">
                                                         <div class="infosectioncontent">
-                
+
                                                             <div class="card bg-light">
-                                                                <div id="drone_imagery_standard_process_generated_polygons_table">First
+                                                                <div
+                                                                    id="drone_imagery_standard_process_generated_polygons_table">
+                                                                    First
                                                                     Complete the Templating Above</div>
                                                             </div>
-                
+
                                                         </div>
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
-                
+
                                         <hr>
                                         <div class="card bg-light">
                                             <div id="drone_imagery_standard_process_trial_layout_div_0"></div>
@@ -961,24 +1110,27 @@
                                             <div id="drone_imagery_standard_process_trial_layout_div_29"></div>
                                             <div id="drone_imagery_standard_process_trial_layout_div_30"></div>
                                         </div>
-                
+
                                     </li>
                                     <li>
                                         <div id="pagetitle">
-                                            <h3 id="pagetitle_h3">Apply these same steps to other imaging event bands in the current
+                                            <h3 id="pagetitle_h3">Apply these same steps to other imaging event bands in
+                                                the current
                                                 imaging event</h3>
                                         </div>
-                
-                
+
+
                                         <div class="card bg-light">
                                             <ul>
-                                                <li>Here you can apply the same actions you did for the previous steps 1 to 6, to
+                                                <li>Here you can apply the same actions you did for the previous steps 1
+                                                    to 6, to
                                                     additional imaging event bands in this imaging event.</li>
-                                                <li>Thresholding will be done dynamically, by removing the top and bottom 20% of pixel
+                                                <li>Thresholding will be done dynamically, by removing the top and
+                                                    bottom 20% of pixel
                                                     values.</li>
                                             </ul>
                                         </div>
-                
+
                                         <div class="card bg-light">
                                             <div class="card card-default">
                                                 <div class="card-body">
@@ -998,12 +1150,13 @@
                                                             </tr>
                                                         </thead>
                                                     </table>
-                
+
                                                     <br />
-                
+
                                                     <div style="text-align: center;">
                                                         <button class="btn btn-primary"
-                                                            id="manage_drone_imagery_standard_process_drone_run_band_apply_step">Go to
+                                                            id="manage_drone_imagery_standard_process_drone_run_band_apply_step">Go
+                                                            to
                                                             Next Step</button>
                                                     </div>
                                                 </div>
@@ -1012,53 +1165,66 @@
                                     </li>
                                     <li>
                                         <div id="pagetitle">
-                                            <h3 id="pagetitle_h3">Create and apply these same steps to vegetative indices</h3>
+                                            <h3 id="pagetitle_h3">Create and apply these same steps to vegetative
+                                                indices</h3>
                                         </div>
-                
-                
+
+
                                         <form class="form-horizontal">
                                             <div class="form-group form-group-sm">
-                                                <label class="col-sm-6 control-label">Vegetative Indices To Apply: </label>
+                                                <label class="col-sm-6 control-label">Vegetative Indices To Apply:
+                                                </label>
                                                 <div class="col-sm-6">
-                                                    <input name="drone_imagery_standard_process_apply_indices_select" value="TGI"
-                                                        type="checkbox" checked> Triangular Greenness Index (TGI) <br />
-                                                    <input name="drone_imagery_standard_process_apply_indices_select" value="VARI"
-                                                        type="checkbox" checked> Visible Atmospheric Resistant Index (VARI) <br />
-                                                    <input name="drone_imagery_standard_process_apply_indices_select" value="NDVI"
-                                                        type="checkbox" checked> Normalized Difference Vegetative Index (NDVI) <br />
-                                                    <input name="drone_imagery_standard_process_apply_indices_select" value="NDRE"
-                                                        type="checkbox" checked> Normalized Difference Red Edge Vegetative Index (NDRE)
+                                                    <input name="drone_imagery_standard_process_apply_indices_select"
+                                                        value="TGI" type="checkbox" checked> Triangular Greenness Index
+                                                    (TGI) <br />
+                                                    <input name="drone_imagery_standard_process_apply_indices_select"
+                                                        value="VARI" type="checkbox" checked> Visible Atmospheric
+                                                    Resistant Index (VARI) <br />
+                                                    <input name="drone_imagery_standard_process_apply_indices_select"
+                                                        value="NDVI" type="checkbox" checked> Normalized Difference
+                                                    Vegetative Index (NDVI) <br />
+                                                    <input name="drone_imagery_standard_process_apply_indices_select"
+                                                        value="NDRE" type="checkbox" checked> Normalized Difference Red
+                                                    Edge Vegetative Index (NDRE)
                                                     <br />
-                                                    <input name="drone_imagery_standard_process_apply_indices_select" value="CCC"
-                                                        type="checkbox" checked> Canopy Cover Canopeo Algorithm (CC) <br />
+                                                    <input name="drone_imagery_standard_process_apply_indices_select"
+                                                        value="CCC" type="checkbox" checked> Canopy Cover Canopeo
+                                                    Algorithm (CC) <br />
                                                 </div>
                                             </div>
                                         </form>
-                
+
                                         <br />
-                
+
                                         <div style="text-align: center;">
                                             <button type="button" class="btn btn-primary"
-                                                id="manage_drone_imagery_standard_process_indices_step">Go to Next Step</button>
+                                                id="manage_drone_imagery_standard_process_indices_step">Go to Next
+                                                Step</button>
                                         </div>
                                     </li>
                                     <li>
                                         <div id="pagetitle">
                                             <h3 id="pagetitle_h3">Calculate phenotypes for all plot polygon images</h3>
                                         </div>
-                
+
                                         <form class="form-horizontal">
                                             <div class="card bg-light">
                                                 <div class="form-group form-group-sm">
-                                                    <label class="col-sm-4 control-label">Zonal Statistics to Calculate and Save in
+                                                    <label class="col-sm-4 control-label">Zonal Statistics to Calculate
+                                                        and Save in
                                                         Database: </label>
                                                     <div class="col-sm-8">
-                                                        <input name="drone_imagery_standard_process_phenotypes_select" value="zonal"
-                                                            type="checkbox" checked disabled> Zonal Statistics: nonzero_pixel_count,
-                                                        total_pixel_sum, mean_pixel_value, harmonic_mean_value, median_pixel_value,
-                                                        variance_pixel_value, stdev_pixel_value, pstdev_pixel_value, min_pixel_value,
+                                                        <input name="drone_imagery_standard_process_phenotypes_select"
+                                                            value="zonal" type="checkbox" checked disabled> Zonal
+                                                        Statistics: nonzero_pixel_count,
+                                                        total_pixel_sum, mean_pixel_value, harmonic_mean_value,
+                                                        median_pixel_value,
+                                                        variance_pixel_value, stdev_pixel_value, pstdev_pixel_value,
+                                                        min_pixel_value,
                                                         max_pixel_value, minority_pixel_value, minority_pixel_count,
-                                                        majority_pixel_value, majority_pixel_count, pixel_variety_count <br />
+                                                        majority_pixel_value, majority_pixel_count, pixel_variety_count
+                                                        <br />
                                                     </div>
                                                 </div>
                                             </div>
@@ -1067,11 +1233,12 @@
                                                     id="drone_imagery_standard_process_phenotypes_margin_button">&nbsp;&nbsp;&nbsp;&nbsp;
                                                 Change Margin Values
                                                 <hr>
-                
+
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group form-group-sm">
-                                                            <label class="col-sm-8 control-label">Buffer Margin When Calculating
+                                                            <label class="col-sm-8 control-label">Buffer Margin When
+                                                                Calculating
                                                                 Phenotypes On Top/Bottom of Plot Polygons (%): </label>
                                                             <div class="col-sm-4">
                                                                 <input class="form-control"
@@ -1083,7 +1250,8 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group form-group-sm">
-                                                            <label class="col-sm-8 control-label">Buffer Margin When Calculating
+                                                            <label class="col-sm-8 control-label">Buffer Margin When
+                                                                Calculating
                                                                 Phenotypes On Left/Right of Plot Polygons (%): </label>
                                                             <div class="col-sm-4">
                                                                 <input class="form-control"
@@ -1094,10 +1262,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                
+
                                                 <hr>
-                
-                                                <div id="drone_imagery_standard_process_phenotypes_margin_visual_div_svg">
+
+                                                <div
+                                                    id="drone_imagery_standard_process_phenotypes_margin_visual_div_svg">
                                                     <div class="card bg-light">
                                                         <p>LOADING...Please wait...</p>
                                                     </div>
@@ -1105,9 +1274,12 @@
                                             </div>
                                             <div class="card bg-light">
                                                 <div class="form-group form-group-sm">
-                                                    <label class="col-sm-9 control-label">Apply same standard process to all uploaded
-                                                        imaging events that use the same camera rig (Only applicable for static camera
-                                                        rigs, such as in a greenhouse or controlled environment): </label>
+                                                    <label class="col-sm-9 control-label">Apply same standard process to
+                                                        all uploaded
+                                                        imaging events that use the same camera rig (Only applicable for
+                                                        static camera
+                                                        rigs, such as in a greenhouse or controlled environment):
+                                                    </label>
                                                     <div class="col-sm-3">
                                                         <select class="form-control"
                                                             id="drone_imagery_standard_process_camera_rig_apply_select">
@@ -1119,9 +1291,9 @@
                                             </div>
                                         </form>
                                         <br />
-                
+
                                         <div id="drone_imagery_standard_process_week_term_div"></div>
-                
+
                                         <div style="text-align: center;">
                                             <button type="button" class="btn btn-info"
                                                 id="manage_drone_imagery_standard_process_phenotypes_step">Finish</button>

@@ -116,18 +116,40 @@ def sortOrthos(imaging_event: ImagingEvent, sensor: Sensor, ortho_paths: list[st
                                         description=band.description,
                                         imaging_event_id=imaging_event.id)
         ImageService.saveImageCollection(collection=new_image_collection)
+
+        # copy from upload archive to working directory
         ortho_dir = Path(settings.image_storage_dir) / imaging_event.getEventFilePath()
         ortho_dir.mkdir(parents=True, exist_ok=True)
         ortho_new_path = ortho_dir / f"ortho{band.image_suffix}.png"
         ortho_new_path.touch()
         shutil.copy(local_path, ortho_new_path)
 
-        ortho_thumbnail_path = ortho_dir / f"ortho{band.image_suffix}_thumb.png"
-        ResizeImageService.resizeImage(input_image=ortho_new_path, outfile_path=ortho_thumbnail_path, width=1000)
+        # generate thumbnail
+        (calc_width, multiplier) = ResizeImageService.calculateThumbnailWidthAndMultiplier(ortho_new_path)
+        
+        process_step = "thumb"
+        thumbnail_path = renameOutfile(ortho_new_path, process_step)
+        (height, width) = ResizeImageService.resizeImage(input_image=ortho_new_path, outfile_path=thumbnail_path, width=calc_width)
+
+        thumbnail = Image(name=thumbnail_path.name,
+                          description=thumbnail_path.name,
+                          image_collection_id=new_image_collection.id,
+                          height=height,
+                          width= width,
+                          image_scale_factor=multiplier,
+                          local_path=str(thumbnail_path),
+                          process_step=process_step,
+                          sensor_band_id=band.id,
+                          sensor_id=sensor.id)
+        thumbnail = ImageService.saveImage(image=thumbnail)
 
         ImageService.saveOrthoImage(collection=new_image_collection, 
                                     ortho_image_path=ortho_new_path, 
-                                    ortho_thumbnail_path=ortho_thumbnail_path, 
+                                    ortho_thumbnail_id=thumbnail.id,
                                     sensor_id=sensor.id, 
                                     sensor_band_id=band.id)
 
+
+def renameOutfile(outfile: str, process_step_name: str):
+    outfile_path = Path(outfile)
+    return outfile_path.parent / f"{outfile_path.stem}_{process_step_name}{outfile_path.suffix}"

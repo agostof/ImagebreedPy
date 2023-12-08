@@ -50,9 +50,9 @@ async def get_field_trial_drone_run_projects_in_same_orthophoto(current_user: Us
 
 @router.get("/drone_imagery/get_image")
 async def get_image( image_id:int = None, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    image_data = ImageService.getImageMetadata(image_id=image_id)
+    image_data = ImageService.getImage(image_id=image_id)
     image_response = {
-        "image_url": f'/{image_data.getWebPath()}?r={randint(1000, 9999)}',
+        "image_url": image_data.getWebPath(),
         "image_width": image_data.width if image_data.width > 0 else 1000,
         "image_height": image_data.height if image_data.height > 0 else 1000
     }
@@ -186,7 +186,8 @@ async def get_drone_runs(select_checkbox_name: str, drone_run_project_id: int, c
     if event :
         for collection in event.image_collections:
             ortho_image = collection.images[0] #TODO make this more robust later
-            table_row = [collection.name, 
+            table_row = [f"<input type='checkbox' name='{select_checkbox_name}' value='{collection.id}'>", 
+                         collection.name, 
                          collection.description, 
                          ortho_image.sensor_band.name, 
                          event.name, 
@@ -196,8 +197,6 @@ async def get_drone_runs(select_checkbox_name: str, drone_run_project_id: int, c
                          event.trial_description]
             imagery_bands_table.append(table_row)
 
-    for band in imagery_bands_table:
-        band.insert(0, f"<input type='checkbox' name='{select_checkbox_name}' value='{collection.id}'>")
     return JSONResponse(content={"data": imagery_bands_table})
 
 @router.get("/drone_imagery/imaging_vehicles")
@@ -266,7 +265,7 @@ async def get_project_md_image(drone_run_band_project_id: int, current_user: Use
 async def get_parameter_template(drone_run_band_project_id: int, current_user: User = Depends(AuthUtils.getCurrentUser)):
     ortho_image = ImageService.getOrthoImage(drone_run_band_project_id)
     image_name = Path(ortho_image.local_path).name
-    return JSONResponse(content={"image_collection_thumbnail_url": f"/images/{ortho_image.id}/{image_name}"})
+    return JSONResponse(content={"image_collection_thumbnail_url": ortho_image.getWebPath()})
 
 
 
