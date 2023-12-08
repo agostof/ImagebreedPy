@@ -15,6 +15,7 @@ import main.image_processing.rotate as ImageRotateService
 import main.image_processing.crop as ImageCropService
 import main.image_processing.denoise as ImageDenoiseService
 from main.services.image_file_util import renameOutfile
+import main.image_processing.vegetative_index as VegetativeIndexService
 
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
 router = APIRouter(prefix="/api")
@@ -138,6 +139,10 @@ async def post_standard_process_apply(request: StandardProcessRequest, current_u
     return JSONResponse(content={"error": "", "success": "true"})
 
 async def runStandardProcess(request: StandardProcessRequest):
+    applyImageManipulations(request=request)
+    applyVegetativeIndex(request=request)
+
+def applyImageManipulations(request: StandardProcessRequest):
 
     for collection_id in request.apply_drone_run_band_project_ids:
         # Get the location of the uploaded ortho image
@@ -187,4 +192,47 @@ async def runStandardProcess(request: StandardProcessRequest):
                                                new_image_path=outfile_path, 
                                                process_step_name="plot", 
                                                height=height, width=width)
+                
         print(f"standard process complete")
+
+        
+def applyVegetativeIndex(request: StandardProcessRequest):
+    print("apply vegetative index")
+    band_collections={}
+    for collection_id in request.apply_drone_run_band_project_ids:
+        collection = ImageService.getImageCollection(image_collection_id=int(collection_id))
+        band_collections[collection.images[0].sensor_band.abbreviation] = collection
+
+    if 'RGB' in band_collections:
+        for image in band_collections['RGB'].images:
+            if image.process_step == 'plot':
+                if 'CCC' in request.vegetative_indices:
+                    process_step = 'CCC'
+                    outfile_path = renameOutfile(image.local_path, process_step)
+                    VegetativeIndexService.CCC(rgb_image_path=image.local_path, outfile_path=outfile_path)
+                    ImageService.saveModifiedImage(original_image=image, 
+                                                   new_image_path=outfile_path, 
+                                                   process_step_name=process_step)
+                    
+                if 'TGI' in request.vegetative_indices:
+                    process_step = 'TGI'
+                    outfile_path = renameOutfile(image.local_path, process_step)
+                    VegetativeIndexService.TGI(rgb_image_path=image.local_path, outfile_path=outfile_path)
+                    ImageService.saveModifiedImage(original_image=image, 
+                                                   new_image_path=outfile_path, 
+                                                   process_step_name=process_step)
+                    
+                if 'VARI' in request.vegetative_indices:
+                    process_step = 'VARI'
+                    outfile_path = renameOutfile(image.local_path, process_step)
+                    VegetativeIndexService.VARI(rgb_image_path=image.local_path, outfile_path=outfile_path)
+                    ImageService.saveModifiedImage(original_image=image, 
+                                                   new_image_path=outfile_path, 
+                                                   process_step_name=process_step)
+                    
+    elif 'R1' in band_collections and 'G1' in band_collections and 'B' in band_collections:
+        # TODO handle single channel images
+        pass
+    
+    print("vegetative index complete")
+

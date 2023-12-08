@@ -28,7 +28,10 @@ def CCC(rgb_image_path:str = None,
         b_image_path:str = None,
         outfile_path:str = None):
     
-    b,g,r = None
+    b=None
+    g=None
+    r=None
+
     if rgb_image_path:
         img = cv2.imread(str(rgb_image_path))
         b,g,r = cv2.split(img)
@@ -90,3 +93,56 @@ def NDVI(image_path:str = None,
     ndvi = ndvi.astype(np.uint8)
 
     cv2.imwrite(str(outfile_path), ndvi)
+
+def TGI(rgb_image_path:str = None, 
+        r_image_path:str = None, 
+        g_image_path:str = None, 
+        b_image_path:str = None,
+        outfile_path:str = None):
+    
+    b=None
+    g=None
+    r=None
+
+    if rgb_image_path:
+        img = cv2.imread(str(rgb_image_path))
+        b,g,r = cv2.split(img)
+    elif r_image_path and g_image_path and b_image_path:
+        r = cv2.imread(str(r_image_path))
+        g = cv2.imread(str(g_image_path))
+        b = cv2.imread(str(b_image_path))
+    else:
+        return
+    
+    tgi = g - 0.39*r - 0.61*b
+
+    cv2.imwrite(str(outfile_path), tgi)
+
+def VARI(rgb_image_path:str = None, 
+        r_image_path:str = None, 
+        g_image_path:str = None, 
+        b_image_path:str = None,
+        outfile_path:str = None):
+    
+    b=None
+    g=None
+    r=None
+    if rgb_image_path:
+        img = cv2.imread(str(rgb_image_path))
+        b,g,r = cv2.split(img)
+    elif r_image_path and g_image_path and b_image_path:
+        r = cv2.imread(str(r_image_path))
+        g = cv2.imread(str(g_image_path))
+        b = cv2.imread(str(b_image_path))
+    else:
+        return
+    
+    numerator = g - r
+    denominator = g + r - b
+    vari = np.divide(numerator, denominator)
+    vari[np.isnan(vari)] = 0
+
+    vari = vari * 255
+    vari = vari.astype(np.uint8)
+
+    cv2.imwrite(str(outfile_path), vari)

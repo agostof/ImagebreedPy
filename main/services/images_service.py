@@ -37,7 +37,7 @@ class ImageServiceClass():
 
         return images
     
-    def getImageCollection(self, image_collection_id:str = None):
+    def getImageCollection(self, image_collection_id:int = None):
         sqlStatement = select(ImageCollection)
 
         if image_collection_id:
@@ -47,7 +47,7 @@ class ImageServiceClass():
 
         return image
     
-    def getOrthoImage(self, image_collection_id:str = None):
+    def getOrthoImage(self, image_collection_id:int = None):
         sqlStatement = select(Image)
 
         if image_collection_id:

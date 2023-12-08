@@ -73,15 +73,17 @@ class SensorBand(Base):
     __tablename__ = 'sensor_band'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(50))
+    abbreviation: Mapped[str] = mapped_column(String(50))
     description: Mapped[str] = mapped_column(String(150))
     image_suffix: Mapped[str] = mapped_column(String(50))
     sensor_id: Mapped[int] = mapped_column(ForeignKey("sensor.id"))
     sensor: Mapped["Sensor"] = relationship(back_populates="bands")
 
-    def __init__(self, name:str=None, description:str=None, image_suffix:str=None, sensor_id:str=None):
+    def __init__(self, name:str=None, abbreviation:str=None, description:str=None, image_suffix:str=None, sensor_id:str=None):
         self.name = name
         self.description = description
         self.image_suffix = image_suffix
+        self.abbreviation = abbreviation
         self.sensor_id = sensor_id
 
     def __repr__(self):
