@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  imgbreedpy:
+    image: imgbreedpy
+#    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: imgbreedpy
+    depends_on: 
+      - db
+    env_file:
+      - ${PWD}/example.env
+    ports:
+      - 8000:8000
+  db:
+    image: postgres:16
+#    restart: unless-stopped
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD

@@ -32,4 +32,15 @@ $> python -m uvicorn main.app:app --port 8000 --reload
 
 ## Docker Install
 
-Coming Soon!
+A basic docker-compose file is provided. Please edit or create the environment settings file.
+Make sure to set the `POSTGRES_USER` and `POSTGRES_PASSWORD` environment variables on the .env file.
+```bash
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=test
+```
+Then run:
+```bash
+docker-compose up
+```
+> Note. You might need to run `docker-compose up --build` if you make changes to the [Dockerfile](docker/Dockerfile).
+
