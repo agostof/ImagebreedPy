@@ -73,6 +73,13 @@ fi
 
 echo "Directories verified/created."
 
+
+if [[ "${INIT_DB}" == "true" ]]; then
+    echo "initialize database"
+    python -m main.database.db --drop --init --data
+    echo "database initialized"
+fi
+
 echo "Loading app"
 
 python -m uvicorn main.app:app --host 0.0.0.0 --port 8000 --reload
