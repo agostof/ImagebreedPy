@@ -36,7 +36,7 @@ if [ $APP_REQ_MISSING -eq 1 ]; then
 fi
 
 
-APP_OPTIONAL_SETTINGS=(DEBUG CREATE_DIRS)
+APP_OPTIONAL_SETTINGS=(DEBUG CREATE_DIRS INIT_DB)
 for VAR in "${APP_OPTIONAL_SETTINGS[@]}"; do
     if [ ! -z "${!VAR}" ]; then
         echo -e "Optional APP setting: ${HGLT}${VAR}${RST} ${GREEN}SET${RST}."
