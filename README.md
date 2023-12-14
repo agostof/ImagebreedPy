@@ -32,13 +32,13 @@ $> python -m uvicorn main.app:app --port 8000 --reload
 
 ## Docker Install
 
-A basic docker-compose file is provided. Please edit or create the environment settings file. It is recommended to use the provided [example.env](example.env) file as a template.
+A basic docker-compose file is provided. Please edit or create the environment settings file: `.env`. It is recommended to use the provided [example.env](example.env) file as a template.
 Make sure to set the `DB_USER` and `DB_PASSWORD` environment variables on the `.env` file.
 ```bash
 DB_USER=postgres
 DB_PASSWORD=test
 ```
-If the foolowing variables are not set, the container will not start:
+If the following variables are not set, the container will not start:
 ```bash
 OIDC_ISSUER
 OIDC_CLIENT_ID
