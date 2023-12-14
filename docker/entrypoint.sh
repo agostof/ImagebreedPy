@@ -6,6 +6,8 @@ GREEN="\e[32m"
 RED="\e[31m"
 RST="\e[0m"
 
+DB_WAIT_TIME=10
+
 # We will check if any requiered app settings are missing. Will try to
 # inform the user about what is missnig, then exit.
 echo "Checking if env variables are set for appilication config settings..."
@@ -75,13 +77,14 @@ echo "Directories verified/created."
 
 
 if [[ "${INIT_DB}" == "true" ]]; then
-    echo "initialize database"
+    echo "Waiting ${DB_WAIT_TIME}s for DATABASE to be online..."
+    sleep $DB_WAIT_TIME
+    echo "Initializing database."
     python -m main.database.db --drop --init --data
-    echo "database initialized"
+    echo -e "${HGLT}database${RST} ${GREEN}initialized${RST}."
 fi
 
-echo "Loading app"
-
+echo "Loading app..."
 python -m uvicorn main.app:app --host 0.0.0.0 --port 8000 --reload
 
 
