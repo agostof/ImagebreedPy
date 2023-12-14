@@ -32,11 +32,11 @@ $> python -m uvicorn main.app:app --port 8000 --reload
 
 ## Docker Install
 
-A basic docker-compose file is provided. Please edit or create the environment settings file.
-Make sure to set the `POSTGRES_USER` and `POSTGRES_PASSWORD` environment variables on the `.env` file.
+A basic docker-compose file is provided. Please edit or create the environment settings file. It is recommended to use the provided [example.env](example.env) file as a template.
+Make sure to set the `DB_USER` and `DB_PASSWORD` environment variables on the `.env` file.
 ```bash
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=test
+DB_USER=postgres
+DB_PASSWORD=test
 ```
 If the foolowing variables are not set, the container will not start:
 ```bash
@@ -50,7 +50,7 @@ IMAGE_ARCHIVE_DIR
 In addition, the following variables are optional:
 ```bash
 #creates the image storage and archive directories
-CREATE_DIRS=true 
+CREATE_DIRS=true
 ```
 You will need to set `CREATE_DIRS` to `true` if you want the docker container to create the image storage directories on the host machine.
 
@@ -58,10 +58,10 @@ Once you have set the applications settings in the `.env` file, you can run:
 ```bash
 docker-compose up
 ```
->Note: The default env_file on docker-compose.yml is set to the `example.env` file. Please change this to your own .env file, as needed.
+*Technical Note.* Please note that the default `env_file` on `docker-compose.yml` is set to `.env` file. Please change this to your own .env file, **if needed**. The variables defined on the .env file will also be available inside the docker container of imgbreedpy. Use `docker-compose config` to check which variables are set or extrapolated. If you need to set additional variables, you can do so by adding them to the `environment` section of the `imgbreedpy` service on  `docker-compose.yml`.
+> Warning: Changing the value of env_file to a value different than .env will prevent the docker-compose command from retrieving the values of DB_USER and DB_PASSWORD from the environment (unless defined explicitly). This will cause the container to fail to start.
 
 Please note that you might need to run `docker-compose up --build` if you make changes to the [Dockerfile](docker/Dockerfile).
 
 >Note: The docker-compose file is not intended for production use. Please use for for testing and development purposes only.
-
 

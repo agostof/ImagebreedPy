@@ -10,13 +10,16 @@ services:
     container_name: imgbreedpy
     depends_on: 
       - db
+    # we are using the same env file for injecting vars into the container and for the compose file
+    # check with `docker-compose config`
     env_file:
-      - ${PWD}/example.env
+      - .env
     ports:
       - 8000:8000
   db:
     image: postgres:16
 #    restart: unless-stopped
     environment:
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
+      - POSTGRES_USER=${DB_USER:?Error please check .env file}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:?Error please check .env file}
+
