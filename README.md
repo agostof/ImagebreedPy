@@ -47,10 +47,13 @@ BRAPI_BASE_URL
 IMAGE_STORAGE_DIR
 IMAGE_ARCHIVE_DIR
 ```
-In addition, the following variables are optional:
+The following variables are optional:
 ```bash
-#creates the image storage and archive directories
+# creates the image storage and archive directories
 CREATE_DIRS=true
+# enable DB initialization 
+INIT_DB=true
+
 ```
 You will need to set `CREATE_DIRS` to `true` if you want the docker container to create the image storage directories on the host machine.
 
