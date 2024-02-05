@@ -1,3 +1,17 @@
+"""
+image_file_util.py
+------------------
+
+This module contains utility functions for handling image files.
+
+Imports:
+    - Various services and models related to images and imaging events.
+    - Various standard library modules for handling files and directories.
+
+Functions:
+    - archiveUploads(request: ImagingEventRequest) -> dict: Archives uploaded image files and returns a dictionary with the paths to the archived files.
+
+"""
 from fastapi import UploadFile
 from datetime import datetime
 from pathlib import Path
@@ -16,6 +30,15 @@ import main.image_processing.resize as ResizeImageService
 
     
 def archiveUploads(request: ImagingEventRequest):
+    """
+    Archives uploaded image files.
+
+    Parameters:
+        request (ImagingEventRequest): An object containing information about an imaging event, including associated image files.
+
+    Returns:
+        dict: A dictionary with the paths to the archived files. The keys in the dictionary are "zip", "panel_zip", and "orthos", corresponding to regular images, panel images, and ortho images, respectively.
+    """
     response = {}
     if request.images_zipfile:
         archive_path = archiveZipFile(request.images_zipfile)
@@ -31,6 +54,18 @@ def archiveUploads(request: ImagingEventRequest):
     # TODO add others to archive
 
 def archiveZipFile(zip_file:UploadFile):
+    """
+    Archives a zip file containing image files.
+
+    Parameters:
+        zip_file (UploadFile): The zip file to be archived.
+
+    Returns:
+        Path: The path to the archived zip file.
+
+    Raises:
+        NotADirectoryError: If the output path does not exist and cannot be created.
+    """
     timestamp = str(datetime.now()).replace(' ', '_').replace(':', '-').replace('.', '-')
     out_path = Path(settings.image_archive_dir) / f"archive_{timestamp}"
     out_path.mkdir(parents=True, exist_ok=True)
