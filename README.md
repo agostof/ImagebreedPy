@@ -1,4 +1,4 @@
-# Imagebreed-FastAPI
+# ImageBreedPy
 
 This project attempts to implement Imagebreed's functionality using Python.
 
