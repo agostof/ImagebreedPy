@@ -13,10 +13,17 @@ from main.services.auth_utils import AuthUtils
 app = FastAPI()
 
 from main.routers import breeders, ajax, api, api_standard_process
+from main.routers import s3_cloud_storage, images, image_collections, imaging_events, image_mutations
 app.include_router(breeders.router)
 app.include_router(ajax.router)
 app.include_router(api.router)
 app.include_router(api_standard_process.router)
+app.include_router(s3_cloud_storage.router)
+app.include_router(images.router)
+app.include_router(image_collections.router)
+app.include_router(image_mutations.router)
+app.include_router(imaging_events.router)
+
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
 
 @app.get("/", response_class=HTMLResponse)

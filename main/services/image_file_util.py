@@ -65,6 +65,15 @@ def archiveOrthos(ortho_files: list[ImagingEventRequestOrthoImage]):
     return out_file_paths
 
 def extractZipFile(zip_file_path: str | os.PathLike, output_dir: str | os.PathLike) -> list[Path]:
+    """Takes a zip file and extracts the contents to the output directory.
+
+    Args:
+        zip_file_path (str | os.PathLike): Path to a .zip file of images
+        output_dir (str | os.PathLike): Output directory to extract the contents of the zip file.
+
+    Returns:
+        list[Path]: Returns a list of image file names.
+    """
     images = []
     output = Path(output_dir)
     zip_file = zipfile.ZipFile(file=zip_file_path)

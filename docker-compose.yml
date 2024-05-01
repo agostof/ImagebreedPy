@@ -16,7 +16,11 @@ services:
       - .env
     ports:
       - 8000:8000
+    volumes: # so I can hot reload the application
+      - ./main:/main
   db:
+    ports:
+      - 5432:5432
     image: postgres:16
 #    restart: unless-stopped
     environment:

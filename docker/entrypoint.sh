@@ -73,6 +73,23 @@ if [ ! -d "${IMAGE_ARCHIVE_DIR}" ]; then
     fi
 fi
 
+# Create directory to store s3 credentials
+if [ ! -d /root/.aws ]; then
+    echo "Making S3 credentials directory"
+    if [[ "${CREATE_DIRS}" == "true" ]]; then
+        create_directory "/root/.aws"
+        echo "[default]" > /root/.aws/credentials
+        echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> /root/.aws/credentials
+        echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> /root/.aws/credentials
+        echo "[default]" > /root/.aws/config
+        echo "region=$AWS_REGION" >> /root/.aws/config
+    else
+        echo "Error: AWS directory /root/.aws does not exist and auto-creation is disabled."
+        exit 1
+    fi
+fi
+# end of additions
+
 echo "Directories verified/created."
 
 
