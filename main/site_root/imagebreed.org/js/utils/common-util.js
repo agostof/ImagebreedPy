@@ -20,7 +20,7 @@ function get_select_box(type, div_id, options) {
             else if (response.options) {
                 var optionsHTML = ""
                 optionsHTML = optionsHTML + "<option disabled selected value> -- Select -- </option>";
-               
+
                 for (const selectOption of response.options) {
                     optionsHTML = optionsHTML + "<option title='" + selectOption.name + "' value='" + selectOption.id + "' >" + selectOption.name + "</option>"
                 }
@@ -69,3 +69,41 @@ function filter_options(filter, filterType, targetSelect) {
     }
 
 }
+
+function set_daterangepicker_default(date_element) {
+    date_element[0].valueAsDate = new Date();
+}
+
+var Effects = {
+	//These, on the other hand, are generic and belong in CXGN.Effects:
+	showElement: function(elementId, displayMethod) {
+		var element = document.getElementById(elementId);
+		var dispMethod;
+		if(displayMethod) {
+			dispMethod = displayMethod;
+		}
+		else { dispMethod = "inline"; }
+		element.style.display = dispMethod;
+	},
+	hideElement: function(elementId, displayMethod) {
+		var element = document.getElementById(elementId);
+		var dispMethod = "";
+		if(displayMethod) {
+			dispMethod = displayMethod;
+		}
+		else { dispMethod = "none"; } //alternative is "hidden", which causes it to continue occupying space on the page
+		element.style.display = dispMethod;
+	},
+	swapElements: function(elementIdFrom, elementIdTo, displayMethod){
+		try {	
+			var dispMethod = displayMethod || "inline";
+			var elementFrom = document.getElementById(elementIdFrom);
+			var elementTo = document.getElementById(elementIdTo);
+			elementFrom.style.display = "none";
+			elementTo.style.display = dispMethod;
+		}
+		catch(e) { console.error(e, e.stack); }
+	}
+};
+
+

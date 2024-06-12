@@ -7686,18 +7686,6 @@ $(document).ready(function () {
 
         var drone_run_change_date_element = $("#drone_run_change_date");
         set_daterangepicker_default(drone_run_change_date_element);
-        $('input[title="drone_run_change_date"]').daterangepicker(
-            {
-                "singleDatePicker": true,
-                "showDropdowns": true,
-                "autoUpdateInput": false,
-                "timePicker": true,
-                "timePicker24Hour": true,
-            },
-            function (start) {
-                drone_run_change_date_element.val(start.format('YYYY/MM/DD HH:mm:ss'));
-            }
-        );
 
     });
 
