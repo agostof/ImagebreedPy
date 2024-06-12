@@ -7933,164 +7933,21 @@ $(document).ready(function () {
 
     function showManageDroneImagerySection(section_div_id) {
         console.log(section_div_id);
-        if (section_div_id == 'manage_drone_imagery_top_div') {
-            $('#manage_drone_imagery_top_div').show();
-            $('#manage_drone_imagery_plot_polygons_div').hide();
-            $('#manage_drone_imagery_calculate_phenotypes_div').hide();
-            $('#manage_drone_imagery_remove_background_div').hide();
-            $('#manage_drone_imagery_vegetative_index_div').hide();
-            $('#manage_drone_imagery_standard_process_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_interactive_div').hide();
-            $('#project_drone_imagery_ground_control_points_div').hide();
-            $('#manage_drone_imagery_quality_control_div').hide();
-            $('#manage_drone_imagery_field_trial_time_series_div').hide();
-            $('#manage_drone_imagery_loading_div').hide();
-        } else if (section_div_id == 'manage_drone_imagery_plot_polygons_div') {
-            $('#manage_drone_imagery_top_div').hide();
-            $('#manage_drone_imagery_plot_polygons_div').show();
-            $('#manage_drone_imagery_calculate_phenotypes_div').hide();
-            $('#manage_drone_imagery_remove_background_div').hide();
-            $('#manage_drone_imagery_vegetative_index_div').hide();
-            $('#manage_drone_imagery_standard_process_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_interactive_div').hide();
-            $('#project_drone_imagery_ground_control_points_div').hide();
-            $('#manage_drone_imagery_quality_control_div').hide();
-            $('#manage_drone_imagery_field_trial_time_series_div').hide();
-            $('#manage_drone_imagery_loading_div').hide();
-        } else if (section_div_id == 'manage_drone_imagery_calculate_phenotypes_div') {
-            $('#manage_drone_imagery_top_div').hide();
-            $('#manage_drone_imagery_plot_polygons_div').hide();
-            $('#manage_drone_imagery_calculate_phenotypes_div').show();
-            $('#manage_drone_imagery_remove_background_div').hide();
-            $('#manage_drone_imagery_vegetative_index_div').hide();
-            $('#manage_drone_imagery_standard_process_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_interactive_div').hide();
-            $('#project_drone_imagery_ground_control_points_div').hide();
-            $('#manage_drone_imagery_quality_control_div').hide();
-            $('#manage_drone_imagery_field_trial_time_series_div').hide();
-            $('#manage_drone_imagery_loading_div').hide();
-        } else if (section_div_id == 'manage_drone_imagery_remove_background_div') {
-            $('#manage_drone_imagery_top_div').hide();
-            $('#manage_drone_imagery_plot_polygons_div').hide();
-            $('#manage_drone_imagery_calculate_phenotypes_div').hide();
-            $('#manage_drone_imagery_remove_background_div').show();
-            $('#manage_drone_imagery_vegetative_index_div').hide();
-            $('#manage_drone_imagery_standard_process_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_interactive_div').hide();
-            $('#project_drone_imagery_ground_control_points_div').hide();
-            $('#manage_drone_imagery_quality_control_div').hide();
-            $('#manage_drone_imagery_field_trial_time_series_div').hide();
-            $('#manage_drone_imagery_loading_div').hide();
-        } else if (section_div_id == 'manage_drone_imagery_vegetative_index_div') {
-            $('#manage_drone_imagery_top_div').hide();
-            $('#manage_drone_imagery_plot_polygons_div').hide();
-            $('#manage_drone_imagery_calculate_phenotypes_div').hide();
-            $('#manage_drone_imagery_remove_background_div').hide();
-            $('#manage_drone_imagery_vegetative_index_div').show();
-            $('#manage_drone_imagery_standard_process_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_interactive_div').hide();
-            $('#project_drone_imagery_ground_control_points_div').hide();
-            $('#manage_drone_imagery_quality_control_div').hide();
-            $('#manage_drone_imagery_field_trial_time_series_div').hide();
-            $('#manage_drone_imagery_loading_div').hide();
-        } else if (section_div_id == 'manage_drone_imagery_standard_process_div') {
-            $('#manage_drone_imagery_top_div').hide();
-            $('#manage_drone_imagery_plot_polygons_div').hide();
-            $('#manage_drone_imagery_calculate_phenotypes_div').hide();
-            $('#manage_drone_imagery_remove_background_div').hide();
-            $('#manage_drone_imagery_vegetative_index_div').hide();
-            $('#manage_drone_imagery_standard_process_div').show();
-            $('#manage_drone_imagery_standard_process_raw_images_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_interactive_div').hide();
-            $('#project_drone_imagery_ground_control_points_div').hide();
-            $('#manage_drone_imagery_quality_control_div').hide();
-            $('#manage_drone_imagery_field_trial_time_series_div').hide();
-            $('#manage_drone_imagery_loading_div').hide();
-        } else if (section_div_id == 'manage_drone_imagery_standard_process_raw_images_div') {
-            $('#manage_drone_imagery_top_div').hide();
-            $('#manage_drone_imagery_plot_polygons_div').hide();
-            $('#manage_drone_imagery_calculate_phenotypes_div').hide();
-            $('#manage_drone_imagery_remove_background_div').hide();
-            $('#manage_drone_imagery_vegetative_index_div').hide();
-            $('#manage_drone_imagery_standard_process_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_div').show();
-            $('#manage_drone_imagery_standard_process_raw_images_interactive_div').hide();
-            $('#project_drone_imagery_ground_control_points_div').hide();
-            $('#manage_drone_imagery_quality_control_div').hide();
-            $('#manage_drone_imagery_field_trial_time_series_div').hide();
-            $('#manage_drone_imagery_loading_div').hide();
-        } else if (section_div_id == 'manage_drone_imagery_standard_process_raw_images_interactive_div') {
-            $('#manage_drone_imagery_top_div').hide();
-            $('#manage_drone_imagery_plot_polygons_div').hide();
-            $('#manage_drone_imagery_calculate_phenotypes_div').hide();
-            $('#manage_drone_imagery_remove_background_div').hide();
-            $('#manage_drone_imagery_vegetative_index_div').hide();
-            $('#manage_drone_imagery_standard_process_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_interactive_div').show();
-            $('#project_drone_imagery_ground_control_points_div').hide();
-            $('#manage_drone_imagery_quality_control_div').hide();
-            $('#manage_drone_imagery_field_trial_time_series_div').hide();
-            $('#manage_drone_imagery_loading_div').hide();
-        } else if (section_div_id == 'manage_drone_imagery_quality_control_div') {
-            $('#manage_drone_imagery_top_div').hide();
-            $('#manage_drone_imagery_plot_polygons_div').hide();
-            $('#manage_drone_imagery_calculate_phenotypes_div').hide();
-            $('#manage_drone_imagery_remove_background_div').hide();
-            $('#manage_drone_imagery_vegetative_index_div').hide();
-            $('#manage_drone_imagery_standard_process_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_interactive_div').hide();
-            $('#project_drone_imagery_ground_control_points_div').hide();
-            $('#manage_drone_imagery_quality_control_div').show();
-            $('#manage_drone_imagery_field_trial_time_series_div').hide();
-            $('#manage_drone_imagery_loading_div').hide();
-        } else if (section_div_id == 'project_drone_imagery_ground_control_points_div') {
-            $('#manage_drone_imagery_top_div').hide();
-            $('#manage_drone_imagery_plot_polygons_div').hide();
-            $('#manage_drone_imagery_calculate_phenotypes_div').hide();
-            $('#manage_drone_imagery_remove_background_div').hide();
-            $('#manage_drone_imagery_vegetative_index_div').hide();
-            $('#manage_drone_imagery_standard_process_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_interactive_div').hide();
-            $('#project_drone_imagery_ground_control_points_div').show();
-            $('#manage_drone_imagery_quality_control_div').hide();
-            $('#manage_drone_imagery_field_trial_time_series_div').hide();
-            $('#manage_drone_imagery_loading_div').hide();
-        } else if (section_div_id == 'manage_drone_imagery_field_trial_time_series_div') {
-            $('#manage_drone_imagery_top_div').hide();
-            $('#manage_drone_imagery_plot_polygons_div').hide();
-            $('#manage_drone_imagery_calculate_phenotypes_div').hide();
-            $('#manage_drone_imagery_remove_background_div').hide();
-            $('#manage_drone_imagery_vegetative_index_div').hide();
-            $('#manage_drone_imagery_standard_process_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_interactive_div').hide();
-            $('#project_drone_imagery_ground_control_points_div').hide();
-            $('#manage_drone_imagery_quality_control_div').hide();
-            $('#manage_drone_imagery_field_trial_time_series_div').show();
-            $('#manage_drone_imagery_loading_div').hide();
-        }
-        else if (section_div_id == 'manage_drone_imagery_loading_div') {
-            $('#manage_drone_imagery_top_div').hide();
-            $('#manage_drone_imagery_plot_polygons_div').hide();
-            $('#manage_drone_imagery_calculate_phenotypes_div').hide();
-            $('#manage_drone_imagery_remove_background_div').hide();
-            $('#manage_drone_imagery_vegetative_index_div').hide();
-            $('#manage_drone_imagery_standard_process_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_div').hide();
-            $('#manage_drone_imagery_standard_process_raw_images_interactive_div').hide();
-            $('#project_drone_imagery_ground_control_points_div').hide();
-            $('#manage_drone_imagery_quality_control_div').hide();
-            $('#manage_drone_imagery_field_trial_time_series_div').hide();
-            $('#manage_drone_imagery_loading_div').show();
-        }
+        
+        $('#manage_drone_imagery_top_div').hide();
+        $('#manage_drone_imagery_plot_polygons_div').hide();
+        $('#manage_drone_imagery_calculate_phenotypes_div').hide();
+        $('#manage_drone_imagery_remove_background_div').hide();
+        $('#manage_drone_imagery_vegetative_index_div').hide();
+        $('#manage_drone_imagery_standard_process_div').hide();
+        $('#manage_drone_imagery_standard_process_raw_images_div').hide();
+        $('#manage_drone_imagery_standard_process_raw_images_interactive_div').hide();
+        $('#project_drone_imagery_ground_control_points_div').hide();
+        $('#manage_drone_imagery_quality_control_div').hide();
+        $('#manage_drone_imagery_field_trial_time_series_div').hide();
+        $('#manage_drone_imagery_loading_div').hide();
+
+        $('#' + section_div_id).show();
         window.scrollTo(0, 0);
     }
 
