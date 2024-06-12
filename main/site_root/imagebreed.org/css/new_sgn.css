@@ -602,10 +602,6 @@ span.help {
   border-bottom: 1px dashed #666;
 }
 
-span.toolbar_help {
-  /*nothing different*/
-}
-
 /*****************************     INFO SECTIONS     *******************************************************/
 
 /* plus and minus image in collapsible sections */
@@ -1020,8 +1016,6 @@ span.paginate_nav_ghosted {
   color: #cccccc;
 }
 
-span.paginate_summary {}
-
 span.paginate_nav_currpage {
   font-weight: bolder;
   border: 1px solid black;
@@ -1408,8 +1402,6 @@ span.blasthit_statname:after {
   content: ':';
 }
 
-span.blasthit_statval {}
-
 span.blasthit_id {
   font-family: monospace;
 }
@@ -1454,9 +1446,6 @@ table.info_table_noborder {
   padding: 0;
   margin: 0;
 }
-
-table.sub_info_table,
-table.sub_info_table_noborder {}
 
 th.sub_info_table,
 th.info_table {

@@ -485,10 +485,6 @@ span.help {
   border-bottom: 1px dashed #666;
 }
 
-span.toolbar_help {
-  /*nothing different*/
-}
-
 /*****************************     INFO SECTIONS     *******************************************************/
 /*
    You will probably not need these, because you can 
@@ -879,8 +875,6 @@ span.paginate_nav_ghosted {
   color: #cccccc;
 }
 
-span.paginate_summary {}
-
 span.paginate_nav_currpage {
   font-weight: bolder;
   border: 1px solid black;
@@ -1268,8 +1262,6 @@ span.blasthit_statname:after {
   content: ':';
 }
 
-span.blasthit_statval {}
-
 span.blasthit_id {
   font-family: monospace;
 }
@@ -1314,9 +1306,6 @@ table.info_table_noborder {
   padding: 0;
   margin: 0;
 }
-
-table.sub_info_table,
-table.sub_info_table_noborder {}
 
 th.sub_info_table,
 th.info_table {
@@ -1574,8 +1563,6 @@ a.btn_purple {
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  -webkit-transition: background-color .3s ease;
-
 }
 
 a.btn:hover {
