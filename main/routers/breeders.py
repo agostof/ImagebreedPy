@@ -3,8 +3,10 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
 from main.services.app_settings import DIRECTORY
+from main.services.auth_utils import User, AuthUtils
 from main.services.vehicles_service import VehicleService
 from main.services.imaging_events_service import ImagingEventService
+from main.services.brapi_service import BrAPI
 
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
 router = APIRouter(prefix="/breeders")
@@ -16,11 +18,9 @@ async def breeders_tool_box_drone_rover(request: Request):
 
 @router.get("/drone_imagery", response_class=HTMLResponse)
 async def breeders_toolbox_drone_imagery(request: Request):
-    sensors = VehicleService.getSensors()
     imaging_events = ImagingEventService.getImagingEventDetails()
     context = {
         "request": request,
-        "sensor_options": sensors, 
         "imaging_events": imaging_events,
         "drone_run_base_date": "Jan 02, 2023?",
         "drone_run_averaged_temperature_gdd": "20 days",
@@ -31,6 +31,19 @@ async def breeders_toolbox_drone_imagery(request: Request):
         "drone_run_band_project_type": "Band 1 Red Type"
         }
     return templates.TemplateResponse("drone_imagery.html", context=context)
+
+@router.get("/drone_imagery_upload", response_class=HTMLResponse)
+async def breeders_toolbox_drone_imagery(request: Request):
+    token = AuthUtils.getAccessToken(request)
+    sensors = VehicleService.getSensors()
+    programs = BrAPI.getProgramSummaries(token=token)
+    
+    context = {
+        "request": request,
+        "sensor_options": sensors,
+        "company_options": programs
+        }
+    return templates.TemplateResponse("drone_imagery_upload.html", context=context)
 
 
 @router.get("/drone_imagery_standard_process", response_class=HTMLResponse)

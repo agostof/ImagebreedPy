@@ -60,14 +60,23 @@ class Sensor(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(50))
     description: Mapped[str] = mapped_column(String(50))
+    allowBWBand: Mapped[bool] = mapped_column(default=True)
+    allowRGBBand: Mapped[bool] = mapped_column(default=True)
+    totalBandsAllowed: Mapped[int] = mapped_column(default=0)
     bands: Mapped[List["SensorBand"]] = relationship(back_populates="sensor")
 
-    def __init__(self, name:str=None, description:str=None):
+    def __init__(self, name:str=None, description:str=None, allowBWBand:bool=True, allowRGBBand:bool=True, totalBandsAllowed:int=0 ):
         self.name = name
         self.description = description
+        self.allowBWBand = allowBWBand
+        self.allowRGBBand = allowRGBBand
+        self.totalBandsAllowed = totalBandsAllowed
 
     def __repr__(self):
         return f'Sensor {self.id=}\n     {self.name=}\n     {self.description=}'
+    
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
     
 class SensorBand(Base):
     __tablename__ = 'sensor_band'

@@ -55,9 +55,9 @@ def insert_initial_values_Sensor(target, connection, **kwargs):
         print(f"  Initialize data for {Sensor.__table__}")
         Session = sessionmaker(engine)
         with Session(bind=connection) as session:
-            session.add(Sensor(name='micasense_5', description= "Micasense 5-Channel Camera"))
-            session.add(Sensor(name='micasense_10', description= "Micasense 10-Channel Camera"))
-            session.add(Sensor(name='ccd_color', description= "RGB Color Camera"))
+            session.add(Sensor(name='micasense_5',  description= "Micasense 5-Channel Camera",  allowBWBand=True, allowRGBBand=True, totalBandsAllowed=5))
+            session.add(Sensor(name='micasense_10', description= "Micasense 10-Channel Camera", allowBWBand=True, allowRGBBand=True, totalBandsAllowed=10))
+            session.add(Sensor(name='ccd_color',    description= "RGB Color Camera",            allowBWBand=True, allowRGBBand=True, totalBandsAllowed=3))
             session.add(Sensor(name='interpolated_elevation', description= "Interpolated Elevation Image"))
             session.add(Sensor(name='em38_interpolated_ch1.0m', description= "EM38 Interpolated CH1.0m Image"))
             session.add(Sensor(name='em38_interpolated_ch0.5m', description= "EM38 Interpolated CH0.5m Image"))
@@ -100,11 +100,11 @@ def insert_initial_values_Sensor(target, connection, **kwargs):
             session.add(SensorBand(name='Blue Band 1',    abbreviation="BW",  description= "Micasense 10-Channel Camera - Blue Band", image_suffix="_5_1", sensor_id="2"))
             session.add(SensorBand(name='Blue Band 2',    abbreviation="BW",  description= "Micasense 10-Channel Camera - Blue Band", image_suffix="_5_2", sensor_id="2"))
 
-            session.add(SensorBand(name='Red Band',    abbreviation="BW",  description= "RGB Color Camera - Red Band", image_suffix="_R", sensor_id="3"))
-            session.add(SensorBand(name='Green Band',    abbreviation="BW",  description= "RGB Color Camera - Green Band", image_suffix="_G", sensor_id="3"))
-            session.add(SensorBand(name='Blue Band',    abbreviation="BW",  description= "RGB Color Camera - Blue Band", image_suffix="_B", sensor_id="3"))
+            session.add(SensorBand(name='Red Band',    abbreviation="R",  description= "RGB Color Camera - Red Band",   image_suffix="_R", sensor_id="3"))
+            session.add(SensorBand(name='Green Band',  abbreviation="G",  description= "RGB Color Camera - Green Band", image_suffix="_G", sensor_id="3"))
+            session.add(SensorBand(name='Blue Band',   abbreviation="B",  description= "RGB Color Camera - Blue Band",  image_suffix="_B", sensor_id="3"))
 
-            session.add(SensorBand(name='interpolated_elevation',    abbreviation="BW",  description= "Interpolated Elevation Image", image_suffix="_123", sensor_id="4"))
+            session.add(SensorBand(name='interpolated_elevation',      abbreviation="BW",  description= "Interpolated Elevation Image",   image_suffix="_123", sensor_id="4"))
             session.add(SensorBand(name='em38_interpolated_ch1.0m',    abbreviation="BW",  description= "EM38 Interpolated CH1.0m Image", image_suffix="_123", sensor_id="5"))
             session.add(SensorBand(name='em38_interpolated_ch0.5m',    abbreviation="BW",  description= "EM38 Interpolated CH0.5m Image", image_suffix="_123", sensor_id="6"))
             session.add(SensorBand(name='em38_interpolated_ih1.0m',    abbreviation="BW",  description= "EM38 Interpolated IH1.0m Image", image_suffix="_123", sensor_id="7"))

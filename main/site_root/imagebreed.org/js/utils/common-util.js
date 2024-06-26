@@ -8,40 +8,37 @@ function get_select_box(type, div_id, options) {
         url: '/ajax/html/select/' + type,
         data: options,
         beforeSend: function (xhr) {
-            var html = '<div class="card bg-light"><center><img src="/img/wheel.gif" /></center></div>';
-            $('#' + div_id).html(html);
+            $('#' + div_id + " div").show();
+            $('#' + div_id + " select").hide();
             xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
         },
         success: function (response) {
             if (response.error) {
                 alert(response.error);
-                // $('#'+div_id).html(previous_html);
             }
             else if (response.options) {
-                var optionsHTML = ""
-                optionsHTML = optionsHTML + "<option disabled selected value> -- Select -- </option>";
+                var select = $('#' + div_id + " select");
+                select.empty()
+                select.append("<option disabled selected> -- Select -- </option>")
 
                 for (const selectOption of response.options) {
-                    optionsHTML = optionsHTML + "<option title='" + selectOption.name + "' value='" + selectOption.id + "' >" + selectOption.name + "</option>"
+                    select.append("<option title='" + selectOption.name + "' value='" + selectOption.id + "' >" + selectOption.name + "</option>");
                 }
-                var selectHTML = "<select class='form-control' id='" + options.id + "' name='" + options.name + "'>" +
-                    optionsHTML + "</select>"
-                $('#' + div_id).empty();
-                $('#' + div_id).html(selectHTML);
+
                 if (options.live_search) {
-                    var select = $("#" + options.id);
                     select.selectpicker('render');
                     select.data('selectpicker').$button.focus();
                     select.data('selectpicker').$button.attr("style", "background-color:#fff");
                 }
                 if (options.multiple) {
-                    var select = $("#" + options.id).prop('multiple', 'multiple');
+                    select.prop('multiple', 'multiple');
                 }
                 if (options.workflow_trigger) {
-                    // console.log("this is a workflow trigger. Response.select is: \n");
-                    // console.log(JSON.stringify(response.select));
-                    var select = $("#" + options.id).attr('onChange', 'Workflow.complete(this);');
+                    select.attr('onChange', 'Workflow.complete(this);');
                 }
+                
+                $('#' + div_id + " div").hide();
+                select.show();
             }
         },
         error: function (response) {

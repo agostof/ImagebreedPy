@@ -1,7 +1,60 @@
 {% extends "template.html" %}
 {% block includes %}
 <script src="/js/legacy/CXGN/manage-drone-imagery.js" type="text/javascript"></script>
-<script src="/js/drone-imagery-upload.js" type="text/javascript"></script>
+<script src="/js/drone-imagery.js" type="text/javascript"></script>
+
+<script>
+    $(document).ready(function () {
+        $(document).on('click', 'span[name="drone_image_remove"]', function () {
+            var image_id = $(this).data('image_id');
+            if (confirm("Are you sure you want to remove this image?")) {
+                jQuery.ajax({
+                    url: '/api/drone_imagery/remove_image?image_id=' + image_id,
+                    beforeSend: function (xhr) {
+                        $("#working_modal").modal("show");
+                        xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        $("#working_modal").modal("hide");
+                        location.reload();
+                    },
+                    error: function (response) {
+                        $("#working_modal").modal("hide");
+                        alert('Error removing drone image!')
+                    }
+                });
+            }
+        });
+
+        $(document).on('click', 'button[name="drone_runs_trial_view_geo_layout"]', function () {
+            var trial_id = $(this).data('field_trial_id');
+            window.open('/tools/fieldmap?trial_id=' + trial_id, '_blank');
+        });
+
+    });
+
+    function manageDroneImageryDroneRunBandDisplay(project_drone_run_band_id) {
+        jQuery.ajax({
+            url: '/api/drone_imagery/raw_drone_imagery_drone_run_band?drone_run_band_project_id=' + project_drone_run_band_id,
+            beforeSend: function (xhr) {
+                $("#working_modal").modal("show");
+                xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
+            },
+            success: function (response) {
+                console.log(response);
+                $('#drone_run_band_accordian_drone_run_band_div_' + project_drone_run_band_id).html(
+                    "<img src='" + response.image_collection_thumbnail_url + "' style='width:300px' />");
+                $("#working_modal").modal("hide");
+            },
+            error: function (response) {
+                $("#working_modal").modal("hide");
+                alert('Error getting drone run band summary images!');
+            }
+        });
+    }
+
+</script>
 {% endblock %}
 {% block title %} <h3 id="pagetitle_h3">Manage Aerial Imagery</h3> {% endblock %}
 
@@ -10,140 +63,27 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="well">
-            <div class="row">
-                <div class="col-sm-0">
-                    <span style="font-size:3.5em;" class=""></span>
-                </div>
-                <div class="col-sm-12">
-                    <a class="info_section_anchor" name="aerial_imagery"></a>
+        <div class="infosectioncontent">
+            <div style='margin:15px 0'>
+                <button class='btn btn-primary' style='margin:3px' id='upload_drone_imagery_link'>Upload Imagery</button>
+                <button class='btn btn-success' style='margin:3px' id='drone_imagery_analytics_link'>Analytics</button>
+                <button class='btn btn-outline-secondary' style='margin:3px' id='drone_imagery_view_imaging_vehicles_link'>Imaging Vehicles</button>
+                <button class='btn btn-outline-secondary' style='margin:3px' id='download_phenotypes_drone_imagery_link'>Download Image-Phenotype File</button>
+                <button class='btn btn-outline-secondary' style='margin:3px' id='export_drone_imagery_events'>Export Imaging Events</button>
+            </div>
 
-                    <table cellspacing="0" cellpadding="0" class="infosectionhead" summary="">
-                        <tr>
-                            <td class="infosectiontitle">
-                                <a class="collapser collapser_show" target="" href="" onclick="
-                                    Effects.swapElements('manage_drone_imagery_main_offswitch', 'manage_drone_imagery_main_onswitch');
-                                    Effects.hideElement('manage_drone_imagery_main_content');
-                                    
-                                    return false;" id="manage_drone_imagery_main_offswitch">
-                                    <img class="collapser_img" src="/img/collapser_minus.png" />
-                                    <h4 style='display:inline'>Aerial Imagery</h4>
-                                </a>
-                                <a class="collapser collapser_show" target="" href="" style="display:none;" onclick="
-                                    Effects.swapElements('manage_drone_imagery_main_onswitch', 'manage_drone_imagery_main_offswitch');
-                                    Effects.showElement('manage_drone_imagery_main_content');
-                                    
-                                    return false;" id="manage_drone_imagery_main_onswitch">
-                                    <img class="collapser_img" src="/img/collapser_plus.png" />
-                                    <h4 style='display:inline'>Aerial Imagery</h4>
-                                </a>
-                            </td>
-                            <td class="infosectionsubtitle" role="button" tabindex="0">Please cite
-                                <a href="https://acsess.onlinelibrary.wiley.com/doi/full/10.1002/ppj2.20004"
-                                    target=_blank>ImageBreed</a>
-                                if you find any of these tools useful&nbsp;
-                            </td>
-                        </tr>
-                    </table>
-
-                    <span id="manage_drone_imagery_main_content">
-                        <div class="infosectioncontent">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <button class='btn btn-primary' style='margin:3px'
-                                        id='upload_drone_imagery_link'>Upload Imagery</button><button
-                                        class='btn btn-success' style='margin:3px'
-                                        id='drone_imagery_analytics_link'>Analytics</button><button
-                                        class='btn btn-outline-secondary' style='margin:3px'
-                                        id='drone_imagery_view_imaging_vehicles_link'>Imaging Vehicles</button><button
-                                        class='btn btn-outline-secondary' style='margin:3px'
-                                        id='download_phenotypes_drone_imagery_link'>Download Image-Phenotype
-                                        File</button><button class='btn btn-outline-secondary' style='margin:3px'
-                                        id='export_drone_imagery_events'>Export Imaging Events</button>
-                                </div>
-                            </div>
-
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <table class="display" id="raw_drone_image_datatable">
-                                        <thead>
-                                            <tr>
-                                                <th>Field Trials -> Imaging Events</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                    
-                                    {% include 'drone-run-expanded-view.html' %}
-
-                                    <script>
-                                        $(document).ready(function () {
-                                            $(document).on('click', 'span[name="drone_image_remove"]', function () {
-                                                var image_id = $(this).data('image_id');
-                                                if (confirm("Are you sure you want to remove this image?")) {
-                                                    jQuery.ajax({
-                                                        url: '/api/drone_imagery/remove_image?image_id=' + image_id,
-                                                        beforeSend: function (xhr) {
-                                                            $("#working_modal").modal("show");
-                                                            xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
-                                                        },
-                                                        success: function (response) {
-                                                            console.log(response);
-                                                            $("#working_modal").modal("hide");
-                                                            location.reload();
-                                                        },
-                                                        error: function (response) {
-                                                            $("#working_modal").modal("hide");
-                                                            alert('Error removing drone image!')
-                                                        }
-                                                    });
-                                                }
-                                            });
-
-                                            $(document).on('click', 'button[name="drone_runs_trial_view_geo_layout"]', function () {
-                                                var trial_id = $(this).data('field_trial_id');
-                                                window.open('/tools/fieldmap?trial_id=' + trial_id, '_blank');
-                                            });
-
-                                        });
-
-                                        function manageDroneImageryDroneRunBandDisplay(project_drone_run_band_id) {
-                                            jQuery.ajax({
-                                                url: '/api/drone_imagery/raw_drone_imagery_drone_run_band?drone_run_band_project_id=' + project_drone_run_band_id,
-                                                beforeSend: function (xhr) {
-                                                    $("#working_modal").modal("show");
-                                                    xhr.setRequestHeader('Authorization', localStorage.getItem("access_token"));
-                                                },
-                                                success: function (response) {
-                                                    console.log(response);
-                                                    $('#drone_run_band_accordian_drone_run_band_div_' + project_drone_run_band_id).html(
-                                                        "<img src='" + response.image_collection_thumbnail_url +"' style='width:300px' />");
-                                                    $("#working_modal").modal("hide");
-                                                },
-                                                error: function (response) {
-                                                    $("#working_modal").modal("hide");
-                                                    alert('Error getting drone run band summary images!');
-                                                }
-                                            });
-                                        }
-
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
-                    </span>
-                </div>
+            <div>
+                {% include 'drone-run-expanded-view.html' %}
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="export_drone_imagery_dialog" name="export_drone_imagery_dialog" tabindex="-1" role="dialog"
-    aria-labelledby="exportDroneImageryDialog">
+<div class="modal fade" id="export_drone_imagery_dialog" name="export_drone_imagery_dialog" tabindex="-1" role="dialog" aria-labelledby="exportDroneImageryDialog">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="exportDroneImageryDialog">Export Aerial Imaging Event(s)</h4>
             </div>
             <div class="modal-body">
@@ -168,7 +108,8 @@
                                 <ol class="workflow-content">
                                     <li>
                                         <div id="pagetitle">
-                                            <h3 id="pagetitle_h3">This workflow will guide you through exporting aerial
+                                            <h3 id="pagetitle_h3">This workflow will guide you through exporting
+                                                aerial
                                                 imaging event(s) from the database</h3>
                                         </div>
 
@@ -176,16 +117,18 @@
                                             <li>Exporting imaging events is important for transferring data across
                                                 ImageBreed instances.</li>
                                             <li>Exporting imaging events will return a spreadsheet file defining the
-                                                imaging events, a zipfile containing the orthophoto imges, and a zipfile
+                                                imaging events, a zipfile containing the orthophoto imges, and a
+                                                zipfile
                                                 containing the GeoJSON plot-polygon definitions.</li>
-                                            <li>Phenotypic values will not be exported in this workflow, please use the
+                                            <li>Phenotypic values will not be exported in this workflow, please use
+                                                the
                                                 Wizard of the "Download Image-Phenotype File" to retrieve phenotypic
                                                 values.</li>
                                         </ul>
                                         <br />
                                         <div style="text-align: center;">
-                                            <button class="btn btn-primary"
-                                                onclick="Workflow.complete(this); return false;">Go to export imaging
+                                            <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to export
+                                                imaging
                                                 event(s)</button>
                                         </div>
                                     </li>
@@ -203,8 +146,7 @@
                                         </div>
                                         <br />
                                         <div style="text-align: center;">
-                                            <button class="btn btn-primary"
-                                                onclick="Workflow.complete(this); return false;">Go to Next
+                                            <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next
                                                 Step</button>
                                         </div>
                                     </li>
@@ -228,8 +170,7 @@
                                             </thead>
                                         </table>
                                         <div style="text-align: center;">
-                                            <button class="btn btn-primary"
-                                                id="drone_image_export_drone_run_continue">Go to Next Step</button>
+                                            <button class="btn btn-primary" id="drone_image_export_drone_run_continue">Go to Next Step</button>
                                         </div>
                                     </li>
                                     <li>
@@ -239,9 +180,7 @@
                                         <div id="export_drone_imagery_submit_div">
                                         </div>
                                         <div style="text-align: center;">
-                                            <button type="button" class="btn btn-info"
-                                                name="export_drone_imagery_submit"
-                                                id="export_drone_imagery_submit">Submit</button>
+                                            <button type="button" class="btn btn-info" name="export_drone_imagery_submit" id="export_drone_imagery_submit">Submit</button>
                                         </div>
                                     </li>
                                 </ol>
@@ -263,14 +202,11 @@
     </div>
 </div>
 
-<div class="modal fade" id="manage_drone_imagery_field_trial_time_series_popup"
-    name="manage_drone_imagery_field_trial_time_series_popup" tabindex="-1" role="dialog"
-    aria-labelledby="droneImageryTImeSeriesHoverDialog" data-backdrop="static">
+<div class="modal fade" id="manage_drone_imagery_field_trial_time_series_popup" name="manage_drone_imagery_field_trial_time_series_popup" tabindex="-1" role="dialog" aria-labelledby="droneImageryTImeSeriesHoverDialog" data-backdrop="static">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="droneImageryTImeSeriesHoverDialog">Plot Information</h4>
             </div>
             <div class="modal-body">
@@ -288,14 +224,11 @@
     </div>
 </div>
 
-<div class="modal fade" id="drone_imagery_change_date_drone_run_dialog"
-    name="drone_imagery_change_date_drone_run_dialog" tabindex="-1" role="dialog"
-    aria-labelledby="droneImageryChangeDateDroneRunDialog" data-backdrop="static">
+<div class="modal fade" id="drone_imagery_change_date_drone_run_dialog" name="drone_imagery_change_date_drone_run_dialog" tabindex="-1" role="dialog" aria-labelledby="droneImageryChangeDateDroneRunDialog" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="droneImageryChangeDateDroneRunDialog">Change Date of Imaging Event</h4>
             </div>
             <div class="modal-body">
@@ -308,8 +241,7 @@
                             <label class="col-sm-6 control-label">Imaging Event Date and Hour (Must be after the
                                 planting date):</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="drone_run_change_date" name="drone_run_change_date"
-                                    title="drone_run_change_date" type="text" />
+                                <input class="form-control" id="drone_run_change_date" name="drone_run_change_date" title="drone_run_change_date" type="text" />
                             </div>
                         </div>
                     </div>
@@ -324,20 +256,19 @@
     </div>
 </div>
 
-<div class="modal fade" id="drone_imagery_delete_drone_run_dialog" name="drone_imagery_delete_drone_run_dialog"
-    tabindex="-1" role="dialog" aria-labelledby="droneImageryDeleteDroneRunDialog" data-backdrop="static">
+<div class="modal fade" id="drone_imagery_delete_drone_run_dialog" name="drone_imagery_delete_drone_run_dialog" tabindex="-1" role="dialog" aria-labelledby="droneImageryDeleteDroneRunDialog" data-backdrop="static">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="droneImageryDeleteDroneRunDialog">Delete a Imaging Event</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="well">
                         <ul>
-                            <li>Deleting an imaging event will remove the imaging event and all image bands permanently.
+                            <li>Deleting an imaging event will remove the imaging event and all image bands
+                                permanently.
                             </li>
                             <li>All images in the imaging event will be deleted (obsoleted).</li>
                             <li>Phenotypes that were generated for plots in this imaging event will be deleted
@@ -348,21 +279,19 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="drone_imagery_delete_drone_run_confirm">Delete Imaging
+                <button type="button" class="btn btn-primary" id="drone_imagery_delete_drone_run_confirm">Delete
+                    Imaging
                     Event</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="drone_imagery_associated_field_trials_dialog"
-    name="drone_imagery_associated_field_trials_dialog" tabindex="-1" role="dialog"
-    aria-labelledby="droneImageryAssociatedFieldTrialsDialog" data-backdrop="static">
+<div class="modal fade" id="drone_imagery_associated_field_trials_dialog" name="drone_imagery_associated_field_trials_dialog" tabindex="-1" role="dialog" aria-labelledby="droneImageryAssociatedFieldTrialsDialog" data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="droneImageryAssociatedFieldTrialsDialog">Associated Field Trials</h4>
             </div>
             <div class="modal-body">
@@ -373,21 +302,19 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary"
-                    id="drone_imagery_associated_field_trials_select_submit">Save Associated Field Trials</button>
+                <button type="button" class="btn btn-primary" id="drone_imagery_associated_field_trials_select_submit">Save Associated Field Trials</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="drone_imagery_download_phenotypes_dialog" name="drone_imagery_download_phenotypes_dialog"
-    tabindex="-1" role="dialog" aria-labelledby="droneImageryDownloadPhenotypesDialog" data-backdrop="static">
+<div class="modal fade" id="drone_imagery_download_phenotypes_dialog" name="drone_imagery_download_phenotypes_dialog" tabindex="-1" role="dialog" aria-labelledby="droneImageryDownloadPhenotypesDialog" data-backdrop="static">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="droneImageryDownloadPhenotypesDialog">Download drone image phenotypes and
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryDownloadPhenotypesDialog">Download drone image phenotypes
+                    and
                     plot images</h4>
             </div>
             <div class="modal-body">
@@ -420,35 +347,37 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Field Trial: </label>
                                                 <div class="col-sm-9">
-                                                    <div id="drone_imagery_download_phenotypes_trial_select_div"></div>
+                                                    <div id="drone_imagery_download_phenotypes_trial_select_div">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>
                                         <div style="text-align: center;">
-                                            <button class="btn btn-primary"
-                                                id="drone_imagery_download_phenotypes_field_trial_select_step">Go to
+                                            <button class="btn btn-primary" id="drone_imagery_download_phenotypes_field_trial_select_step">Go to
                                                 Next Step</button>
                                         </div>
                                     </li>
                                     <li>
                                         <div id="pagetitle">
-                                            <h3 id="pagetitle_h3">Select the observation variable(s) you are interested
+                                            <h3 id="pagetitle_h3">Select the observation variable(s) you are
+                                                interested
                                                 in downloading</h3>
                                         </div>
 
                                         <br /><br />
                                         <form class="form-horizontal">
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label">Observation Variables Phenotyped
+                                                <label class="col-sm-3 control-label">Observation Variables
+                                                    Phenotyped
                                                     in the Selected Field Trial: </label>
                                                 <div class="col-sm-9">
-                                                    <div id="drone_imagery_download_phenotypes_trait_select_div"></div>
+                                                    <div id="drone_imagery_download_phenotypes_trait_select_div">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>
                                         <div style="text-align: center;">
-                                            <button class="btn btn-primary"
-                                                id="drone_imagery_download_phenotypes_trait_select_step">Go to Next
+                                            <button class="btn btn-primary" id="drone_imagery_download_phenotypes_trait_select_step">Go to Next
                                                 Step</button>
                                         </div>
                                     </li>
@@ -461,7 +390,8 @@
                                         <br /><br />
                                         <form class="form-horizontal">
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label">Plot Image Types in the Selected
+                                                <label class="col-sm-3 control-label">Plot Image Types in the
+                                                    Selected
                                                     Field Trial: </label>
                                                 <div class="col-sm-9">
                                                     <div id="drone_imagery_download_phenotypes_image_type_select_div">
@@ -470,8 +400,8 @@
                                             </div>
                                         </form>
                                         <div style="text-align: center;">
-                                            <button class="btn btn-primary"
-                                                id="drone_imagery_download_phenotypes_image_type_select_step">Go to Next
+                                            <button class="btn btn-primary" id="drone_imagery_download_phenotypes_image_type_select_step">Go to
+                                                Next
                                                 Step</button>
                                         </div>
                                     </li>
@@ -486,8 +416,7 @@
 
                                         <br /><br />
                                         <div style="text-align: center;">
-                                            <button class="btn btn-primary"
-                                                id="drone_imagery_download_phenotypes_confirm_step">Submit</button>
+                                            <button class="btn btn-primary" id="drone_imagery_download_phenotypes_confirm_step">Submit</button>
                                         </div>
                                     </li>
                                 </ol>
@@ -511,104 +440,9 @@
     </div>
 </div>
 
-<div class="modal fade" id="drone_imagery_view_imaging_vehicles_modal" name="drone_imagery_view_imaging_vehicles_modal"
-    tabindex="-1" role="dialog" aria-labelledby="droneImageryImagingVehiclesDialog" data-backdrop="static">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="droneImageryImagingVehiclesDialog">Available Imaging Vehicles</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-
-                    <table class="display" id="drone_imagery_view_imaging_vehicles_table">
-                        <thead>
-                            <tr>
-                                <th>Vehicles Name</th>
-                                <th>Description</th>
-                                <th>Company</th>
-                                <th>Battery Usage</th>
-                            </tr>
-                        </thead>
-                    </table>
-
-                    <button class="btn btn-primary" name="drone_run_imaging_vehicle_add_new">Add New Imaging
-                        Vehicle</button>
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="drone_run_imaging_vehicle_add_new_modal" name="drone_run_imaging_vehicle_add_new_modal"
-    tabindex="-1" role="dialog" aria-labelledby="uploadDroneImageryAddNewVehicleDialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadDroneImageryAddNewVehicleDialog">Add New Imaging Vehicle</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Imaging Vehicle Name (Must be unique): </label>
-                            <div class="col-sm-9">
-                                <input class="form-control" id="drone_run_new_imaging_vehicle_name"
-                                    name="drone_run_new_imaging_vehicle_name" type="text"
-                                    placeholder="e.g. MyLabDrone1" />
-                            </div>
-                        </div>
-                        <div id="new_imaging_vehicle_company_hide_div" style="display:none">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Company: </label>
-                                <div class="col-sm-9">
-                                    <div id="drone_run_new_imaging_vehicle_company_div"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Imaging Vehicle Description: </label>
-                            <div class="col-sm-9">
-                                <input class="form-control" id="drone_run_new_imaging_vehicle_desc"
-                                    name="drone_run_new_imaging_vehicle_desc" type="text" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Battery Set Names (optional) (comma separated string
-                                of names e.g. blue,green,red,black): </label>
-                            <div class="col-sm-9">
-                                <input class="form-control" id="drone_run_new_imaging_vehicle_battery_names"
-                                    name="drone_run_new_imaging_vehicle_battery_names" type="text"
-                                    placeholder="default_battery" value="default_battery" />
-                            </div>
-                        </div>
-                    </div>
-                    <br /><br />
-                    <div style="text-align: center;">
-                        <button class="btn btn-primary" type="button" id="drone_run_new_imaging_vehicle_submit"
-                            name="drone_run_new_imaging_vehicle_submit">Submit</button>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 {% include 'modals/drone_imagery_analytics_modals.html' %}
 {% include 'modals/drone_imagery_interactive_image_modals.html' %}
 {% include 'modals/drone_imagery_keras_modals.html' %}
-{% include 'modals/upload_drone_imagery_modals.html' %}
-{% include 'modals/upload_drone_imagery_dialog_bands.html' %}
-{% include 'modals/upload_drone_imagery_hidden_divs.html' %}
+{% include 'modals/vehicle-modals.html' %}
 {% endblock %}

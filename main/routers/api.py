@@ -210,6 +210,13 @@ async def get_imaging_vehicles(current_user: User = Depends(AuthUtils.getCurrent
 
     return JSONResponse(content={"data": dronesResponse})
 
+@router.get("/drone_imagery/sensors")
+async def get_imaging_sensors(sensor_id: str, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    sensor = VehicleService.getSensorFromName(sensor_id)
+    response = []
+    response.append(sensor.as_dict())
+    return JSONResponse(content={"data": response})
+
 
 @router.get("/drone_imagery/check_field_trial_ids")
 async def get_check_field_trial_ids(field_trial_ids: str, current_user: User = Depends(AuthUtils.getCurrentUser)):

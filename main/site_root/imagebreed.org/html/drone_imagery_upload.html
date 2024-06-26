@@ -1,0 +1,399 @@
+{% extends "template.html" %}
+{% block includes %}
+<script src="/js/drone-imagery-upload.js" type="text/javascript"></script>
+<script src="/js/vehicles.js" type="text/javascript"></script>
+{% endblock %}
+{% block title %} <h3 id="pagetitle_h3">Upload Aerial Imagery</h3> {% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="container-fluid">
+
+            <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_drone_imagery_form" name="upload_drone_imagery_form"
+                action="/api/drone_imagery/upload_drone_imagery">
+
+                <div id="drone_imagery_upload_workflow" class="workflow">
+                    <ol class="workflow-prog">
+                        <li>
+                            <div class="workflow-title">Intro</div>
+                        </li>
+                        <li>
+                            <div class="workflow-title">Field Trial</div>
+                        </li>
+                        <li>
+                            <div class="workflow-title">Imaging Event</div>
+                        </li>
+                        <li>
+                            <div class="workflow-title">Image Info</div>
+                        </li>
+                    </ol>
+                    <div>
+                        <ol class="workflow-content">
+                            <li>
+                                <div id="pagetitle">
+                                    <h3 id="pagetitle_h3">This workflow will guide you through uploading aerial images to the database</h3>
+                                </div>
+
+                                <ul>
+                                    <li>Your field trial must already be in the database before you can upload images for it. Please go to
+                                        <a href="/breeders/trials">Manage->Field Trials</a> if it is not.
+                                    </li>
+                                    <li>
+                                        <b>For Raw Image Captures</b>:
+                                        If you have raw aerial images (.TIFF, .JPG, .PNG) that have not been stitched into an orthophotomosaic image of the whole field, your raw images should be
+                                        uploaded using a zipfile (.zip). Include at least 25 images in the zipfile. OpenDroneMap will be used to stitch the orthophotos and digital surface maps
+                                        (DSM). OpenDroneMap works for color RGB images and for MicaSense 5-channel multi-spectral images.
+                                    </li>
+                                    <li>
+                                        <b>For Orthophotomosaics</b>:
+                                        If you already have orthophotomosaic image(s) of your entire field from external software, you can upload those images. Upload orthomosaics as .TIFF, .PNG,
+                                        or .JPG images. Orthophotomosaic images for multi-spectral cameras are expected to be perfectly super-imposable for all spectra.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <p>
+                                    <b>Example Data:</b>
+                                    <a href="https://imagebreed.org/static_content/imagebreed/AlfalfaExample35MeterMicasenseAerialDroneFlightRawCaptures.zip" download>
+                                        MicaSense 5 Band Raw Captures (Unstitched TIFF image-captures) (Upload zipfile to ImageBreed and let OpenDroneMap stitch orthophotos and DSM.)
+                                    </a>
+                                </p>
+                                <p>
+                                    <b>Example Data:</b>
+                                    <a href="https://imagebreed.org/static_content/imagebreed/ExampleAerialDroneFlightMicasensePanel.zip" download>
+                                        MicaSense 5 Band Panel Images (MicaSense calibration panel images.) (Upload zipfile for ImageBreed to calibrate Micasense raw-captures.)
+                                    </a>
+                                </p>
+                                <p>
+                                    <b>Example Data:</b>
+                                    <a href="https://imagebreed.org/static_content/imagebreed/AlfalfaExample35MeterMicasenseAerialDroneFlightOrthomosaics.zip" download>
+                                        MicaSense 5 Band Previously Stitched Orthophotomosaic Images (PNG Files in provided zipfile. Can upload each band separately into ImageBreed.)
+                                    </a>
+                                </p>
+                                <p>
+                                    <b>Example Data:</b>
+                                    <a href="https://imagebreed.org/static_content/imagebreed/ExampleColorAerialDroneFlightRawCaptures.zip" download>
+                                        Color Camera Raw Captures (Unstitched JPG image-captures) (Upload zipfile to ImageBreed and let OpenDroneMap stitch orthophotos and DSM.)
+                                    </a>
+                                </p>
+                                <br />
+                                <div style="text-align: center;">
+                                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to upload a single imaging event</button>
+                                    <br /><br />
+                                    <button class="btn btn-outline-secondary" id="upload_drone_imagery_bulk_button">Go to bulk upload of imaging events</button>
+                                    <br /><br />
+                                    <button class="btn btn-outline-secondary" id="upload_drone_imagery_bulk_previous_button">
+                                        Go to bulk upload of previously processed imaging events (GeoJSON definitions included)
+                                    </button>
+                                </div>
+                            </li>
+                            <li>
+                                <div id="pagetitle">
+                                    <h3 id="pagetitle_h3">Select your field trial</h3>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Company: </label>
+                                    <div class="col-sm-9">
+                                        <div id="upload_drone_image_company_select_div">
+                                            <select class="form-control" id="drone_run_company_id" name="drone_run_company_id">
+                                                <option disabled="" selected="" value=""> -- Select -- </option>
+                                                {% for company in company_options %}
+                                                <option value="{{ company.id }}" title="{{ company.name }}">{{ company.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Field Trial: </label>
+                                    <div class="col-sm-9">
+                                        <div id="upload_drone_image_trial_select_div">
+                                            <div class="card bg-light" style="display: none;">
+                                                <img src="/img/wheel.gif" style="margin: auto;"/>
+                                            </div>
+                                            <select class="form-control" id="drone_run_field_trial_id" name="drone_run_field_trial_id" multiple="">
+                                                <option disabled="" selected="" value=""> -- Select -- </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="upload_drone_image_field_trial_info">
+                                </div>
+
+                                <div id="upload_drone_image_field_trial_select_date_continue_div" style="display:none">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Imaging Event Date and Hour (Must be after the planting date):</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="drone_run_date" name="drone_run_date" title="drone_run_date" type="datetime-local" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Is this from a greenhouse, growth chamber, or fixed camera rig?:</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="drone_run_is_fixed_rig" name="drone_run_is_fixed_rig">
+                                                <option value="No">No</option>
+                                                <option value="Yes">Yes</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="text-align: center;">
+                                    <button class="btn btn-primary" id="upload_drone_image_field_trial_select_date_continue">Go to Next Step</button>
+                                </div>
+                            </li>
+                            <li>
+
+                                <div class="accordion" id="accordionCreateImagingEvent">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCreateImagingEvent" aria-expanded="true"
+                                                aria-controls="collapseCreateImagingEvent">
+                                                <div id="pagetitle">
+                                                    <h3 id="pagetitle_h3">Create a new imaging event</h3>
+                                                </div>
+                                            </button>
+                                        </h2>
+                                        <div id="collapseCreateImagingEvent" class="accordion-collapse collapse show" data-bs-parent="#accordionCreateImagingEvent">
+                                            <div class="accordion-body">
+
+                                                <div id="drone_image_upload_create_drone_inputs">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">Imaging Event Name(s) (Uniquely Generated): </label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" id="drone_run_name" name="drone_run_name" type="text" placeholder="e.g. Field Trial Name + Date of Flight"
+                                                                disabled />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">Imaging Event Type:</label>
+                                                        <div class="col-sm-9">
+                                                            <select class="form-control" id="drone_run_type" name="drone_run_type">
+                                                                <option value="">Select One</option>
+                                                                <option value="Aerial Medium to High Res">Medium to High Resolution Aerial Drone Image(s)</option>
+                                                                <option value="Aerial Low Res">Low Resolution Aerial Drone Image(s)</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">Sensor Type:</label>
+                                                        <div class="col-sm-9">
+                                                            <select class="form-control" id="drone_image_upload_camera_info" name="drone_image_upload_camera_info">
+                                                                <option value="" disabled selected>-- Select One --</option>
+                                                                {% for sensor in sensor_options %}
+                                                                <option value="{{ sensor.name }}">{{ sensor.description }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">Imaging Vehicle:
+                                                            <button class="btn btn-sm btn-outline-secondary" id="drone_run_imaging_vehicle_add_new" type="button">Add New Vehicle</button>
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <div id="drone_run_imaging_vehicle_div">
+                                                                <select class="form-control" id="drone_run_field_trial_id" name="drone_run_field_trial_id" multiple="">
+                                                                    <option disabled="" selected="" value=""> -- Select -- </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">Imaging Event Description (e.g. flight altitude, flight plan name, overall weather conditions): </label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" id="drone_run_description" name="drone_run_description" type="text" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="drone_image_upload_create_drone_inputs_fixed_camera" style="display:none">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">
+                                                            Fixed Camera Rig Name (For Fixed Camera Rigs e.g. Greenhouse or Growth Chambers) (Leave empty if not applicable):
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" id="drone_run_camera_rig_description" name="drone_run_camera_rig_description"
+                                                                title="drone_run_camera_rig_description" type="text" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">
+                                                            Base Date and Hour (For Fixed Camera Rigs e.g. Greenhouse or Growth Chambers) (Useful for fixed camera rigs capturing different pieces of a
+                                                            field
+                                                            experiment, and the capture time is not synchronized across camera rigs, but the rigs are on identical intervals. Can be the time of the
+                                                            first image for
+                                                            the rig.) (Leave empty if not applicable):
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" id="drone_run_base_date" name="drone_run_base_date" title="drone_run_base_date" type="text" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUpdateImagingEvent" aria-expanded="false"
+                                                aria-controls="collapseUpdateImagingEvent">
+                                                <div id="pagetitle">
+                                                    <h3 id="pagetitle_h3">Update an existing imaging event</h3>
+                                                </div>
+                                            </button>
+                                        </h2>
+                                        <div id="collapseUpdateImagingEvent" class="accordion-collapse collapse" data-bs-parent="#accordionCreateImagingEvent">
+                                            <div class="accordion-body">
+
+                                                <table class="display" id="drone_image_upload_drone_runs_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Select</th>
+                                                            <th>Imaging Event Name</th>
+                                                            <th>Imaging Event Type</th>
+                                                            <th>Imaging Event Description</th>
+                                                            <th>Imaging Event Date</th>
+                                                            <th>Drone Run GDD</th>
+                                                            <th>Sensor</th>
+                                                            <th>Field Trial Name</th>
+                                                            <th>Field Trial Description</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+
+                                                <!-- If drone run is selected above, the drone_run_project_id is passed to controller, negating need to create new drone run -->
+                                                <input id="drone_run_id" name="drone_run_id" type="hidden" value="" />
+                                                <input id="drone_image_upload_drone_run_band_stitching_odm_image_count" name="drone_image_upload_drone_run_band_stitching_odm_image_count" type="hidden"
+                                                    value="" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+
+                                    <div style="text-align: center;">
+                                        <button class="btn btn-primary" id="drone_image_upload_drone_run_continue">Go to Next Step</button>
+                                    </div>
+                            </li>
+                            <li>
+                                <div id="pagetitle">
+                                    <h3 id="pagetitle_h3">Type of Image to Upload</h3>
+                                </div>
+
+
+                                <div class="well">
+                                    <div style="text-align: center;">
+                                        <h4>Uploading already stitched orthophotomosaics or complete images of experimental field</h4>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            You can choose to upload orthophotomosaic images (PNG, TIFF) created using external software (Pix4d, Agisoft, ODM, etc).
+                                        </li>
+                                        <li>
+                                            You can upload any image (PNG, TIFF, JPEG) which covers the entire experimental field, for example, interpolated soil data for altitude or electrical
+                                            conductance EC measurements. Another example is for images from a phenotyping facility, greenhouse, or growth chamber.
+                                        </li>
+                                        <li>
+                                            Up to seven distinct spectral band images can be uploaded.
+                                        </li>
+                                        <li>
+                                            Images should be perfectly super-imposable for all spectra in an imaging event.
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="well">
+                                    <div style="text-align: center;">
+                                        <h4>Uploading raw images to stitch using OpenDroneMap</h4>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            You can upload raw images (PNG, TIFF, JPEG) from a MicaSense
+                                            5-channel camera or a color image camera, for instance collected
+                                            from an aerial drone, and then orthophotomosaics will be created
+                                            using OpenDroneMap and saved in ImageBreed.
+                                        </li>
+                                        <li>
+                                            Raw images are uploaded using a zipfile (.zip). Place all images
+                                            relevant to the imaging event into one zipfile. Include at least
+                                            25 images in the zipfile.
+                                        </li>
+                                        <li>
+                                            Make sure there is >75% overlap in the images, so that the
+                                            images can be properly assembled.
+                                        </li>
+                                        <li>
+                                            A digital surface map (DSM) will also be generated and saved as
+                                            a black and white image. The DSM is a representation of height
+                                            of objects.
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">
+                                        Are you uploading orthophotomosaic(s) or complete image(s) of the experimental field?:
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" id="drone_image_upload_drone_run_band_stitching" name="drone_image_upload_drone_run_band_stitching">
+                                            <option value="">Select One</option>
+                                            <option value="no">
+                                                Yes, I am uploading stitched orthomosaic(s) or complete image(s)
+                                            </option>
+                                            <option value="yes_open_data_map_stitch">
+                                                No, I am uploading a zipfile of raw images to stitch using OpenDroneMap within ImageBreed
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="drone_run_upload_drone_run_band_number_div">
+                                    <label class="col-sm-3 control-label">
+                                        Number of Spectral Bands (Image Sets) To Upload:
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" id="drone_run_band_number" name="drone_run_band_number">
+                                            <option disabled selected> -- Select -- </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="drone_run_upload_drone_run_band_image_type_div">
+                                    <label class="col-sm-3 control-label">Orthophotomosaic Product From:</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" id="drone_run_upload_drone_run_band_image_type" name="drone_run_upload_drone_run_band_image_type">
+                                            <option value="">Select One</option>
+                                            <option value="None">None</option>
+                                            <option value="Pix4D">Pix4D (Individual Band Images)</option>
+                                            <option value="Agisoft">Agisoft (MultiBand Stack Image)</option>
+                                            <option value="ODM">OpenDroneMap (MultiBand Stack Image) </option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div style="text-align: center;">
+                                    <button class="btn btn-primary" id="drone_image_upload_drone_run_band_continue">Go to Next Step</button>
+                                </div>
+                            </li>
+                        </ol>
+                        <div class="workflow-pending-message">Complete!</div>
+                        <div class="workflow-complete-message">Complete!</div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    Workflow.init("#drone_imagery_upload_workflow");
+                </script>
+
+
+                <div id="upload_drone_imagery_verify_status"></div>
+            </form><br />
+        </div>
+    </div>
+</div>
+
+{% include 'modals/upload_drone_imagery_modals.html' %}
+{% include 'modals/upload_drone_imagery_dialog_bands.html' %}
+{% include 'modals/upload_drone_imagery_hidden_divs.html' %}
+{% include 'modals/vehicle-modals.html' %}
+{% endblock %}

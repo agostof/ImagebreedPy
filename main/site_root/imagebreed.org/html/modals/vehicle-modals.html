@@ -1,0 +1,92 @@
+
+<div class="modal fade" id="drone_imagery_view_imaging_vehicles_modal" name="drone_imagery_view_imaging_vehicles_modal" tabindex="-1" role="dialog" aria-labelledby="droneImageryImagingVehiclesDialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="droneImageryImagingVehiclesDialog">Available Imaging Vehicles</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <table class="display" id="drone_imagery_view_imaging_vehicles_table">
+                        <thead>
+                            <tr>
+                                <th>Vehicles Name</th>
+                                <th>Description</th>
+                                <th>Company</th>
+                                <th>Battery Usage</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    <button class="btn btn-primary" id="drone_run_imaging_vehicle_add_new">Add New Imaging
+                        Vehicle</button>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="drone_run_imaging_vehicle_add_new_modal" name="drone_run_imaging_vehicle_add_new_modal" tabindex="-1" role="dialog" aria-labelledby="uploadDroneImageryAddNewVehicleDialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDroneImageryAddNewVehicleDialog">Add New Imaging Vehicle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Imaging Vehicle Name (Must be unique): </label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="drone_run_new_imaging_vehicle_name" name="drone_run_new_imaging_vehicle_name" type="text" placeholder="e.g. MyLabDrone1" />
+                            </div>
+                        </div>
+                        <div id="new_imaging_vehicle_company_hide_div" style="display:none">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Company: </label>
+                                <div class="col-sm-9">
+                                    <div id="drone_run_new_imaging_vehicle_company_div">
+                                        <select class="form-control" id="drone_run_new_imaging_vehicle_company_id" name="drone_run_new_imaging_vehicle_company_id">
+                                            <option disabled="" selected="" value=""> -- Select -- </option>
+                                            {% for company in company_options %}
+                                            <option value="{{ company.id }}" title="{{ company.name }}">{{ company.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Imaging Vehicle Description: </label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="drone_run_new_imaging_vehicle_desc" name="drone_run_new_imaging_vehicle_desc" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Battery Set Names (optional) (comma separated
+                                string
+                                of names e.g. blue,green,red,black): </label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="drone_run_new_imaging_vehicle_battery_names" name="drone_run_new_imaging_vehicle_battery_names" type="text" placeholder="default_battery" value="default_battery" />
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div style="text-align: center;">
+                        <button class="btn btn-primary" type="button" id="drone_run_new_imaging_vehicle_submit" name="drone_run_new_imaging_vehicle_submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

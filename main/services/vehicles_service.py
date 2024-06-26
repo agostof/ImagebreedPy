@@ -70,6 +70,11 @@ class VehicleServiceClass():
 
         return sensor_summaries
 
+    def getSensorFromId(self, sensor_id:str):
+        sqlStatement = select(Sensor).where(Sensor.id == sensor_id)
+        sensor = db_session.scalars(sqlStatement).first()
+        return sensor
+
     def getSensorFromName(self, sensor_name:str):
         sqlStatement = select(Sensor).where(Sensor.name == sensor_name)
         sensor = db_session.scalars(sqlStatement).first()
