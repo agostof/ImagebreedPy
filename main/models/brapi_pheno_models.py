@@ -92,7 +92,7 @@ class EntryType(Enum):
     CHECK = 'CHECK'
     TEST = 'TEST'
     FILLER = 'FILLER'
-# TODO: We should consolidad and verify that PositionCoordinateType{X,Y} can be generalized
+
 class PositionCoordinateType(Enum):
     LONGITUDE = 'LONGITUDE'
     LATITUDE = 'LATITUDE'
@@ -103,26 +103,6 @@ class PositionCoordinateType(Enum):
     MEASURED_ROW = 'MEASURED_ROW'
     MEASURED_COL = 'MEASURED_COL'
 
-class PositionCoordinateXType(Enum):
-    LONGITUDE = 'LONGITUDE'
-    LATITUDE = 'LATITUDE'
-    PLANTED_ROW = 'PLANTED_ROW'
-    PLANTED_INDIVIDUAL = 'PLANTED_INDIVIDUAL'
-    GRID_ROW = 'GRID_ROW'
-    GRID_COL = 'GRID_COL'
-    MEASURED_ROW = 'MEASURED_ROW'
-    MEASURED_COL = 'MEASURED_COL'
-
-
-class PositionCoordinateYType(Enum):
-    LONGITUDE = 'LONGITUDE'
-    LATITUDE = 'LATITUDE'
-    PLANTED_ROW = 'PLANTED_ROW'
-    PLANTED_INDIVIDUAL = 'PLANTED_INDIVIDUAL'
-    GRID_ROW = 'GRID_ROW'
-    GRID_COL = 'GRID_COL'
-    MEASURED_ROW = 'MEASURED_ROW'
-    MEASURED_COL = 'MEASURED_COL'
 
 
 # note: Commented out from the Auto-generated to diferentiate from HeaderRowEnum(Enum) 
