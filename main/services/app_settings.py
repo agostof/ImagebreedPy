@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     image_storage_dir: str
     image_archive_dir: str
     
+    brapi_user: str
+    brapi_pass: str
     model_config = SettingsConfigDict(env_file='.env', env_file_encoding='utf-8')
 
 settings = Settings()
