@@ -192,7 +192,16 @@ class BrAPIServiceClass():
         print(responseJSON.json())
         #response = StudyListResponse.model_validate(responseJSON.json())
         return responseJSON
-        return response
+        #return response
+
+    def getStudyLayoutCoords(self, studyDbId: str, token:str= "", pageSize=1000):
+        # the OAuth token is ingored for now using brearer token instead
+        # TODO: Revise for OAuth token
+        out_json = self.getStudyLayout(studyDbId=studyDbId, pageSize=pageSize).json()
+        study_info = ObservationUnitListResponse(**out_json)
+        out = parse_observation_unit_list_response(study_info)
+        return out
+
 
     def getStudies(self, programDbId: str, token:str= "") -> StudyListResponse:
         req = PreparedRequest()
