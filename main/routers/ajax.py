@@ -12,16 +12,31 @@ from main.services.brapi_service import BrAPI
 templates = Jinja2Templates(directory=DIRECTORY + "html/")
 router = APIRouter(prefix="/ajax")
 
+@router.get("/breeders/trial/{studyDbId}/coords")
+@router.get("/breeders/trial/{studyDbId}/layout")
+async def get_trial_coords(studyDbId: str):
+    # example with studyDbId=169
+    # ajax/breeders/trial/169/coords
+    # this emulates / re-implements a call by the same name on imagebreed
+    out = BrAPI.getStudyLayoutCoords(studyDbId=studyDbId)
+    return out
+
 @router.get("/html/select/private_companies")
-async def get_private_companies(request: Request, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    token = AuthUtils.getAccessToken(request)
+async def get_private_companies(request: Request):#, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    # TODO: Re-enable Oauth tokens
+    # Token has been disabled for accessing BrAPI on breeding management datbases
+    #token = AuthUtils.getAccessToken(request)
+    token = None
     privateCompanies = BrAPI.getProgramSummaries(token=token)
 
     return JSONResponse(content={"options": privateCompanies})
 
 @router.get("/html/select/trials")
-async def get_trials( request: Request, private_company_id: str = None, current_user: User = Depends(AuthUtils.getCurrentUser)):
-    token = AuthUtils.getAccessToken(request=request)
+async def get_trials( request: Request, private_company_id: str = None): #, current_user: User = Depends(AuthUtils.getCurrentUser)):
+    # TODO: Re-enable Oauth tokens 
+    # Token has been disabled for accessing BrAPI on breeding management datbases
+    # token = AuthUtils.getAccessToken(request=request)
+    token = None
     trials = BrAPI.getStudySummaries(private_company_id, token=token)
 
     return JSONResponse(content={"options": trials})
