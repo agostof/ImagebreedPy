@@ -11,7 +11,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional, Union
 
-from pydantic import AnyUrl, BaseModel, Field, constr, RootModel
+from pydantic import AnyUrl, BaseModel, Field, constr, RootModel, validator
 
 # from brapi_v2.core.models import (
 from main.models.brapi_core_models import (
@@ -93,8 +93,7 @@ class EntryType(Enum):
     TEST = 'TEST'
     FILLER = 'FILLER'
 
-
-class PositionCoordinateXType(Enum):
+class PositionCoordinateType(Enum):
     LONGITUDE = 'LONGITUDE'
     LATITUDE = 'LATITUDE'
     PLANTED_ROW = 'PLANTED_ROW'
@@ -104,16 +103,6 @@ class PositionCoordinateXType(Enum):
     MEASURED_ROW = 'MEASURED_ROW'
     MEASURED_COL = 'MEASURED_COL'
 
-
-class PositionCoordinateYType(Enum):
-    LONGITUDE = 'LONGITUDE'
-    LATITUDE = 'LATITUDE'
-    PLANTED_ROW = 'PLANTED_ROW'
-    PLANTED_INDIVIDUAL = 'PLANTED_INDIVIDUAL'
-    GRID_ROW = 'GRID_ROW'
-    GRID_COL = 'GRID_COL'
-    MEASURED_ROW = 'MEASURED_ROW'
-    MEASURED_COL = 'MEASURED_COL'
 
 
 # note: Commented out from the Auto-generated to diferentiate from HeaderRowEnum(Enum) 
@@ -1063,6 +1052,12 @@ class ImageSearchRequest(
     )
 
 class ObservationUnitPosition(BaseModel):
+    @validator('entryType', pre=True, always=True)
+    def capitalize_entry_type(cls, value):
+        if value:
+            return value.upper()
+        return value
+
     entryType: Optional[EntryType] = Field(
         None,
         description='The type of entry for this observation unit. ex. "CHECK", "TEST", "FILLER"',
@@ -1070,6 +1065,13 @@ class ObservationUnitPosition(BaseModel):
     )
     geoCoordinates: Optional[GeoJSON] = None
     observationLevel: Optional[ObservationUnitLevelRelationship] = None
+
+    @validator('observationLevelRelationships', pre=True, each_item=True)
+    def replace_replicate_with_rep(cls, value):
+        if 'levelName' in value and value['levelName'] == 'replicate':
+            value['levelName'] = 'rep'
+        return value
+
     observationLevelRelationships: Optional[
         List[ObservationUnitLevelRelationship]
     ] = Field(
@@ -1086,7 +1088,13 @@ class ObservationUnitPosition(BaseModel):
         description='The X position coordinate for an observation unit. Different systems may use different coordinate systems.',
         example='74',
     )
-    positionCoordinateXType: Optional[PositionCoordinateXType] = Field(
+    @validator('positionCoordinateX', 'positionCoordinateY', pre=True, always=True)
+    def convert_coordinates_to_str(cls, value):
+        if isinstance(value, int):
+            return str(value)
+        return value
+    # generalizing to PositionCoordinateType
+    positionCoordinateXType: Optional[PositionCoordinateType] = Field(
         None,
         description="The type of positional coordinate used. Must be one of the following values\n\nLONGITUDE - ISO 6709 standard, WGS84 geodetic datum. See 'Location Coordinate Encoding' for details\n\nLATITUDE - ISO 6709 standard, WGS84 geodetic datum. See 'Location Coordinate Encoding' for details\n\nPLANTED_ROW - The physical planted row number \n\nPLANTED_INDIVIDUAL - The physical counted number, could be independant or within a planted row\n\nGRID_ROW - The row index number of a square grid overlay\n\nGRID_COL - The column index number of a square grid overlay\n\nMEASURED_ROW - The distance in meters from a defined 0-th row\n\nMEASURED_COL - The distance in meters from a defined 0-th column",
         example='GRID_COL',
@@ -1096,7 +1104,8 @@ class ObservationUnitPosition(BaseModel):
         description='The Y position coordinate for an observation unit. Different systems may use different coordinate systems.',
         example='03',
     )
-    positionCoordinateYType: Optional[PositionCoordinateYType] = Field(
+    # generalizing to PositionCoordinateType
+    positionCoordinateYType: Optional[PositionCoordinateType] = Field(
         None,
         description="The type of positional coordinate used. Must be one of the following values\n\nLONGITUDE - ISO 6709 standard, WGS84 geodetic datum. See 'Location Coordinate Encoding' for details\n\nLATITUDE - ISO 6709 standard, WGS84 geodetic datum. See 'Location Coordinate Encoding' for details\n\nPLANTED_ROW - The physical planted row number \n\nPLANTED_INDIVIDUAL - The physical counted number, could be independant or within a planted row\n\nGRID_ROW - The row index number of a square grid overlay\n\nGRID_COL - The column index number of a square grid overlay\n\nMEASURED_ROW - The distance in meters from a defined 0-th row\n\nMEASURED_COL - The distance in meters from a defined 0-th column",
         example='GRID_ROW',

@@ -11,7 +11,7 @@ from datetime import date, datetime
 from enum import Enum
 from typing import Dict, List, Optional, Union
 
-from pydantic import AnyUrl, BaseModel, Field, RootModel
+from pydantic import AnyUrl, BaseModel, Field, RootModel, validator
 
 
 class Contact(BaseModel):
@@ -1004,6 +1004,11 @@ class StudyNewRequest(BaseModel):
         description='A URL to the human readable documentation of this object',
         example='https://wiki.brapi.org',
     )
+    @validator('documentationURL', pre=True, always=True)
+    def set_empty_string_to_none(cls, v):
+        if v == '':
+           return None
+        return v
     endDate: Optional[datetime] = Field(
         None,
         description='The date the study ends\n\nMIAPPE V1.1 (DM-15) End date of study - Date and, if relevant, time when the experiment ended',
