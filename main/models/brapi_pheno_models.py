@@ -92,7 +92,7 @@ class EntryType(Enum):
     CHECK = 'CHECK'
     TEST = 'TEST'
     FILLER = 'FILLER'
-
+# TODO: We should consolidad and verify that PositionCoordinateType{X,Y} can be generalized
 class PositionCoordinateType(Enum):
     LONGITUDE = 'LONGITUDE'
     LATITUDE = 'LATITUDE'
@@ -103,6 +103,26 @@ class PositionCoordinateType(Enum):
     MEASURED_ROW = 'MEASURED_ROW'
     MEASURED_COL = 'MEASURED_COL'
 
+class PositionCoordinateXType(Enum):
+    LONGITUDE = 'LONGITUDE'
+    LATITUDE = 'LATITUDE'
+    PLANTED_ROW = 'PLANTED_ROW'
+    PLANTED_INDIVIDUAL = 'PLANTED_INDIVIDUAL'
+    GRID_ROW = 'GRID_ROW'
+    GRID_COL = 'GRID_COL'
+    MEASURED_ROW = 'MEASURED_ROW'
+    MEASURED_COL = 'MEASURED_COL'
+
+
+class PositionCoordinateYType(Enum):
+    LONGITUDE = 'LONGITUDE'
+    LATITUDE = 'LATITUDE'
+    PLANTED_ROW = 'PLANTED_ROW'
+    PLANTED_INDIVIDUAL = 'PLANTED_INDIVIDUAL'
+    GRID_ROW = 'GRID_ROW'
+    GRID_COL = 'GRID_COL'
+    MEASURED_ROW = 'MEASURED_ROW'
+    MEASURED_COL = 'MEASURED_COL'
 
 
 # note: Commented out from the Auto-generated to diferentiate from HeaderRowEnum(Enum) 
@@ -253,8 +273,31 @@ class Event(BaseModel):
         None, description='The study in which the event occurred', example='2cc2001f'
     )
 
-
+from datetime import datetime
 class ObservationNewRequest(BaseModel):
+    # added for fixing the timestamp format for BreedBase / Imagebreed compatibility
+    @validator('observationTimeStamp', pre=True)
+    def parse_timestamp(cls, value):
+        # Remove the 'NA' prefix if it exists
+        if isinstance(value, str):
+            #print(value)
+            if value.startswith('NA'):
+                value = value[2:]
+                #print('CLEANED DATIME VALUE DATE NA REMOVED', value)
+
+            # Replace '_' with ' ' to match the datetime format
+            #value = value.replace('_', ' ')
+            #print('CLEANED DATIME VALUE', value)
+            try:
+                return datetime.strptime(value, '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                pass  # If it fails, try the next format
+            try:
+                return datetime.fromisoformat(value)
+            except ValueError:
+                raise ValueError(f"Invalid datetime format: {value}")
+        return value
+
     additionalInfo: Optional[dict] = Field(
         None, description='Additional arbitrary info'
     )
@@ -297,7 +340,17 @@ class ObservationNewRequest(BaseModel):
         description='A human readable name for an observation variable',
         example='Plant Height in meters',
     )
+    # TODO: Fix season model to return single season instead of a list during validation
+    @validator('season', pre=True)
+    def parse_season(cls, value):
+        if isinstance(value, list):
+            if isinstance(value[0], list):
+                raise ValueError(f"Invalid season format, single season expected: {value}")
+            else:#len(value) == 1:
+                return value[0]
+        return value
     season: Optional[Season] = None
+    #season: Optional[List[Season]] = None
     studyDbId: Optional[str] = Field(
         None,
         description='The ID which uniquely identifies a study within the given database server',
