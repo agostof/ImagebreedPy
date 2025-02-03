@@ -1050,7 +1050,8 @@ class StudyNewRequest(BaseModel):
         example='Observation units consisted in individual plots themselves consisting of a row of 15 plants at a density of approximately six plants per square meter.',
     )
     # TODO: Fix incosistent use of season as as strings vs a Season Object
-    seasons: Optional[List[str]] = Field(
+    seasons: Optional[List[Union[str, None]]] = Field(
+    #seasons: Optional[List[str]] = Field(
     #seasons: Optional[List[Season]] = Field(
         None,
         description='List of seasons over which this study was performed.',
