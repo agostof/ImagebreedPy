@@ -307,7 +307,8 @@ class Season(BaseModel):
         description="Name of the season. ex. 'Spring', 'Q2', 'Season A', etc.",
         example='Spring',
     )
-    seasonDbId: str = Field(
+    # made optional for compatibility with ImageBreed and Breedbase
+    seasonDbId: Optional[str] = Field(
         ...,
         description="The ID which uniquely identifies a season. For backward compatibility it can be a string like '2012', '1957-2004'",
         example='Spring_2018',
@@ -1048,7 +1049,9 @@ class StudyNewRequest(BaseModel):
         description='MIAPPE V1.1 (DM-25) Observation unit description - General description of the observation units in the study.',
         example='Observation units consisted in individual plots themselves consisting of a row of 15 plants at a density of approximately six plants per square meter.',
     )
+    # TODO: Fix incosistent use of season as as strings vs a Season Object
     seasons: Optional[List[str]] = Field(
+    #seasons: Optional[List[Season]] = Field(
         None,
         description='List of seasons over which this study was performed.',
         example=['Spring_2018'],
